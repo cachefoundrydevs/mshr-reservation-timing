@@ -127,6 +127,24 @@ jobs:
             if [ "$(wc -c < "$f")" -gt 150000 ]; then tail -c 100000 "$f" > "/tmp/pub/latest/$rel"; else cp "$f" "/tmp/pub/latest/$rel"; fi
           done
           cp comparison.md /tmp/pub/latest/comparison.md
+          # ONE file with everything the prompt (section 7) asks you to paste: copy it into the chat as it is
+          {
+            echo "# Results of run ${{ github.run_id }}, commit $(git rev-parse HEAD)"
+            echo
+            echo "(Versions: $(ls res | sed -n 's/^result-\(.*\)-\(func\|mshr_entry\|mshr\|rsv\)$/\1/p' | sort -u | tr '\n' ' '))"
+            echo
+            cat comparison.md
+            echo
+            echo "## Details per version and part (function checks, timing, failing groups at 200 ps)"
+            for d in $(ls -d res/result-* | sort); do
+              for f in "$d"/*.md; do [ -f "$f" ] && { echo; cat "$f"; }; done
+            done
+            echo
+            echo "## First lines of every log that shows a failure (empty = no failure)"
+            for f in $(find res -type f ( -name '*.log' -o -name 'formal.txt' ) -exec grep -l -E "TEST FAILED|MISMATCH|NOT PROVEN|FAIL" {} + 2>/dev/null); do
+              echo; echo "### ${f#res/}"; echo '```'; grep -m1 -n -E "TEST FAILED|MISMATCH|NOT PROVEN|FAIL" "$f" | head -1; grep -E "MISMATCH|TEST FAILED|NOT PROVEN" "$f" | head -20; echo '```'
+            done
+          } > /tmp/pub/latest/PASTE_TO_CHATGPT.md
           {
             echo "run: ${{ github.run_id }}"
             echo "commit: $(git rev-parse HEAD)"
@@ -144,7 +162,7 @@ jobs:
           mkdir -p runs
           cp -r /tmp/pub/latest latest
           cp -r /tmp/pub/latest "runs/$RUN"
-          printf '# Results branch\n\nWritten by the workflow after every run. `latest/` = the newest run (`comparison.md` is the table, `RUN.txt` says which run and commit); `runs/<run id>_<commit>/` = the same for older runs.\nRead it with: `git fetch origin results && git show origin/results:latest/comparison.md`\n' > README.md
+          printf '# Results branch\n\nWritten by the workflow after every run. `latest/` = the newest run (`PASTE_TO_CHATGPT.md` = everything to paste into the chat, `comparison.md` is the table, `RUN.txt` says which run and commit); `runs/<run id>_<commit>/` = the same for older runs.\nRead it with: `git fetch origin results && git show origin/results:latest/comparison.md`\n' > README.md
           git add README.md latest runs
           git commit -q -m "results of run ${{ github.run_id }} (commit $SHA7) [skip ci]" || echo "nothing to commit"
           git push origin results

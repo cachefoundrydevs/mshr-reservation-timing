@@ -25,7 +25,7 @@ The repository is https://github.com/cachefoundrydevs/mshr-reservation-timing (p
 
 If you cannot reach `api.github.com`, do not try: after every Actions run the workflow writes its results to the git branch `results`,
 which you can read with plain git (`git fetch origin results`, then `git show origin/results:latest/comparison.md`; `latest/RUN.txt` names the
-run and commit, older runs are in `runs/<run id>_<commit>/`). Otherwise I paste the results to you.
+run and commit, older runs are in `runs/<run id>_<commit>/`). Most of the time I simply paste the file `PASTE_TO_CHATGPT.md` of that branch to you: it holds the comparison table, the details per version and the first lines of every failing log, i.e. everything section 7 lists.
 
 ## 1. Your role and the goal
 
@@ -179,6 +179,7 @@ needed next (including ideas that are NOT exact, clearly marked as needing a des
 
 ## 7. What I paste back after each run
 
+0. Normally ONE file: `PASTE_TO_CHATGPT.md` (it holds items 1 to 3 below). On github.com: the branch `results`, folder `latest`; or https://raw.githubusercontent.com/cachefoundrydevs/mshr-reservation-timing/results/latest/PASTE_TO_CHATGPT.md. Copy its text into the chat.
 1. The **comparison table** from the run's summary page (job "compare"), all rows. (It is also in the branch `results`: `git show origin/results:latest/comparison.md`; `latest/RUN.txt` says which run and commit it belongs to. Check that RUN.txt names the commit I pushed.)
 2. For each candidate and for `opt`: the "Failing groups at 200 ps" block of each timing job (`mshr`, `mshr_entry`, `rsv`).
 3. If anything failed: the `FAIL` / `MISMATCH` / `NOT PROVEN` lines, and the first 20 lines of the failing log (artifact

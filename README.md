@@ -85,3 +85,10 @@ bash flow/run_timing.sh l1d_mshr rtl/opt 200 out/t     # one timing run
 `PROMPT_ITERATION.md` is a complete, self-contained prompt for an AI assistant (written for ChatGPT) that runs **10 optimisation
 iterations** with this repository: it proposes candidate versions in `variants/`, you push them, Actions checks and times them, you paste the
 results back, and only a version that passes every check and is faster replaces `rtl/opt`. `ITERATION_LOG.md` records every iteration.
+
+## Getting the results into the chat (no GitHub access needed by the assistant)
+
+After every run the workflow publishes one file with everything the assistant needs:
+`https://github.com/cachefoundrydevs/mshr-reservation-timing/blob/results/latest/PASTE_TO_CHATGPT.md` (open it, copy the text, paste it into the chat).
+`latest/RUN.txt` in the same folder says which run and commit it belongs to; check that it names the commit you pushed (the file is
+replaced when the run ends, 30-90 minutes after the push).
