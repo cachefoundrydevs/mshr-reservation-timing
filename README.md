@@ -1,4 +1,4 @@
 # Results branch
 
-Written by the workflow after every run. `latest/` = the newest run (`comparison.md` is the table, `RUN.txt` says which run and commit); `runs/<run id>_<commit>/` = the same for older runs.
+Written by the workflow after every run. `latest/` = the newest run (`PASTE_TO_CHATGPT.md` = everything to paste into the chat, `comparison.md` is the table, `RUN.txt` says which run and commit); `runs/<run id>_<commit>/` = the same for older runs.
 Read it with: `git fetch origin results && git show origin/results:latest/comparison.md`

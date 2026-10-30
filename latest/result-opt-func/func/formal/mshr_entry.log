@@ -1,0 +1,1144 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+
+-- Executing script file `/__w/mshr-reservation-timing/mshr-reservation-timing/out/opt/func/formal/mshr_entry.ys' --
+
+1. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v' to AST representation.
+Generating RTLIL representation for module `\l1d_mshr_entry'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v' to AST representation.
+Generating RTLIL representation for module `\l1d_resp_gen'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v' to AST representation.
+Generating RTLIL representation for module `\fv_wrap'.
+Successfully finished Verilog frontend.
+
+4. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1. Analyzing design hierarchy..
+Top module:  \fv_wrap
+Used module:     \l1d_mshr_entry
+Used module:         \l1d_resp_gen
+Parameter \IN_BYTES = 64
+Parameter \WRITE_DATA_WIDTH = 64
+Parameter \MEM_SIZE_BITS = 2
+Parameter \OFF_W = 6
+
+4.2. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_resp_gen'.
+Parameter \IN_BYTES = 64
+Parameter \WRITE_DATA_WIDTH = 64
+Parameter \MEM_SIZE_BITS = 2
+Parameter \OFF_W = 6
+Generating RTLIL representation for module `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen'.
+Parameter \ADDR_W = 64
+Parameter \LINE_BYTES = 64
+Parameter \NUM_BANKS = 4
+Parameter \SETS = 64
+Parameter \WAYS = 4
+Parameter \WRITE_DATA_WIDTH = 64
+Parameter \MEM_SIZE_BITS = 2
+Parameter \MASTER_ID_BITS = 2
+Parameter \IDX_BITS = 3
+Parameter \LSU_BUF_DEPTH = 8
+Parameter \TRK_ENTRIES = 16
+Parameter \TRK_REFILL_RSV = 2
+Parameter \MSHR_ENTRIES = 8
+Parameter \MSHR_NC_ENTRIES = 2
+Parameter \VC_SLOTS = 8
+Parameter \RESP_FIFO_DEPTH = 4
+Parameter \REFILL_SKIP = 2
+Parameter \SNP_BUF_DEPTH = 2
+Parameter \SNP_RESP_DEPTH = 2
+Parameter \PF_FIFO_DEPTH = 4
+Parameter \SNP_STARVE = 8
+Parameter \LOCK_TIMEOUT = 1024
+Parameter \RSV_CLR_ON_EVICT = 1
+Parameter \HAS_SNOOP = 1
+Parameter \HAS_AMO = 1
+Parameter \AXI_DATA_W = 128
+Parameter \AXI_ADDR_W = 64
+
+4.3. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_mshr_entry'.
+Parameter \ADDR_W = 64
+Parameter \LINE_BYTES = 64
+Parameter \NUM_BANKS = 4
+Parameter \SETS = 64
+Parameter \WAYS = 4
+Parameter \WRITE_DATA_WIDTH = 64
+Parameter \MEM_SIZE_BITS = 2
+Parameter \MASTER_ID_BITS = 2
+Parameter \IDX_BITS = 3
+Parameter \LSU_BUF_DEPTH = 8
+Parameter \TRK_ENTRIES = 16
+Parameter \TRK_REFILL_RSV = 2
+Parameter \MSHR_ENTRIES = 8
+Parameter \MSHR_NC_ENTRIES = 2
+Parameter \VC_SLOTS = 8
+Parameter \RESP_FIFO_DEPTH = 4
+Parameter \REFILL_SKIP = 2
+Parameter \SNP_BUF_DEPTH = 2
+Parameter \SNP_RESP_DEPTH = 2
+Parameter \PF_FIFO_DEPTH = 4
+Parameter \SNP_STARVE = 8
+Parameter \LOCK_TIMEOUT = 1024
+Parameter \RSV_CLR_ON_EVICT = 1
+Parameter \HAS_SNOOP = 1
+Parameter \HAS_AMO = 1
+Parameter \AXI_DATA_W = 128
+Parameter \AXI_ADDR_W = 64
+Generating RTLIL representation for module `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry'.
+
+4.4. Analyzing design hierarchy..
+Top module:  \fv_wrap
+Used module:     $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry
+Used module:         \l1d_resp_gen
+Parameter \IN_BYTES = 64
+Parameter \WRITE_DATA_WIDTH = 64
+Parameter \MEM_SIZE_BITS = 2
+Parameter \OFF_W = 6
+Found cached RTLIL representation for module `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen'.
+
+4.5. Analyzing design hierarchy..
+Top module:  \fv_wrap
+Used module:     $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry
+Used module:         $paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen
+
+4.6. Analyzing design hierarchy..
+Top module:  \fv_wrap
+Used module:     $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry
+Used module:         $paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen
+Removing unused module `\l1d_resp_gen'.
+Removing unused module `\l1d_mshr_entry'.
+Removed 2 unused modules.
+
+5. Executing PROC pass (convert processes to netlists).
+
+5.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+5.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$411 in module fv_wrap.
+Marked 7 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Removed a total of 0 dead cases.
+
+5.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 146 assignments to connections.
+
+5.4. Executing PROC_INIT pass (extract init attributes).
+
+5.5. Executing PROC_ARST pass (detect async resets in processes).
+
+5.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~14 debug messages>
+
+5.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$411'.
+     1/1: $0\bcnt[2:0]
+Creating decoders for process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:26$408'.
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+     1/25: $6$lookahead\buf_r$764[511:0]$793
+     2/25: $5$lookahead\buf_r$764[511:0]$777
+     3/25: $3$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:264$439[31:0]$776
+     4/25: $4$lookahead\buf_r$764[511:0]$775
+     5/25: $3$lookahead\buf_r$764[511:0]$772
+     6/25: $2$lookahead\buf_r$764[511:0]$771
+     7/25: $2$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:264$439[31:0]$770
+     8/25: $1$lookahead\buf_r$764[511:0]$769
+     9/25: $1$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:264$439[31:0]$768
+    10/25: $0\p_wdata[63:0]
+    11/25: $0\p_off[5:0]
+    12/25: $0\p_idx[2:0]
+    13/25: $0\p_mid[1:0]
+    14/25: $0\p_size[1:0]
+    15/25: $0\p_rd_wr[0:0]
+    16/25: $0\p_seat[2:0]
+    17/25: $0\beat[1:0]
+    18/25: $0\err_r[0:0]
+    19/25: $0\slot_r[2:0]
+    20/25: $0\swap_r[0:0]
+    21/25: $0\unique_r[0:0]
+    22/25: $0\shared_r[0:0]
+    23/25: $0\dirty_r[0:0]
+    24/25: $0\line_r[57:0]
+    25/25: $0\state[2:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:204$699'.
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:194$440'.
+Creating decoders for process `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v:57$421'.
+
+5.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\merged' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:204$699'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\m' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:204$699'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\b' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:194$440'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\st_mask' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:194$440'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\st_data' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:194$440'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\nbytes' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:194$440'.
+No latch inferred for signal `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.\i' from process `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v:57$421'.
+No latch inferred for signal `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.\nbytes' from process `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v:57$421'.
+No latch inferred for signal `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.\load_data' from process `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v:57$421'.
+
+5.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\fv_wrap.\bcnt' using process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$411'.
+  created $dff cell `$procdff$1194' with positive edge clock.
+Creating register for signal `\fv_wrap.\started' using process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:26$408'.
+  created $dff cell `$procdff$1195' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\state' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1196' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\line_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1197' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\buf_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1198' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\dirty_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1199' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\shared_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1200' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\unique_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1201' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\swap_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1202' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\slot_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1203' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\err_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1204' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\beat' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1205' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_seat' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1206' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_rd_wr' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1207' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_size' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1208' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_mid' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1209' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_idx' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1210' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_off' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1211' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_wdata' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1212' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:264$439' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1213' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$lookahead\buf_r$764' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+  created $dff cell `$procdff$1214' with positive edge clock.
+
+5.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+5.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$411'.
+Removing empty process `fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$411'.
+Removing empty process `fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:26$408'.
+Found and cleaned up 12 empty switches in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:226$765'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:204$699'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:194$440'.
+Removing empty process `$paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v:57$421'.
+Cleaned up 14 empty switches.
+
+5.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fv_wrap.
+Optimizing module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+<suppressed ~22 debug messages>
+Optimizing module $paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.
+
+6. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Deleting now unused module $paramod$862e2aadd06fc4759615bbfec756a05f4a46841d\l1d_resp_gen.
+<suppressed ~2 debug messages>
+
+7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+Removed 10 unused cells and 268 unused wires.
+<suppressed ~11 debug messages>
+
+8. Executing MEMORY pass.
+
+8.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+8.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+8.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+8.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+8.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+8.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+
+8.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+8.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+8.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+
+8.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+9. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+10. Executing OPT pass (performing simple optimizations).
+
+10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fv_wrap.
+<suppressed ~3 debug messages>
+
+10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fv_wrap'.
+Computing hashes of 528 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 428 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+<suppressed ~300 debug messages>
+Removed a total of 100 cells.
+
+10.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$1194 ($dff) from module fv_wrap (D = $procmux$819_Y, Q = \bcnt, rval = 3'000).
+Adding EN signal on $auto$ff.cc:337:slice$1217 ($sdff) from module fv_wrap (D = $add$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:31$414_Y, Q = \bcnt).
+Adding EN signal on $flatten\u.$procdff$1212 ($dff) from module fv_wrap (D = \allocate_store_data, Q = \u.p_wdata).
+Adding EN signal on $flatten\u.$procdff$1211 ($dff) from module fv_wrap (D = \u.allocate_byte_offset, Q = \u.p_off).
+Adding EN signal on $flatten\u.$procdff$1210 ($dff) from module fv_wrap (D = \allocate_rob_index [2:0], Q = \u.p_idx).
+Adding EN signal on $flatten\u.$procdff$1209 ($dff) from module fv_wrap (D = \allocate_master_id [1:0], Q = \u.p_mid).
+Adding EN signal on $flatten\u.$procdff$1208 ($dff) from module fv_wrap (D = \allocate_access_size, Q = \u.p_size).
+Adding EN signal on $flatten\u.$procdff$1207 ($dff) from module fv_wrap (D = \allocate_is_write, Q = \u.p_rd_wr).
+Adding EN signal on $flatten\u.$procdff$1206 ($dff) from module fv_wrap (D = \allocate_seat, Q = \u.p_seat).
+Adding SRST signal on $flatten\u.$procdff$1205 ($dff) from module fv_wrap (D = $flatten\u.$procmux$1035_Y, Q = \u.beat, rval = 2'00).
+Adding EN signal on $auto$ff.cc:337:slice$1254 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$1035_Y, Q = \u.beat).
+Adding SRST signal on $flatten\u.$procdff$1204 ($dff) from module fv_wrap (D = $flatten\u.$procmux$1052_Y, Q = \u.err_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$1264 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$1052_Y, Q = \u.err_r).
+Adding EN signal on $flatten\u.$procdff$1203 ($dff) from module fv_wrap (D = \allocate_swap_vc_slot, Q = \u.slot_r).
+Adding SRST signal on $flatten\u.$procdff$1202 ($dff) from module fv_wrap (D = $flatten\u.$procmux$1086_Y, Q = \u.swap_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$1279 ($sdff) from module fv_wrap (D = \allocate_is_swap, Q = \u.swap_r).
+Adding SRST signal on $flatten\u.$procdff$1201 ($dff) from module fv_wrap (D = $flatten\u.$procmux$1101_Y, Q = \u.unique_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$1283 ($sdff) from module fv_wrap (D = $flatten\u.$logic_and$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_mshr_entry.v:240$774_Y, Q = \u.unique_r).
+Adding SRST signal on $flatten\u.$procdff$1200 ($dff) from module fv_wrap (D = $flatten\u.$procmux$1114_Y, Q = \u.shared_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$1287 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$1114_Y, Q = \u.shared_r).
+Adding SRST signal on $flatten\u.$procdff$1199 ($dff) from module fv_wrap (D = $flatten\u.$procmux$1133_Y, Q = \u.dirty_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$1297 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$1133_Y, Q = \u.dirty_r).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [7:0], Q = \u.buf_r [7:0]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [15:8], Q = \u.buf_r [15:8]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [23:16], Q = \u.buf_r [23:16]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [31:24], Q = \u.buf_r [31:24]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [39:32], Q = \u.buf_r [39:32]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [47:40], Q = \u.buf_r [47:40]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [55:48], Q = \u.buf_r [55:48]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [63:56], Q = \u.buf_r [63:56]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [71:64], Q = \u.buf_r [71:64]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [79:72], Q = \u.buf_r [79:72]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [87:80], Q = \u.buf_r [87:80]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [95:88], Q = \u.buf_r [95:88]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [103:96], Q = \u.buf_r [103:96]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [111:104], Q = \u.buf_r [111:104]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [119:112], Q = \u.buf_r [119:112]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [127:120], Q = \u.buf_r [127:120]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [135:128], Q = \u.buf_r [135:128]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [143:136], Q = \u.buf_r [143:136]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [151:144], Q = \u.buf_r [151:144]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [159:152], Q = \u.buf_r [159:152]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [167:160], Q = \u.buf_r [167:160]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [175:168], Q = \u.buf_r [175:168]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [183:176], Q = \u.buf_r [183:176]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [191:184], Q = \u.buf_r [191:184]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [199:192], Q = \u.buf_r [199:192]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [207:200], Q = \u.buf_r [207:200]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [215:208], Q = \u.buf_r [215:208]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [223:216], Q = \u.buf_r [223:216]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [231:224], Q = \u.buf_r [231:224]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [239:232], Q = \u.buf_r [239:232]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [247:240], Q = \u.buf_r [247:240]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [255:248], Q = \u.buf_r [255:248]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [263:256], Q = \u.buf_r [263:256]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [271:264], Q = \u.buf_r [271:264]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [279:272], Q = \u.buf_r [279:272]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [287:280], Q = \u.buf_r [287:280]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [295:288], Q = \u.buf_r [295:288]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [303:296], Q = \u.buf_r [303:296]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [311:304], Q = \u.buf_r [311:304]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [319:312], Q = \u.buf_r [319:312]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [327:320], Q = \u.buf_r [327:320]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [335:328], Q = \u.buf_r [335:328]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [343:336], Q = \u.buf_r [343:336]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [351:344], Q = \u.buf_r [351:344]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [359:352], Q = \u.buf_r [359:352]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [367:360], Q = \u.buf_r [367:360]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [375:368], Q = \u.buf_r [375:368]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [383:376], Q = \u.buf_r [383:376]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [391:384], Q = \u.buf_r [391:384]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [399:392], Q = \u.buf_r [399:392]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [407:400], Q = \u.buf_r [407:400]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [415:408], Q = \u.buf_r [415:408]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [423:416], Q = \u.buf_r [423:416]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [431:424], Q = \u.buf_r [431:424]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [439:432], Q = \u.buf_r [439:432]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [447:440], Q = \u.buf_r [447:440]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [455:448], Q = \u.buf_r [455:448]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [463:456], Q = \u.buf_r [463:456]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [471:464], Q = \u.buf_r [471:464]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [479:472], Q = \u.buf_r [479:472]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [487:480], Q = \u.buf_r [487:480]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [495:488], Q = \u.buf_r [495:488]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [503:496], Q = \u.buf_r [503:496]).
+Adding EN signal on $flatten\u.$procdff$1198 ($dff) from module fv_wrap (D = $flatten\u.$2$lookahead\buf_r$764[511:0]$771 [511:504], Q = \u.buf_r [511:504]).
+Adding EN signal on $flatten\u.$procdff$1197 ($dff) from module fv_wrap (D = \allocate_line_addr, Q = \u.line_r).
+Adding SRST signal on $flatten\u.$procdff$1196 ($dff) from module fv_wrap (D = $flatten\u.$procmux$1166_Y, Q = \u.state, rval = 3'000).
+Adding EN signal on $auto$ff.cc:337:slice$2400 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$1166_Y, Q = \u.state).
+Setting constant 1-bit at position 0 on $procdff$1195 ($dff) from module fv_wrap.
+
+10.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+Removed 41 unused cells and 142 unused wires.
+<suppressed ~43 debug messages>
+
+10.5. Rerunning OPT passes. (Removed registers in this run.)
+
+10.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fv_wrap.
+<suppressed ~149 debug messages>
+
+10.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fv_wrap'.
+Computing hashes of 923 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 590 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 588 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+<suppressed ~1005 debug messages>
+Removed a total of 335 cells.
+
+10.8. Executing OPT_DFF pass (perform DFF optimizations).
+Removing never-active SRST on $auto$ff.cc:337:slice$1255 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$1265 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$1280 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$1284 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$1288 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$1298 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$2401 ($sdffe) from module fv_wrap.
+
+10.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+Removed 0 unused cells and 415 unused wires.
+<suppressed ~1 debug messages>
+
+10.10. Rerunning OPT passes. (Removed registers in this run.)
+
+10.11. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fv_wrap.
+
+10.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fv_wrap'.
+Computing hashes of 588 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 585 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+<suppressed ~9 debug messages>
+Removed a total of 3 cells.
+
+10.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+10.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+Removed 0 unused cells and 3 unused wires.
+<suppressed ~1 debug messages>
+
+10.15. Finished fast OPT passes.
+Renaming module \fv_wrap to \ref_top.
+
+11. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v' to AST representation.
+Warning: Encountered `translate_off' comment! Such legacy hot comments are supported by Yosys, but are not part of any formal language specification. Using a portable and standards-compliant construct such as `ifdef is recommended!
+Generating RTLIL representation for module `\l1d_mshr_entry'.
+Successfully finished Verilog frontend.
+
+12. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/common/l1d_resp_gen.v' to AST representation.
+Generating RTLIL representation for module `\l1d_resp_gen'.
+Successfully finished Verilog frontend.
+
+13. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v' to AST representation.
+Generating RTLIL representation for module `\fv_wrap'.
+Successfully finished Verilog frontend.
+
+14. Executing HIERARCHY pass (managing design hierarchy).
+
+14.1. Analyzing design hierarchy..
+Top module:  \fv_wrap
+Used module:     \l1d_mshr_entry
+Parameter \ADDR_W = 64
+Parameter \LINE_BYTES = 64
+Parameter \NUM_BANKS = 4
+Parameter \SETS = 64
+Parameter \WAYS = 4
+Parameter \WRITE_DATA_WIDTH = 64
+Parameter \MEM_SIZE_BITS = 2
+Parameter \MASTER_ID_BITS = 2
+Parameter \IDX_BITS = 3
+Parameter \LSU_BUF_DEPTH = 8
+Parameter \TRK_ENTRIES = 16
+Parameter \TRK_REFILL_RSV = 2
+Parameter \MSHR_ENTRIES = 8
+Parameter \MSHR_NC_ENTRIES = 2
+Parameter \VC_SLOTS = 8
+Parameter \RESP_FIFO_DEPTH = 4
+Parameter \REFILL_SKIP = 2
+Parameter \SNP_BUF_DEPTH = 2
+Parameter \SNP_RESP_DEPTH = 2
+Parameter \PF_FIFO_DEPTH = 4
+Parameter \SNP_STARVE = 8
+Parameter \LOCK_TIMEOUT = 1024
+Parameter \RSV_CLR_ON_EVICT = 1
+Parameter \HAS_SNOOP = 1
+Parameter \HAS_AMO = 1
+Parameter \AXI_DATA_W = 128
+Parameter \AXI_ADDR_W = 64
+
+14.2. Executing AST frontend in derive mode using pre-parsed AST for module `\l1d_mshr_entry'.
+Parameter \ADDR_W = 64
+Parameter \LINE_BYTES = 64
+Parameter \NUM_BANKS = 4
+Parameter \SETS = 64
+Parameter \WAYS = 4
+Parameter \WRITE_DATA_WIDTH = 64
+Parameter \MEM_SIZE_BITS = 2
+Parameter \MASTER_ID_BITS = 2
+Parameter \IDX_BITS = 3
+Parameter \LSU_BUF_DEPTH = 8
+Parameter \TRK_ENTRIES = 16
+Parameter \TRK_REFILL_RSV = 2
+Parameter \MSHR_ENTRIES = 8
+Parameter \MSHR_NC_ENTRIES = 2
+Parameter \VC_SLOTS = 8
+Parameter \RESP_FIFO_DEPTH = 4
+Parameter \REFILL_SKIP = 2
+Parameter \SNP_BUF_DEPTH = 2
+Parameter \SNP_RESP_DEPTH = 2
+Parameter \PF_FIFO_DEPTH = 4
+Parameter \SNP_STARVE = 8
+Parameter \LOCK_TIMEOUT = 1024
+Parameter \RSV_CLR_ON_EVICT = 1
+Parameter \HAS_SNOOP = 1
+Parameter \HAS_AMO = 1
+Parameter \AXI_DATA_W = 128
+Parameter \AXI_ADDR_W = 64
+Generating RTLIL representation for module `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry'.
+
+14.3. Analyzing design hierarchy..
+Top module:  \fv_wrap
+Used module:     $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry
+
+14.4. Analyzing design hierarchy..
+Top module:  \fv_wrap
+Used module:     $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry
+Removing unused module `\l1d_resp_gen'.
+Removing unused module `\l1d_mshr_entry'.
+Removed 2 unused modules.
+
+15. Executing PROC pass (convert processes to netlists).
+
+15.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 128 empty switches in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:286$7055'.
+Found and cleaned up 512 empty switches in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:243$5052'.
+Cleaned up 640 empty switches.
+
+15.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 2 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:439$7415 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Marked 2 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:429$7408 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:419$7407 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:407$7406 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:369$7368 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Marked 4 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356 in module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$4942 in module fv_wrap.
+Removed a total of 0 dead cases.
+
+15.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 13 redundant assignments.
+Promoted 1371 assignments to connections.
+
+15.4. Executing PROC_INIT pass (extract init attributes).
+
+15.5. Executing PROC_ARST pass (detect async resets in processes).
+
+15.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~29 debug messages>
+
+15.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:451$7420'.
+     1/1: $0\ld_beat_r[127:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:439$7415'.
+     1/6: $0\buf_r[511:0] [511:384]
+     2/6: $0\buf_r[511:0] [255:128]
+     3/6: $0\buf_r[511:0] [127:0]
+     4/6: $0\buf_r[511:0] [383:256]
+     5/6: $1\bj[31:0]
+     6/6: $2\bj[31:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:429$7408'.
+     1/1: $0\beat_oh[3:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:419$7407'.
+     1/3: $0\tk_c_q[0:0]
+     2/3: $0\rs_c_q[0:0]
+     3/3: $0\ar_c_q[0:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:407$7406'.
+     1/3: $0\tk_arb_q[0:0]
+     2/3: $0\rs_arb_q[0:0]
+     3/3: $0\ar_arb_q[0:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+     1/6: $0\inst_q[0:0]
+     2/6: $0\mrg_q[0:0]
+     3/6: $0\dat_q[0:0]
+     4/6: $0\tk_q[0:0]
+     5/6: $0\rs_q[0:0]
+     6/6: $0\ar_q[0:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:369$7368'.
+     1/1: $0\busy_r[0:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+     1/17: $0\state[2:0]
+     2/17: $0\line_r[57:0]
+     3/17: $0\dirty_r[0:0]
+     4/17: $0\shared_r[0:0]
+     5/17: $0\unique_r[0:0]
+     6/17: $0\swap_r[0:0]
+     7/17: $0\slot_r[2:0]
+     8/17: $0\err_r[0:0]
+     9/17: $0\beat[1:0]
+    10/17: $0\p_seat[2:0]
+    11/17: $0\p_rd_wr[0:0]
+    12/17: $0\p_size[1:0]
+    13/17: $0\p_mid[1:0]
+    14/17: $0\p_idx[2:0]
+    15/17: $0\p_off[5:0]
+    16/17: $0\p_wdata[63:0]
+    17/17: $0\ld_r[63:0]
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:286$7055'.
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:273$6990'.
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:254$6989'.
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:243$5052'.
+Creating decoders for process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+Creating decoders for process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$4942'.
+     1/1: $0\bcnt[2:0]
+Creating decoders for process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:26$4939'.
+
+15.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\lj' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:286$7055'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\lk' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:286$7055'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\load_data' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:286$7055'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\m' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:273$6990'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\merged' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:273$6990'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\b' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:243$5052'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\k' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:243$5052'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\data_n' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:243$5052'.
+No latch inferred for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\mask_n' from process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:243$5052'.
+
+15.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\ld_beat_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:451$7420'.
+  created $dff cell `$procdff$7794' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\bj' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:439$7415'.
+  created $dff cell `$procdff$7795' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\buf_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:439$7415'.
+  created $dff cell `$procdff$7796' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\beat_oh' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:429$7408'.
+  created $dff cell `$procdff$7797' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\tk_c_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:419$7407'.
+  created $dff cell `$procdff$7798' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\rs_c_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:419$7407'.
+  created $dff cell `$procdff$7799' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\ar_c_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:419$7407'.
+  created $dff cell `$procdff$7800' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\tk_arb_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:407$7406'.
+  created $dff cell `$procdff$7801' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\rs_arb_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:407$7406'.
+  created $dff cell `$procdff$7802' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\ar_arb_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:407$7406'.
+  created $dff cell `$procdff$7803' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\inst_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+  created $dff cell `$procdff$7804' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\tk_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+  created $dff cell `$procdff$7805' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\rs_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+  created $dff cell `$procdff$7806' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\mrg_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+  created $dff cell `$procdff$7807' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\dat_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+  created $dff cell `$procdff$7808' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\ar_q' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+  created $dff cell `$procdff$7809' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\busy_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:369$7368'.
+  created $dff cell `$procdff$7810' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\ld_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7811' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_wdata' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7812' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_off' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7813' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_idx' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7814' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_mid' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7815' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_size' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7816' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_rd_wr' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7817' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\p_seat' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7818' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\beat' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7819' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\err_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7820' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\slot_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7821' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\swap_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7822' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\unique_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7823' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\shared_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7824' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\dirty_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7825' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\line_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7826' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\state' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+  created $dff cell `$procdff$7827' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\st_data' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:254$6989'.
+  created $dff cell `$procdff$7828' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\st_mask' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:254$6989'.
+  created $dff cell `$procdff$7829' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\a' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+  created $dff cell `$procdff$7830' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\k' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+  created $dff cell `$procdff$7831' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\szk_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+  created $dff cell `$procdff$7832' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\off_oh_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+  created $dff cell `$procdff$7833' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\off_lo_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+  created $dff cell `$procdff$7834' with positive edge clock.
+Creating register for signal `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.\off_hi_r' using process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+  created $dff cell `$procdff$7835' with positive edge clock.
+Creating register for signal `\fv_wrap.\bcnt' using process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$4942'.
+  created $dff cell `$procdff$7836' with positive edge clock.
+Creating register for signal `\fv_wrap.\started' using process `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:26$4939'.
+  created $dff cell `$procdff$7837' with positive edge clock.
+
+15.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+15.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:451$7420'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:451$7420'.
+Found and cleaned up 7 empty switches in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:439$7415'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:439$7415'.
+Found and cleaned up 3 empty switches in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:429$7408'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:429$7408'.
+Found and cleaned up 1 empty switch in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:419$7407'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:419$7407'.
+Found and cleaned up 1 empty switch in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:407$7406'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:407$7406'.
+Found and cleaned up 1 empty switch in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:395$7395'.
+Found and cleaned up 1 empty switch in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:369$7368'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:369$7368'.
+Found and cleaned up 12 empty switches in `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:297$7356'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:286$7055'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:273$6990'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:254$6989'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:243$5052'.
+Removing empty process `$paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:232$4951'.
+Found and cleaned up 2 empty switches in `\fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$4942'.
+Removing empty process `fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:29$4942'.
+Removing empty process `fv_wrap.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:26$4939'.
+Cleaned up 29 empty switches.
+
+15.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+<suppressed ~165 debug messages>
+Optimizing module fv_wrap.
+
+16. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod$fae45dc4b06d9fd5383bac0e10f2749c5c70d801\l1d_mshr_entry.
+<suppressed ~1 debug messages>
+
+17. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+Removed 15 unused cells and 1664 unused wires.
+<suppressed ~19 debug messages>
+
+18. Executing MEMORY pass.
+
+18.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+18.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+18.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+18.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+18.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+18.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+
+18.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+18.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+18.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+
+18.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+19. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+20. Executing OPT pass (performing simple optimizations).
+
+20.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fv_wrap.
+
+20.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fv_wrap'.
+Computing hashes of 2503 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 2464 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 2462 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+<suppressed ~123 debug messages>
+Removed a total of 41 cells.
+
+20.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$7836 ($dff) from module fv_wrap (D = $procmux$7789_Y, Q = \bcnt, rval = 3'000).
+Adding EN signal on $auto$ff.cc:337:slice$7839 ($sdff) from module fv_wrap (D = $add$/__w/mshr-reservation-timing/mshr-reservation-timing/formal/fv_wrap_mshr_entry.v:31$4945_Y, Q = \bcnt).
+Adding EN signal on $flatten\u.$procdff$7794 ($dff) from module fv_wrap (D = \axi_read_beat_data, Q = \u.ld_beat_r).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [7:0], Q = \u.buf_r [7:0]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [15:8], Q = \u.buf_r [15:8]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [23:16], Q = \u.buf_r [23:16]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [31:24], Q = \u.buf_r [31:24]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [39:32], Q = \u.buf_r [39:32]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [47:40], Q = \u.buf_r [47:40]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [55:48], Q = \u.buf_r [55:48]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [63:56], Q = \u.buf_r [63:56]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [71:64], Q = \u.buf_r [71:64]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [79:72], Q = \u.buf_r [79:72]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [87:80], Q = \u.buf_r [87:80]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [95:88], Q = \u.buf_r [95:88]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [103:96], Q = \u.buf_r [103:96]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [111:104], Q = \u.buf_r [111:104]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [119:112], Q = \u.buf_r [119:112]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [127:120], Q = \u.buf_r [127:120]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [135:128], Q = \u.buf_r [135:128]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [143:136], Q = \u.buf_r [143:136]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [151:144], Q = \u.buf_r [151:144]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [159:152], Q = \u.buf_r [159:152]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [167:160], Q = \u.buf_r [167:160]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [175:168], Q = \u.buf_r [175:168]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [183:176], Q = \u.buf_r [183:176]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [191:184], Q = \u.buf_r [191:184]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [199:192], Q = \u.buf_r [199:192]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [207:200], Q = \u.buf_r [207:200]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [215:208], Q = \u.buf_r [215:208]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [223:216], Q = \u.buf_r [223:216]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [231:224], Q = \u.buf_r [231:224]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [239:232], Q = \u.buf_r [239:232]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [247:240], Q = \u.buf_r [247:240]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [255:248], Q = \u.buf_r [255:248]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [263:256], Q = \u.buf_r [263:256]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [271:264], Q = \u.buf_r [271:264]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [279:272], Q = \u.buf_r [279:272]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [287:280], Q = \u.buf_r [287:280]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [295:288], Q = \u.buf_r [295:288]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [303:296], Q = \u.buf_r [303:296]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [311:304], Q = \u.buf_r [311:304]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [319:312], Q = \u.buf_r [319:312]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [327:320], Q = \u.buf_r [327:320]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [335:328], Q = \u.buf_r [335:328]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [343:336], Q = \u.buf_r [343:336]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [351:344], Q = \u.buf_r [351:344]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [359:352], Q = \u.buf_r [359:352]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [367:360], Q = \u.buf_r [367:360]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [375:368], Q = \u.buf_r [375:368]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [383:376], Q = \u.buf_r [383:376]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [391:384], Q = \u.buf_r [391:384]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [399:392], Q = \u.buf_r [399:392]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [407:400], Q = \u.buf_r [407:400]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [415:408], Q = \u.buf_r [415:408]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [423:416], Q = \u.buf_r [423:416]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [431:424], Q = \u.buf_r [431:424]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [439:432], Q = \u.buf_r [439:432]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [447:440], Q = \u.buf_r [447:440]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [455:448], Q = \u.buf_r [455:448]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [463:456], Q = \u.buf_r [463:456]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [471:464], Q = \u.buf_r [471:464]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [479:472], Q = \u.buf_r [479:472]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [487:480], Q = \u.buf_r [487:480]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [495:488], Q = \u.buf_r [495:488]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [503:496], Q = \u.buf_r [503:496]).
+Adding EN signal on $flatten\u.$procdff$7796 ($dff) from module fv_wrap (D = $flatten\u.$0\buf_r[511:0] [511:504], Q = \u.buf_r [511:504]).
+Adding SRST signal on $flatten\u.$procdff$7797 ($dff) from module fv_wrap (D = $flatten\u.$procmux$7488_Y, Q = \u.beat_oh, rval = 4'0001).
+Adding EN signal on $auto$ff.cc:337:slice$8418 ($sdff) from module fv_wrap (D = $flatten\u.$or$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:432$7414_Y, Q = \u.beat_oh).
+Adding SRST signal on $flatten\u.$procdff$7804 ($dff) from module fv_wrap (D = $flatten\u.$logic_or$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:404$7405_Y, Q = \u.inst_q, rval = 1'0).
+Adding SRST signal on $flatten\u.$procdff$7807 ($dff) from module fv_wrap (D = \u.last_beat, Q = \u.mrg_q, rval = 1'0).
+Adding SRST signal on $flatten\u.$procdff$7808 ($dff) from module fv_wrap (D = $flatten\u.$logic_or$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:402$7399_Y, Q = \u.dat_q, rval = 1'0).
+Adding SRST signal on $flatten\u.$procdff$7810 ($dff) from module fv_wrap (D = $flatten\u.$ternary$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:371$7370_Y, Q = \u.busy_r, rval = 1'0).
+Adding EN signal on $flatten\u.$procdff$7811 ($dff) from module fv_wrap (D = $flatten\u.$ternary$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:351$7366_Y, Q = \u.ld_r).
+Adding SRST signal on $auto$ff.cc:337:slice$8426 ($dffe) from module fv_wrap (D = \u.load_data, Q = \u.ld_r, rval = 64'0000000000000000000000000000000000000000000000000000000000000000).
+Adding EN signal on $flatten\u.$procdff$7812 ($dff) from module fv_wrap (D = \allocate_store_data, Q = \u.p_wdata).
+Adding EN signal on $flatten\u.$procdff$7813 ($dff) from module fv_wrap (D = \u.allocate_byte_offset, Q = \u.p_off).
+Adding EN signal on $flatten\u.$procdff$7814 ($dff) from module fv_wrap (D = \allocate_rob_index [2:0], Q = \u.p_idx).
+Adding EN signal on $flatten\u.$procdff$7815 ($dff) from module fv_wrap (D = \allocate_master_id [1:0], Q = \u.p_mid).
+Adding EN signal on $flatten\u.$procdff$7816 ($dff) from module fv_wrap (D = \allocate_access_size, Q = \u.p_size).
+Adding EN signal on $flatten\u.$procdff$7817 ($dff) from module fv_wrap (D = \allocate_is_write, Q = \u.p_rd_wr).
+Adding EN signal on $flatten\u.$procdff$7818 ($dff) from module fv_wrap (D = \allocate_seat, Q = \u.p_seat).
+Adding SRST signal on $flatten\u.$procdff$7820 ($dff) from module fv_wrap (D = $flatten\u.$procmux$7663_Y, Q = \u.err_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$8467 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$7663_Y, Q = \u.err_r).
+Adding EN signal on $flatten\u.$procdff$7821 ($dff) from module fv_wrap (D = \allocate_swap_vc_slot, Q = \u.slot_r).
+Adding SRST signal on $flatten\u.$procdff$7822 ($dff) from module fv_wrap (D = $flatten\u.$procmux$7639_Y, Q = \u.swap_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$8482 ($sdff) from module fv_wrap (D = \allocate_is_swap, Q = \u.swap_r).
+Adding SRST signal on $flatten\u.$procdff$7823 ($dff) from module fv_wrap (D = $flatten\u.$procmux$7625_Y, Q = \u.unique_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$8486 ($sdff) from module fv_wrap (D = $flatten\u.$logic_and$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_mshr_entry.v:320$7358_Y, Q = \u.unique_r).
+Adding SRST signal on $flatten\u.$procdff$7824 ($dff) from module fv_wrap (D = $flatten\u.$procmux$7605_Y, Q = \u.shared_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$8490 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$7605_Y, Q = \u.shared_r).
+Adding SRST signal on $flatten\u.$procdff$7825 ($dff) from module fv_wrap (D = $flatten\u.$procmux$7587_Y, Q = \u.dirty_r, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$8500 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$7587_Y, Q = \u.dirty_r).
+Adding EN signal on $flatten\u.$procdff$7826 ($dff) from module fv_wrap (D = \allocate_line_addr, Q = \u.line_r).
+Adding SRST signal on $flatten\u.$procdff$7827 ($dff) from module fv_wrap (D = $flatten\u.$procmux$7541_Y, Q = \u.state, rval = 3'000).
+Adding EN signal on $auto$ff.cc:337:slice$8515 ($sdff) from module fv_wrap (D = $flatten\u.$procmux$7541_Y, Q = \u.state).
+Setting constant 1-bit at position 0 on $procdff$7837 ($dff) from module fv_wrap.
+
+20.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+Removed 47 unused cells and 88 unused wires.
+<suppressed ~48 debug messages>
+
+20.5. Rerunning OPT passes. (Removed registers in this run.)
+
+20.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fv_wrap.
+<suppressed ~24 debug messages>
+
+20.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fv_wrap'.
+Computing hashes of 2755 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 2620 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Computing hashes of 2619 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+<suppressed ~408 debug messages>
+Removed a total of 136 cells.
+
+20.8. Executing OPT_DFF pass (perform DFF optimizations).
+Removing never-active SRST on $auto$ff.cc:337:slice$8422 ($sdff) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8423 ($sdff) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8424 ($sdff) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8425 ($sdff) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8468 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8483 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8487 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8491 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8501 ($sdffe) from module fv_wrap.
+Removing never-active SRST on $auto$ff.cc:337:slice$8516 ($sdffe) from module fv_wrap.
+
+20.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+Removed 0 unused cells and 156 unused wires.
+<suppressed ~1 debug messages>
+
+20.10. Rerunning OPT passes. (Removed registers in this run.)
+
+20.11. Executing OPT_EXPR pass (perform const folding).
+Optimizing module fv_wrap.
+
+20.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\fv_wrap'.
+Computing hashes of 2619 cells of `\fv_wrap'.
+Finding duplicate cells in `\fv_wrap'.
+Removed a total of 0 cells.
+
+20.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+20.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \fv_wrap..
+
+20.15. Finished fast OPT passes.
+Renaming module \fv_wrap to \opt_top.
+
+21. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "ref_top" and gate cell "opt_top".
+
+21.1. Executing FLATTEN pass (flatten design).
+<suppressed ~2 debug messages>
+
+21.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+22. Executing HIERARCHY pass (managing design hierarchy).
+
+22.1. Analyzing design hierarchy..
+Top module:  \miter
+
+22.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `\opt_top'.
+Removing unused module `\ref_top'.
+Removed 2 unused modules.
+
+23. Executing OPT pass (performing simple optimizations).
+
+23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+Computing hashes of 3222 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3212 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3206 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3205 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3204 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 3203 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+<suppressed ~57 debug messages>
+Removed a total of 19 cells.
+
+23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \miter..
+Removed 0 unused cells and 18 unused wires.
+<suppressed ~1 debug messages>
+
+23.5. Finished fast OPT passes.
+
+24. Executing SAT pass (solving SAT problems in the circuit).
+Using SAT solver `minisat`.
+
+Setting up time step 1:
+Import set-constraint for this timestep: \in_rst = 1'1
+Final constraint equation: \in_rst = 1'1
+Imported 3203 cells to SAT database.
+Final init constraint equation: { \gold.u.buf_r [343:336] \gold.u.buf_r [223:216] \gold.u.buf_r [103:96] \gold.u.buf_r [295:288] \gold.u.buf_r [95:88] \gold.u.buf_r [215:208] \gold.u.buf_r [471:464] \gold.u.buf_r [87:80] \gold.u.buf_r [431:424] \gold.u.buf_r [407:392] \gold.u.buf_r [287:280] \gold.u.buf_r [207:200] \gold.u.buf_r [79:72] \gold.u.buf_r [367:360] \gold.u.buf_r [335:328] \gold.u.buf_r [71:64] \gold.u.buf_r [199:192] \gold.u.buf_r [63:56] \gold.u.buf_r [279:272] \gold.u.buf_r [55:48] \gold.u.buf_r [191:184] \gold.u.buf_r [47:40] \gold.u.buf_r [327:320] \gold.u.buf_r [183:176] \gold.u.buf_r [39:32] \gold.u.buf_r [271:264] \gold.u.buf_r [383:376] \gold.u.buf_r [31:24] \gold.u.buf_r [175:168] \gold.u.buf_r [359:352] \gold.u.buf_r [23:16] \gold.u.buf_r [263:256] \gold.u.buf_r [167:160] \gold.u.buf_r [15:8] \gold.u.buf_r [423:416] \gold.u.buf_r [319:312] \gold.u.buf_r [7:0] \gold.u.buf_r [159:152] \gold.u.buf_r [439:432] \gold.u.state \gold.u.buf_r [255:248] \gold.u.buf_r [151:144] \gold.u.buf_r [351:344] \gold.u.buf_r [311:304] \gold.u.buf_r [247:240] \gold.u.buf_r [143:136] \gold.u.buf_r [415:408] \gate.u.buf_r [255:248] \gold.u.buf_r [391:384] \gold.u.buf_r [135:128] \gold.u.buf_r [487:480] \gold.u.buf_r [375:368] \gold.u.buf_r [239:232] \gold.u.buf_r [495:488] \gold.u.buf_r [127:120] \gold.u.buf_r [463:456] \gold.u.buf_r [503:496] \gold.u.buf_r [303:296] \gold.u.buf_r [455:448] \gold.u.buf_r [119:112] \gold.u.buf_r [479:472] \gate.bcnt \gold.u.buf_r [231:224] \gold.u.dirty_r \gold.u.line_r \gold.u.buf_r [511:504] \gold.u.shared_r \gold.u.unique_r \gold.u.swap_r \gold.u.err_r \gold.u.slot_r \gold.u.beat \gold.u.buf_r [111:104] \gold.u.p_seat \gold.u.p_rd_wr \gold.u.p_size \gold.u.p_mid \gold.u.p_idx \gold.u.p_off \gold.u.p_wdata \gold.bcnt \gold.u.buf_r [447:440] \gate.u.state \gate.u.buf_r [247:240] \gate.u.buf_r [383:376] \gate.u.buf_r [239:216] \gate.u.buf_r [375:368] \gate.u.buf_r [215:200] \gate.u.buf_r [367:360] \gate.u.buf_r [199:192] \gate.u.buf_r [431:424] \gate.u.buf_r [191:176] \gate.u.buf_r [359:352] \gate.u.buf_r [175:168] \gate.u.buf_r [455:448] \gate.u.buf_r [167:160] \gate.u.buf_r [351:344] \gate.u.buf_r [159:144] \gate.u.buf_r [423:416] \gate.u.buf_r [143:136] \gate.u.buf_r [343:336] \gate.u.buf_r [135:112] \gate.u.buf_r [335:328] \gate.u.buf_r [111:104] \gate.u.buf_r [463:456] \gate.u.buf_r [103:96] \gate.u.buf_r [327:320] \gate.u.buf_r [95:88] \gate.u.buf_r [415:408] \gate.u.buf_r [87:72] \gate.u.buf_r [319:312] \gate.u.buf_r [71:64] \gate.u.buf_r [447:440] \gate.u.buf_r [63:56] \gate.u.buf_r [311:304] \gate.u.buf_r [55:40] \gate.u.buf_r [407:400] \gate.u.buf_r [39:32] \gate.u.buf_r [303:296] \gate.u.buf_r [31:16] \gate.u.buf_r [295:288] \gate.u.buf_r [15:0] \gate.u.off_hi_r \gate.u.off_lo_r \gate.u.off_oh_r \gate.u.szk_r \gate.u.st_mask \gate.u.st_data \gate.u.dirty_r \gate.u.line_r \gate.u.shared_r \gate.u.unique_r \gate.u.swap_r \gate.u.err_r \gate.u.slot_r \gate.u.busy_r \gate.u.p_seat \gate.u.p_rd_wr \gate.u.p_size \gate.u.p_mid \gate.u.p_idx \gate.u.p_off \gate.u.p_wdata \gate.u.ld_r \gate.u.dat_q \gate.u.ar_q \gate.u.mrg_q \gate.u.inst_q \gate.u.rs_q \gate.u.tk_q \gate.u.ar_arb_q \gate.u.rs_arb_q \gate.u.tk_arb_q \gate.u.ar_c_q \gate.u.rs_c_q \gate.u.tk_c_q \gate.u.beat_oh \gate.u.buf_r [511:504] \gate.u.ld_beat_r \gate.u.buf_r [503:496] \gate.u.buf_r [287:280] \gate.u.buf_r [399:392] \gate.u.buf_r [479:472] \gate.u.buf_r [487:480] \gate.u.buf_r [279:264] \gate.u.buf_r [495:488] \gate.u.buf_r [391:384] \gate.u.buf_r [263:256] \gate.u.buf_r [471:464] \gate.u.buf_r [439:432] } = 2209'0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+Setting up time step 2:
+Final constraint equation: { } = { }
+Imported 3203 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 3:
+Final constraint equation: { } = { }
+Imported 3203 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 4:
+Final constraint equation: { } = { }
+Imported 3203 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 5:
+Final constraint equation: { } = { }
+Imported 3203 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 6:
+Final constraint equation: { } = { }
+Imported 3203 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+Import show expression: \in_clk
+Import show expression: \in_rst
+Import show expression: \in_allocate_valid
+Import show expression: \in_allocate_line_addr
+Import show expression: \in_allocate_is_swap
+Import show expression: \in_allocate_swap_line_data
+Import show expression: \in_allocate_swap_dirty
+Import show expression: \in_allocate_swap_shared
+Import show expression: \in_allocate_swap_vc_slot
+Import show expression: \in_allocate_unique_read
+Import show expression: \in_allocate_seat
+Import show expression: \in_allocate_is_write
+Import show expression: \in_allocate_access_size
+Import show expression: \in_allocate_master_id
+Import show expression: \in_allocate_rob_index
+Import show expression: \in_allocate_byte_offset_raw
+Import show expression: \in_allocate_store_data
+Import show expression: \in_axi_read_addr_accepted
+Import show expression: \in_axi_read_beat_valid
+Import show expression: \in_axi_read_beat_data
+Import show expression: \in_axi_read_beat_last
+Import show expression: \in_axi_read_beat_error
+Import show expression: \in_axi_read_beat_shared
+Import show expression: \in_response_taken
+Import show expression: \in_refill_token_granted
+Import show expression: \in_refill_token_held_by_s1
+Import show expression: \in_install_done_by_s2
+Import show expression: \trigger
+Import show expression: \gate_entry_busy
+Import show expression: \gold_entry_busy
+Import show expression: \gate_entry_line_addr
+Import show expression: \gold_entry_line_addr
+Import show expression: \gate_axi_read_addr_request
+Import show expression: \gold_axi_read_addr_request
+Import show expression: \gate_axi_read_is_unique
+Import show expression: \gold_axi_read_is_unique
+Import show expression: \gate_response_request
+Import show expression: \gold_response_request
+Import show expression: \gate_response_packet_v
+Import show expression: \gold_response_packet_v
+Import show expression: \gate_response_seat
+Import show expression: \gold_response_seat
+Import show expression: \gate_refill_token_request
+Import show expression: \gold_refill_token_request
+Import show expression: \gate_line_buffer_data_v
+Import show expression: \gold_line_buffer_data_v
+Import show expression: \gate_install_state
+Import show expression: \gold_install_state
+Import show expression: \gate_line_buffer_has_data
+Import show expression: \gold_line_buffer_has_data
+Import show expression: \gate_entry_is_swap
+Import show expression: \gold_entry_is_swap
+Import show expression: \gate_entry_swap_vc_slot_v
+Import show expression: \gold_entry_swap_vc_slot_v
+Import show expression: \gate_entry_freed_pulse
+Import show expression: \gold_entry_freed_pulse
+
+Solving problem with 1066513 variables and 2879619 clauses..
+SAT proof finished - no model found: SUCCESS!
+
+                  /$$$$$$      /$$$$$$$$     /$$$$$$$    
+                 /$$__  $$    | $$_____/    | $$__  $$   
+                | $$  \ $$    | $$          | $$  \ $$   
+                | $$  | $$    | $$$$$       | $$  | $$   
+                | $$  | $$    | $$__/       | $$  | $$   
+                | $$/$$ $$    | $$          | $$  | $$   
+                |  $$$$$$/ /$$| $$$$$$$$ /$$| $$$$$$$//$$
+                 \____ $$$|__/|________/|__/|_______/|__/
+                       \__/                              
+
+Warnings: 1 unique messages, 1 total
+End of script. Logfile hash: 655662aa33, time: 33.18s, user: 32.66s, system: 0.56s, MEM: 900.01 MB peak
+Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+Time spent: 95% 1x sat (31 sec), 1% 13x opt_clean (0 sec), ...
