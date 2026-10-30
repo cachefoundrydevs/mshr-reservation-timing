@@ -1,17 +1,92 @@
-# Results of run 41053629617, commit 948923cabdd02a6245cfebd449f0c4272c37d97d
+# Results of run 41054567569, commit d136d8c87995a93cf3b8f54842c900c31e1c4ab4
 
-(Versions: opt ref )
+(Versions: R-1 opt ref )
 
 ## Comparison (critical delay in ps, ASAP7, ideal clock, no wires; smaller is faster)
 
 | version | lint | lockstep | formal | mshr 250 | mshr 250 sized | mshr 200 | entry 250 | entry 250 sized | entry 200 | rsv 250 | rsv 250 sized | rsv 200 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
+| R-1 | iverilog | 12/12 | EQUIVALENT | 278.0 | 271.3 | 275.5 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
 | opt | iverilog | 12/12 | EQUIVALENT | 278.0 | 271.3 | 275.5 | 230.5 | 230.5 | 228.0 | 252.3 | 248.2 | 249.8 |
 | ref |  |  |  | 542.3 | 463.0 | 539.8 | 476.6 | 418.5 | 474.1 | 258.0 | 251.5 | 255.5 |
 
 A version may replace rtl/opt only if lint passes, lockstep is 12/12, formal is EQUIVALENT, and it is faster (see PROMPT_ITERATION.md).
 
 ## Details per version and part (function checks, timing, failing groups at 200 ps)
+
+## Version `R-1`: function checks
+
+| check | result |
+|---|---|
+| lint | iverilog compile only (no verilator) |
+| lockstep against the original (12 runs) | 12 passed, 0 failed |
+| formal equivalence | FORMAL: ALL EQUIVALENT (arb_rr arb_rr3 mshr_entry rsv rsv_to) |
+
+## Version `R-1`: timing of `l1d_mshr` (ASAP7, ideal clock, no wires)
+
+| check | result |
+|---|---|
+| 250 ps (4 GHz), synthesis only | 278.0 ps (slack -28.0) |
+| 250 ps after gate sizing | 271.3 ps (slack -21.3) |
+| 200 ps (5 GHz), synthesis only | 275.5 ps (slack -75.5) |
+| area | 11644 um2 |
+
+Failing groups at 200 ps (worst first):
+
+```
+    58 endpoints  worst    -75.5 ps  axi_read_req_line_addr[]
+    58 endpoints  worst    -75.4 ps  refill_token_line_addr[]
+     8 endpoints  worst    -71.6 ps  g_entry[].u_entry.tk_arb_q$_DFF_P_/D
+     8 endpoints  worst    -71.6 ps  g_entry[].u_entry.tk_c_q$_DFF_P_/D
+     8 endpoints  worst    -71.6 ps  g_entry[].u_entry.tk_q$_DFF_P_/D
+     8 endpoints  worst    -71.4 ps  g_entry[].u_entry.busy_r$_SDFF_PP0_/D
+    72 endpoints  worst    -67.8 ps  response_packet[]
+     3 endpoints  worst    -67.7 ps  response_seat[]
+     1 endpoints  worst    -64.6 ps  axi_read_req_unique
+     8 endpoints  worst    -63.8 ps  entry_freed_pulses[]
+     1 endpoints  worst    -59.9 ps  lookup_entry_has_data
+    47 endpoints  worst    -59.0 ps  g_entry[].u_entry.state[]$_DFF_P_/D
+     7 endpoints  worst    -55.3 ps  g_entry[].u_entry.inst_q$_SDFF_PP0_/D
+   457 endpoints  worst    -55.2 ps  g_entry[].u_entry.line_r[]$_DFFE_PP_/D
+```
+
+## Version `R-1`: timing of `l1d_mshr_entry` (ASAP7, ideal clock, no wires)
+
+| check | result |
+|---|---|
+| 250 ps (4 GHz), synthesis only | 230.5 ps (slack 19.5) |
+| 250 ps after gate sizing | 230.5 ps (slack 19.5) |
+| 200 ps (5 GHz), synthesis only | 228.0 ps (slack -28.0) |
+| area | 1407 um2 |
+
+Failing groups at 200 ps (worst first):
+
+```
+   512 endpoints  worst    -28.0 ps  buf_r[]$_DFFE_PP_/D
+   120 endpoints  worst     -6.0 ps  ld_beat_r[]$_DFFE_PP_/D
+
+```
+
+## Version `R-1`: timing of `l1d_reservation_unit` (ASAP7, ideal clock, no wires)
+
+| check | result |
+|---|---|
+| 250 ps (4 GHz), synthesis only | 242.9 ps (slack 7.1) |
+| 250 ps after gate sizing | 242.9 ps (slack 7.1) |
+| 200 ps (5 GHz), synthesis only | 240.4 ps (slack -40.4) |
+| area | 142 um2 |
+
+Failing groups at 200 ps (worst first):
+
+```
+     1 endpoints  worst    -40.4 ps  amo_lock_snoop_hold$_SDFFE_PP0P_/D
+     1 endpoints  worst    -22.3 ps  reservation_valid$_SDFF_PP0_/D
+     1 endpoints  worst    -18.4 ps  amo_lock_valid$_SDFFE_PP0P_/D
+     1 endpoints  worst    -16.3 ps  sc_reservation_matches
+     1 endpoints  worst     -4.4 ps  to_cnt[]$_SDFFE_PP0P_/D
+     1 endpoints  worst     -3.1 ps  amo_lock_timeout_pulse$_SDFF_PP0_/D
+
+```
 
 ## Version `opt`: function checks
 
