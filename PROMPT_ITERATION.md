@@ -24,8 +24,8 @@ The repository is https://github.com/cachefoundrydevs/mshr-reservation-timing (p
 `scripts/run_all.sh`, `.github/workflows/mshr_rsv.yml`.
 
 If you cannot reach `api.github.com`, do not try: after every Actions run the workflow writes its results to the git branch `results`,
-which you can read with plain git (`git fetch origin results`, then `git show origin/results:latest/comparison.md`; see the end of this
-prompt). Otherwise I paste the results to you.
+which you can read with plain git (`git fetch origin results`, then `git show origin/results:latest/comparison.md`; `latest/RUN.txt` names the
+run and commit, older runs are in `runs/<run id>_<commit>/`). Otherwise I paste the results to you.
 
 ## 1. Your role and the goal
 
