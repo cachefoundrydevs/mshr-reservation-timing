@@ -219,3 +219,22 @@ rule, then give iteration 1. If the first Actions run of this repository has not
   log, and paste them to the assistant; it can only fix its own files, not GitHub, so check the "tools" step first.
 * **Formal depth**: the proofs are bounded (6-20 cycles). The lockstep runs cover long sequences. Both must pass.
 * **Real silicon numbers**: the numbers are synthesis estimates with an ideal clock and no wires; place-and-route usually adds 15-30 %.
+
+---
+
+## Reading the results without the GitHub API
+
+After every run the workflow writes the results into the branch `results` of this repository (a normal git branch; the push of that
+branch does not start the workflow again). If a tool cannot reach `api.github.com` (for example a cloud sandbox whose network policy
+blocks it) but can use git, read the results like this:
+
+```bash
+git fetch origin results
+git show origin/results:latest/RUN.txt                 # which run and commit these results belong to
+git show origin/results:latest/comparison.md           # the comparison table (what section 7 item 1 asks for)
+git ls-tree -r --name-only origin/results latest | head -50                      # all files of the newest run
+git show origin/results:latest/result-opt-mshr/out/opt/mshr/t200/violations.txt  # example: failing groups of one timing job
+```
+
+Older runs stay under `runs/<run id>_<commit>/`. The results appear a few minutes after the last job of a run ends (the last job,
+"compare", writes them). If `latest/RUN.txt` still names an older commit than the one you pushed, the run has not finished yet.

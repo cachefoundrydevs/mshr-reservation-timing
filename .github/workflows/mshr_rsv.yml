@@ -7,6 +7,8 @@ name: mshr and reservation unit timing
 
 on:
   push:
+    branches-ignore:
+      - results
     paths-ignore:
       - "**.md"
   workflow_dispatch:
@@ -79,7 +81,12 @@ jobs:
     needs: check
     if: always()
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/download-artifact@v4
         with:
           pattern: result-*
@@ -108,3 +115,36 @@ jobs:
         with:
           name: comparison
           path: comparison.md
+      - name: publish the results to the branch "results" (readable with git fetch, no GitHub API needed)
+        run: |
+          set -u
+          SHA7=$(git rev-parse --short HEAD)
+          RUN="${{ github.run_id }}_${SHA7}"
+          rm -rf /tmp/pub; mkdir -p /tmp/pub/latest
+          # small result files of every job: tables, result lines, failing groups; long logs are cut to their last 100 kB
+          find res -type f \( -name '*.md' -o -name '*.txt' -o -name '*.log' \) | while read -r f; do
+            rel=${f#res/}; mkdir -p "/tmp/pub/latest/$(dirname "$rel")"
+            if [ "$(wc -c < "$f")" -gt 150000 ]; then tail -c 100000 "$f" > "/tmp/pub/latest/$rel"; else cp "$f" "/tmp/pub/latest/$rel"; fi
+          done
+          cp comparison.md /tmp/pub/latest/comparison.md
+          {
+            echo "run: ${{ github.run_id }}"
+            echo "commit: $(git rev-parse HEAD)"
+            echo "time: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "versions: $(ls res | sed -n 's/^result-\(.*\)-\(func\|mshr_entry\|mshr\|rsv\)$/\1/p' | sort -u | tr '\n' ' ')"
+          } > /tmp/pub/latest/RUN.txt
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin results >/dev/null 2>&1; then
+            git fetch origin results && git checkout -B results origin/results
+          else
+            git checkout --orphan results && git rm -rf . >/dev/null 2>&1 || true
+          fi
+          rm -rf latest "runs/$RUN"
+          mkdir -p runs
+          cp -r /tmp/pub/latest latest
+          cp -r /tmp/pub/latest "runs/$RUN"
+          printf '# Results branch\n\nWritten by the workflow after every run. `latest/` = the newest run (`comparison.md` is the table, `RUN.txt` says which run and commit); `runs/<run id>_<commit>/` = the same for older runs.\nRead it with: `git fetch origin results && git show origin/results:latest/comparison.md`\n' > README.md
+          git add README.md latest runs
+          git commit -q -m "results of run ${{ github.run_id }} (commit $SHA7) [skip ci]" || echo "nothing to commit"
+          git push origin results
