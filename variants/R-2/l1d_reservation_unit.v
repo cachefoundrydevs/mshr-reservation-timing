@@ -167,6 +167,12 @@ module l1d_reservation_unit #(`L1D_PARAMS) (
             amo_lock_timeout_pulse     <= 1'b0;
         end else begin
             amo_lock_timeout_pulse <= 1'b0;
+            // TIMING OPT (R-2): parallel hold/install terms, then release gating.
+            // Without a new read: release clears; otherwise keep or install sets.
+            // The read assignment below retains priority over both cases.
+            amo_lock_snoop_hold <= !(rel_amow || rel_to) &&
+                (amo_lock_snoop_hold || (amo_lock_valid && s2_install_valid &&
+                 (s2_install_line_addr == amo_lock_line)));
             // an AMO read completes: take the lock on its line (the time-out counter restarts below)
             if (s2_amo_read_completed) begin
                 amo_lock_valid <= 1'b1;
@@ -175,12 +181,7 @@ module l1d_reservation_unit #(`L1D_PARAMS) (
             // release; the error pulse is raised only for a time-out (not when the AMO write released it)
             end else if (rel_amow || rel_to) begin
                 amo_lock_valid <= 1'b0;
-                amo_lock_snoop_hold   <= 1'b0;
                 amo_lock_timeout_pulse     <= rel_to && !rel_amow;
-            // lock held: when the locked line gets installed (AMO read was a miss) start holding snoops
-            end else if (amo_lock_valid) begin
-                if (s2_install_valid && (s2_install_line_addr == amo_lock_line))
-                    amo_lock_snoop_hold <= 1'b1;
             end
             // TIMING OPT (RU-1): the time-out counter restarts with a new lock and counts in EVERY locked cycle, also in the
             // release cycle (it used to hold there). to_cnt / to_last are read only while the lock is held (rel_to = amo_lock_valid && to_last)

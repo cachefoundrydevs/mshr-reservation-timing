@@ -82,6 +82,9 @@ module l1d_reservation_unit #(`L1D_PARAMS) (
     // TO_W = bits of the time-out counter; TO_LAST = the counter value one cycle before the time-out
     localparam TO_W = $clog2(LOCK_TIMEOUT + 1);
     localparam [TO_W-1:0] TO_LAST = LOCK_TIMEOUT - 1;
+    // TIMING OPT (R-1): predecessor comparison removes the incrementer from to_last.
+    // Both sides use TO_W-bit arithmetic, including wraparound; no cycle changes.
+    localparam [TO_W-1:0] TO_PRELAST = TO_LAST - 1'b1; // TO_W = 11 bits by default
 
     input  wire                   clk;                    // clock: all registers change on its rising edge
     input  wire                   rst;                    // synchronous reset, active high (control state goes to its idle value)
@@ -188,7 +191,7 @@ module l1d_reservation_unit #(`L1D_PARAMS) (
                 to_last <= 1'b0;
             end else if (amo_lock_valid) begin
                 to_cnt  <= to_cnt + 1'b1;
-                to_last <= ((to_cnt + 1'b1) == TO_LAST);
+                to_last <= (to_cnt == TO_PRELAST);
             end
         end
     end
