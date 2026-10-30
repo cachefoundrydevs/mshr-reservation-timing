@@ -141,7 +141,7 @@ jobs:
             done
             echo
             echo "## First lines of every log that shows a failure (empty = no failure)"
-            for f in $(find res -type f ( -name "*.log" -o -name "formal.txt" ) -exec grep -l -E "TEST FAILED|MISMATCH|NOT PROVEN|FAIL" {} + 2>/dev/null); do
+            for f in $(grep -rl -E "TEST FAILED|MISMATCH|NOT PROVEN|FAIL" res --include='*.log' --include='formal.txt' 2>/dev/null); do
               echo; echo "### ${f#res/}"; echo '```'; grep -m1 -n -E "TEST FAILED|MISMATCH|NOT PROVEN|FAIL" "$f" | head -1; grep -E "MISMATCH|TEST FAILED|NOT PROVEN" "$f" | head -20; echo '```'
             done
           } > /tmp/pub/latest/PASTE_TO_CHATGPT.md
