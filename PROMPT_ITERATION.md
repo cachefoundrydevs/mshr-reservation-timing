@@ -82,12 +82,12 @@ comparison).
 
 | Module | 250 ps | 200 ps | Worst endpoint groups at 200 ps (slack in ps) |
 |---|---|---|---|
-| `l1d_mshr` | 270.9 | 268.4 | entry `line_r` -68.4 (457 endpoints), `response_packet` -68.2, `refill_token_line_addr` -68.1, `lookup_entry_has_data` -65.3, `axi_read_req_line_addr` -62.8, entry `busy_r` -62.3, `lookup_entry_id` -61.3, `response_seat` -59.5, `lookup_hit` -58.5, entry `p_*` -54.2, entry `state` -51.7, entry `buf_r` -51.6 (4094) |
-| `l1d_mshr_entry` | 230.5 | 228.0 | `buf_r` -28.0 (512 endpoints), `ld_beat_r` -6.0 |
-| `l1d_reservation_unit` | 252.3 | 249.8 | `to_last` -49.8, `to_cnt` -42.9, `amo_lock_snoop_hold` -30.7, `amo_lock_valid` -22.1, `reservation_valid` -19.0, `sc_reservation_matches` -18.0, `amo_lock_timeout_pulse` -16.8 |
+| `l1d_mshr` | 278.0 (271.3 after gate sizing) | 275.5 | `axi_read_req_line_addr` -75.5 (58 endpoints), `refill_token_line_addr` -75.4, entry `tk_arb_q` / `tk_c_q` / `tk_q` -71.6, entry `busy_r` -71.4, `response_packet` -67.8 (72), `response_seat` -67.7, `axi_read_req_unique` -64.6, `entry_freed_pulses` -63.8, `lookup_entry_has_data` -59.9, entry `state` -59.0 (47), entry `inst_q` -55.3, entry `line_r` -55.2 (457) |
+| `l1d_mshr_entry` | 230.5 (230.5 sized) | 228.0 | `buf_r` -28.0 (512 endpoints), `ld_beat_r` -6.0 |
+| `l1d_reservation_unit` | 252.3 (248.2 sized) | 249.8 | `to_last` -49.8, `to_cnt` -42.9, `amo_lock_snoop_hold` -30.7, `amo_lock_valid` -22.1, `reservation_valid` -19.0, `sc_reservation_matches` -18.0, `amo_lock_timeout_pulse` -16.8 |
 
-(These numbers come from the same flow run elsewhere; the first Actions run of this repository gives the exact baseline: use the `opt`
-row of its comparison table from then on. The `ref` row shows the original for comparison.)
+(Measured in the first Actions run of this repository, 2026-10-30: all checks passed, lockstep 12/12, formal EQUIVALENT. For the original, `ref`: mshr 542.3 / 463.0 sized / 539.8, entry 476.6 / 418.5 / 474.1, rsv 258.0 / 251.5 / 255.5. From now on use the `opt`
+row of the newest comparison table as the baseline.)
 
 ### Structure of the slow paths (read the code to confirm)
 
@@ -147,7 +147,7 @@ every `begin` has its `end`), ports are unchanged, no latch, no new size literal
 **Step E: I paste the results** (section 7). You read them.
 
 **Step F: decide, with this rule.** A candidate WINS only if ALL of these hold:
-1. its `lint` is `pass` (or the compile-only note when Verilator is missing), `lockstep` is `12/12`, `formal` is `EQUIVALENT`;
+1. its `lint` is `pass` or `iverilog` (the Verilator tool is not in the image, so the table shows `iverilog` = the Icarus compile succeeded), `lockstep` is `12/12`, `formal` is `EQUIVALENT`;
 2. its target module's critical delay at 200 ps is at least **1.0 ps** lower than `opt` (smaller changes are noise);
 3. no other module and no other column (250 ps, 250 ps sized) got more than **1.0 ps** worse.
 If a function check fails, the candidate is out, whatever its timing. Explain the failure from the log lines I paste (a `MISMATCH`
