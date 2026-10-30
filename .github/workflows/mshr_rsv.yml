@@ -1,0 +1,110 @@
+# Every push (and "Run workflow" by hand): each version is checked in parallel jobs.
+#   versions: ref (the original, timing only: it is the baseline), opt (rtl/opt), and every folder in variants/ (its files placed over rtl/opt)
+#   parts:    func (lint, 12 lockstep simulations, 5 formal proofs against rtl/ref), and the ASAP7 timing of l1d_mshr, l1d_mshr_entry and
+#             l1d_reservation_unit at 250 ps (with gate sizing) and 200 ps
+# The last job puts all results into one comparison table (the run's summary page; also the artifact "comparison").
+name: mshr and reservation unit timing
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: ubuntu-24.04
+    outputs:
+      variants: ${{ steps.l.outputs.variants }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: l
+        run: |
+          v='["ref","opt"'
+          for d in variants/*/; do [ -d "$d" ] && ls "$d"/*.v >/dev/null 2>&1 && v="$v,\"$(basename "$d")\""; done
+          echo "variants=$v]" >> "$GITHUB_OUTPUT"
+          echo "versions: $v]"
+
+  check:
+    needs: list
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    container:
+      image: openroad/orfs:latest
+      options: --user root
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJSON(needs.list.outputs.variants) }}
+        part: [func, mshr, mshr_entry, rsv]
+        exclude:
+          - variant: ref
+            part: func
+    steps:
+      - uses: actions/checkout@v4
+      - name: tools
+        run: |
+          command -v iverilog || (apt-get update -qq && apt-get install -y -qq iverilog > /dev/null)
+          iverilog -V 2>&1 | head -1
+          command -v verilator && verilator --version || echo "verilator not installed: lint step uses the iverilog compile"
+      - name: checks
+        run: |
+          V="${{ matrix.variant }}"
+          case "$V" in
+            ref) D=rtl/ref ;;
+            opt) D=rtl/opt ;;
+            *)   D=build/v_$V; mkdir -p "$D"; cp rtl/opt/*.v "$D/"; cp variants/$V/*.v "$D/" ;;
+          esac
+          bash scripts/run_all.sh "$V" "$D" "out/$V" "${{ matrix.part }}"
+      - name: summary
+        if: always()
+        run: cat "out/${{ matrix.variant }}/${{ matrix.part }}.md" >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: result-${{ matrix.variant }}-${{ matrix.part }}
+          retention-days: 30
+          path: |
+            out/${{ matrix.variant }}/${{ matrix.part }}.md
+            out/${{ matrix.variant }}/${{ matrix.part }}.txt
+            out/${{ matrix.variant }}/func/*.log
+            out/${{ matrix.variant }}/func/formal.txt
+            out/${{ matrix.variant }}/func/formal/*.log
+            out/${{ matrix.variant }}/${{ matrix.part }}/t250/result.txt
+            out/${{ matrix.variant }}/${{ matrix.part }}/t250/violations.txt
+            out/${{ matrix.variant }}/${{ matrix.part }}/t200/result.txt
+            out/${{ matrix.variant }}/${{ matrix.part }}/t200/violations.txt
+
+  compare:
+    needs: check
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: result-*
+          path: res
+      - name: table
+        run: |
+          g() { sed -n "s/.*\b$2=\([^ ]*\).*/\1/p" "$1" 2>/dev/null | head -1; }
+          {
+            echo "## Comparison (critical delay in ps, ASAP7, ideal clock, no wires; smaller is faster)"
+            echo
+            echo "| version | lint | lockstep | formal | mshr 250 | mshr 250 sized | mshr 200 | entry 250 | entry 250 sized | entry 200 | rsv 250 | rsv 250 sized | rsv 200 |"
+            echo "|---|---|---|---|---|---|---|---|---|---|---|---|---|"
+            for V in $(ls res | sed -n 's/^result-\(.*\)-\(func\|mshr_entry\|mshr\|rsv\)$/\1/p' | sort -u); do
+              F=$(ls res/result-$V-func/*.txt 2>/dev/null | grep '/func.txt$' | head -1)
+              M=$(ls res/result-$V-mshr/mshr.txt 2>/dev/null | head -1)
+              E=$(ls res/result-$V-mshr_entry/mshr_entry.txt 2>/dev/null | head -1)
+              R=$(ls res/result-$V-rsv/rsv.txt 2>/dev/null | head -1)
+              echo "| $V | $(g "$F" lint) | $(g "$F" lockstep) | $(g "$F" formal) | $(g "$M" t250) | $(g "$M" t250sized) | $(g "$M" t200) | $(g "$E" t250) | $(g "$E" t250sized) | $(g "$E" t200) | $(g "$R" t250) | $(g "$R" t250sized) | $(g "$R" t200) |"
+            done
+            echo
+            echo "A version may replace rtl/opt only if lint passes, lockstep is 12/12, formal is EQUIVALENT, and it is faster (see PROMPT_ITERATION.md)."
+          } > comparison.md
+          cat comparison.md >> "$GITHUB_STEP_SUMMARY"
+          cat comparison.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: comparison
+          path: comparison.md
