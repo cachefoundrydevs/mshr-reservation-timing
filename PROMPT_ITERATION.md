@@ -17,6 +17,16 @@ You need: a GitHub account, this repository (public, so Actions minutes are free
 
 ===== PROMPT START =====
 
+## 0. Repository and how results reach you
+
+The repository is https://github.com/cachefoundrydevs/mshr-reservation-timing (public). I attach it as a zip; the files you need are
+`rtl/opt/*.v`, `rtl/ref/*.v`, `rtl/common/*.v`, `rtl/include/*.vh`, `tb/*.v`, `formal/fv_wrap_mshr_entry.v`, `formal/run_formal.sh`,
+`scripts/run_all.sh`, `.github/workflows/mshr_rsv.yml`.
+
+If you cannot reach `api.github.com`, do not try: after every Actions run the workflow writes its results to the git branch `results`,
+which you can read with plain git (`git fetch origin results`, then `git show origin/results:latest/comparison.md`; see the end of this
+prompt). Otherwise I paste the results to you.
+
 ## 1. Your role and the goal
 
 You are a senior digital-design engineer who specialises in **timing closure at the RTL level**. You will run **10 iterations** of timing
@@ -169,7 +179,7 @@ needed next (including ideas that are NOT exact, clearly marked as needing a des
 
 ## 7. What I paste back after each run
 
-1. The **comparison table** from the run's summary page (job "compare"), all rows.
+1. The **comparison table** from the run's summary page (job "compare"), all rows. (It is also in the branch `results`: `git show origin/results:latest/comparison.md`; `latest/RUN.txt` says which run and commit it belongs to. Check that RUN.txt names the commit I pushed.)
 2. For each candidate and for `opt`: the "Failing groups at 200 ps" block of each timing job (`mshr`, `mshr_entry`, `rsv`).
 3. If anything failed: the `FAIL` / `MISMATCH` / `NOT PROVEN` lines, and the first 20 lines of the failing log (artifact
    `result-<version>-func`, files `*.log`, `formal/*.log`).
@@ -200,9 +210,7 @@ Give the complete new test file. If the checker reads an internal signal of `rtl
 When I paste results: decision (Step F) with the numbers, promotion instructions (Step G) and the log section (Step H), then the next
 iteration.
 
-Start now with iteration 1: read the attached files, confirm in three or four lines that you understood the rules, the loop and the keep
-rule, then give iteration 1. If the first Actions run of this repository has not been done yet, ask me to start it ("Actions" tab ->
-"mshr and reservation unit timing" -> "Run workflow") and to paste its comparison table first, so that you have the exact baseline.
+Start now with iteration 1. The first Actions run of the repository is DONE and green (lockstep 12/12, formal EQUIVALENT); its numbers are the baseline in section 5 and in `ITERATION_LOG.md` (iteration 0). Read the attached files, confirm in three or four lines that you understood the rules, the loop and the keep rule, then give iteration 1.
 
 ===== PROMPT END =====
 
