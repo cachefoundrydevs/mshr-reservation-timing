@@ -1,4 +1,4 @@
 cycles 300000  allocations 6922  allocation while full 93027  responses 23607  AXI read offers 24008  tokens 35820  hit with data 30582  multi-match lookups 185125  entries freed 3255
 N-1 control / data grant errors 0
 TEST PASSED
-/__w/mshr-reservation-timing/mshr-reservation-timing/tb/tb_mshr_equiv.v:259: $finish called at 3000020000 (1ps)
+/__w/mshr-reservation-timing/mshr-reservation-timing/tb/tb_mshr_equiv.v:274: $finish called at 3000020000 (1ps)

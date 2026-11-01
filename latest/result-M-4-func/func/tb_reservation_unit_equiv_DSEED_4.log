@@ -1,0 +1,3 @@
+cycles 300000  LOCK_TIMEOUT 1024  LR 41420  reservation-valid cycles 132688  SC match cycles 29068  lock cycles 275659  snoop-hold cycles 157410  time-outs 0  AMO writes on the locked line 9767  resets 20
+TEST PASSED
+/__w/mshr-reservation-timing/mshr-reservation-timing/tb/tb_reservation_unit_equiv.v:185: $finish called at 3000030000 (1ps)
