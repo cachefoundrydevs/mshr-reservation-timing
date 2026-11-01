@@ -18,6 +18,10 @@
 | 6 | 2026-11-01 | M-11 | state-local token next value | iverilog | 12/12 | EQUIVALENT | 259.3 | 253.8 | 256.8 | -9.3 | WIN | yes |
 | 6 | 2026-11-01 | M-12 | control-only circular picks | iverilog | 12/12 | EQUIVALENT | 260.1 | 254.2 | 257.6 | -10.1 | WIN (smaller gain) | no |
 
+| 7 | 2026-11-01 | M-13 | direct blocker picks | iverilog | 12/12 | EQUIVALENT | 261.0 | 250.8 | 258.5 | -11.0 | LOSE | no |
+| 7 | 2026-11-01 | M-14 | M-10 plus M-11 combination | iverilog | 12/12 | EQUIVALENT | 265.0 | 257.4 | 262.5 | -15.0 | LOSE | no |
+| 7 | 2026-11-01 | M-15 | control circular picks plus absorption and M-11 | iverilog | 12/12 | EQUIVALENT | 269.4 | 254.9 | 266.9 | -19.4 | LOSE | no |
+
 | iteration | mshr | entry | rsv | commit | Actions run |
 |---|---|---|---|---|---|
 | 0 | 278.0 / 271.3 / 275.5 | 230.5 / 230.5 / 228.0 | 252.3 / 248.2 / 249.8 | bb49958 | first run |
@@ -28,6 +32,8 @@
 | 5 | 270.7 / 264.6 / 268.2 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 81c1a83 (M-7 source) | 41337210471 |
 
 | 6 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | d288b0d (M-11 source) | 41341553133 |
+
+| 7 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | b62dced (opt unchanged) | 41345585336 |
 
 | id | idea | status | reason |
 |---|---|---|---|
@@ -59,3 +65,6 @@
 | M-13 | per-winner direct blocker grant | running | iteration 7; Boolean identity for every binary mask, original state retained |
 | M-14 | M-10 absorption plus M-11 entry | running | iteration 7; fresh combination of measured components |
 | M-15 | M-12 control topology plus absorption and M-11 entry | running | iteration 7; all component state checkers retained |
+| M-13 | per-winner direct blocker grant | lost | iteration 7: +1.7 ps at 250/200; sized improves 3.0 but not eligible |
+| M-14 | M-10 absorption plus M-11 entry | lost | iteration 7: +5.7 ps at 250/200 |
+| M-15 | M-12 control topology plus absorption and M-11 entry | lost | iteration 7: +10.1 ps at 250/200 |

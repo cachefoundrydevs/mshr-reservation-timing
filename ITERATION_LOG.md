@@ -674,4 +674,28 @@ compile, Verilator lint and 100000-cycle whole-MSHR lockstep pass for all
 three; M-13 also passes 20000-cycle arbiter lockstep and both 20-cycle
 arbiter bounded formal checks. No failures/mismatches. Each built RTL
 file is byte-identical to the promoted tuple plus its candidate overlay.
-Decision pending; no iteration 7 promotion.
+Decision: no winner; all three LOSE on timing. All have lint=iverilog,
+12/12 lockstep and all five bounded formal checks EQUIVALENT in Actions
+run 41345585336, source b62dced6e46aa6658994cd1b3a4a9608d4b12199.
+Read RUN.txt, comparison.md and complete PASTE_TO_CHATGPT.md from results;
+no failure-log lines are present. Baseline reproduces 259.3/253.8/256.8.
+
+| version | mshr 250 / sized / 200 | delta vs opt | mshr area |
+|---|---|---|---|
+| M-13 | 261.0 / 250.8 / 258.5 | +1.7 / -3.0 / +1.7 | 11794 |
+| M-14 | 265.0 / 257.4 / 262.5 | +5.7 / +3.6 / +5.7 | 11807 |
+| M-15 | 269.4 / 254.9 / 266.9 | +10.1 / +1.1 / +10.1 | 11809 |
+
+All entry columns remain 215.9/215.9/213.4; all reservation columns remain
+242.9/242.9/240.4. Decimal keep checks reject all three: none improves the
+target 250 ps synthesis column by 1 ps. M-13's sized improvement alone
+does not permit promotion. No combined component gain was assumed.
+
+M-13 limits on line_r -> CAM XNOR/reduction -> match priority -> has-data
+output (-11.0), line D -10.1; busy D improves to -2.3 but another path
+loses. M-14/M-15 instead limit on busy_r -> free-entry pick -> allocation
+-> line/metadata D (-15.0/-19.4). Retain M-11 as opt, unchanged byte-for-byte.
+Consecutive no-win iterations=1. Continue iteration 8 per the stop rule.
+Sources remain archived in b62dced: M-13 arb 152 lines; M-14 arb 135;
+M-15 arb 135 and top 558. Remove these folders from active matrix and
+retain the added checker. No protected paths or old comparisons changed.
