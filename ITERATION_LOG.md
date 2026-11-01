@@ -56,7 +56,7 @@ New worst reservation path: amo_lock_line[14] -> line comparisons and lock-contr
 logic -> amo_lock_snoop_hold, -40.4 ps slack at 200 ps. The counter path is now -4.4 ps.
 
 
-## Iteration 3 (2026-11-01): proposals awaiting Actions
+## Iteration 3 (2026-11-01)
 
 Baseline evidence: run 41061877208, commit db9ae18df94f90b84f049e3620f407a6436af11a.
 MSHR 250 / sized / 200: 278.0 / 271.3 / 275.5 ps. The 250 ps worst
@@ -107,6 +107,61 @@ Exactness and self-review:
   need a carefully proved topology within the unchanged port contract.
   M-3 remains untried. Existing R-2 is retained unchanged from the branch.
 
-Decision: pending. Neither candidate is claimed verified or promoted.
-The same-commit Actions compile, 12/12 lockstep, five bounded formal checks,
-and all timing columns are required before deciding. Nothing is merged to main.
+Actions evidence: run 41290245424, source commit
+75074d07075ebd5891abc699821562acd4ae28af. Results published 2026-11-01T09:35:47Z.
+Read using git fetch origin results, then latest/RUN.txt, latest/comparison.md,
+and latest/PASTE_TO_CHATGPT.md. All four tested non-reference versions passed
+Icarus compile, 12/12 lockstep tests (including the added checkers), and all
+five bounded formal checks: arb_rr / arb_rr3 (20 cycles), mshr_entry (6),
+rsv (12), rsv_to (16). The published failure-log section is empty.
+
+## Comparison (critical delay in ps, ASAP7, ideal clock, no wires; smaller is faster)
+
+| version | lint | lockstep | formal | mshr 250 | mshr 250 sized | mshr 200 | entry 250 | entry 250 sized | entry 200 | rsv 250 | rsv 250 sized | rsv 200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| M-2 | iverilog | 12/12 | EQUIVALENT | 282.9 | 272.4 | 280.4 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| M-4 | iverilog | 12/12 | EQUIVALENT | 275.6 | 263.7 | 273.1 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| R-2 | iverilog | 12/12 | EQUIVALENT | 278.0 | 271.3 | 275.5 | 230.5 | 230.5 | 228.0 | 246.5 | 246.5 | 244.0 |
+| opt | iverilog | 12/12 | EQUIVALENT | 278.0 | 271.3 | 275.5 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| ref |  |  |  | 542.3 | 463.0 | 539.8 | 476.6 | 418.5 | 474.1 | 258.0 | 251.5 | 255.5 |
+
+A version may replace rtl/opt only if lint passes, lockstep is 12/12, formal is EQUIVALENT, and it is faster (see PROMPT_ITERATION.md).
+
+Decision: M-4 WINS. MSHR improves by 2.4 ps at 250, 7.6 ps at 250 sized,
+and 2.4 ps at 200; entry and reservation columns are identical to opt.
+Its MSHR area is 11643 flow units versus 11644 for opt. The gain is below
+the 30 ps suspect-result threshold. The original AXI address group improves
+by 9.6 ps, but the response packet group worsens by 5.3 ps and becomes the
+worst group. This endpoint regression is disclosed; the keep rule compares
+module maxima and timing columns, all of which improve or stay unchanged.
+New worst 250 ps path: g_entry[1].u_entry.rs_arb_q -> round-robin pick ->
+response mux/buffers -> response_packet[70], slack -25.6 ps (200: -73.1 ps).
+The 4 GHz target and 230 ps working goal are NOT met; the sized gap is 13.7 ps.
+
+M-2 LOSES on timing despite passing every functional check: +4.9 ps at
+250 and 200, +1.1 ps sized. MSHR area 11650. The AXI address group barely
+changes (-28.1 vs -28.0 ps at 250), and the new maximum is
+rs_c_q -> response/free control -> another entry's busy_r, slack -32.9 ps.
+No function-check FAIL / MISMATCH / NOT PROVEN line or differing cycle exists.
+
+Promoted to rtl/opt: l1d_arb_rr.v, copied byte-for-byte from M-4 on this timing
+branch only. Source SHA-256: e513301e34c32c7f2cc0f50b7429c6b1374f861ee87047f8ec12c83f01939257.
+Removed this iteration's M-2 and M-4 folders; complete sources remain in
+commit 75074d0. Existing R-2 is unchanged from the starting branch.
+New baseline (250 / sized / 200): mshr 275.6 / 263.7 / 273.1;
+entry 230.5 / 230.5 / 228.0; rsv 242.9 / 242.9 / 240.4 ps.
+Table 2 in STATUS.md cites the tested M-4 source commit, not a new measurement
+of the promotion commit. No other RTL file changed in this iteration; no
+ports, latency, parameters, reset values, or signal widths changed. The
+added combinational signals and all output-pin arguments are listed above.
+
+Protected files and every original comparison line were preserved. The
+complete changes against main also include inherited CODEX_TASK.md, the R-1
+reservation promotion, and the old R-2 candidate, none edited in iteration 3.
+Inherited R-1 is the TO_W-bit modular predecessor identity described in
+iteration 1. Inherited R-2 factors hold/install and release conditions while
+retaining the new-read assignment's priority; its function checks also passed
+in this run, but its slower timing remains rejected. Documentation has no
+hardware behavior; checker additions only strengthen existing verification.
+
+This is a proposal for user re-check. Nothing is merged into main.

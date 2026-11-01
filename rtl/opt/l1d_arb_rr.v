@@ -75,44 +75,48 @@ module l1d_arb_rr #(
     wire [N-1:0] masked = request_bits & mask_r;          // requests that come after `last` in this round
     wire         use_masked = |masked;
 
-    // lowest set bit of `masked` and of `request_bits`, one-hot and as a number, computed in parallel
-    reg  [N-1:0]     gm, gu;                              // one-hot of the lowest set bit, N bits
-    reg  [IDX_W-1:0] im, iu;                              // its number, IDX_W bits
-    reg              seen_m, seen_u;
-    integer          i;
-    always @* begin
-        gm = {N{1'b0}};  gu = {N{1'b0}};
-        im = {IDX_W{1'b0}};  iu = {IDX_W{1'b0}};
-        seen_m = 1'b0;   seen_u = 1'b0;
-        for (i = 0; i < N; i = i + 1) begin
-            if (masked[i] && !seen_m)       begin gm[i] = 1'b1; im = i[IDX_W-1:0]; end
-            if (request_bits[i] && !seen_u) begin gu[i] = 1'b1; iu = i[IDX_W-1:0]; end
-            seen_m = seen_m | masked[i];
-            seen_u = seen_u | request_bits[i];
+    // TIMING OPT (M-4): each prefix is a reduction over the input bits,
+    // not a procedural seen-bit chain. For bit j, a lower request exists iff
+    // the prefix below j is nonzero. Compute both rounds in parallel.
+    wire [N-1:0] gm, gu;                               // N = 4 (8 inside MSHR) bits
+    wire [N-1:0] mm, mu;                               // lower-request prefixes, N bits
+    genvar j, ib, ie;
+    generate
+        for (j = 0; j < N; j = j + 1) begin : g_m4_prefix
+            if (j == 0) begin : g_first
+                assign mm[j] = 1'b0;
+                assign mu[j] = 1'b0;
+            end else begin : g_rest
+                assign mm[j] = |masked[j-1:0];
+                assign mu[j] = |request_bits[j-1:0];
+            end
+            assign gm[j] = masked[j] & ~mm[j];
+            assign gu[j] = request_bits[j] & ~mu[j];
         end
-    end
-
+    endgenerate
+    // A lower request exists iff its lowest-set-bit grant is below j:
+    // OR(gm[j-1:0]) == OR(masked[j-1:0]), likewise for gu. Thus mm/mu
+    // are also exactly the old next-mask candidates, including no requests.
+    wire [IDX_W-1:0] picked_index;                     // IDX_W = 2 (3 inside MSHR) bits
+    generate
+        for (ib = 0; ib < IDX_W; ib = ib + 1) begin : g_m4_index
+            wire [N-1:0] terms;                        // N encoded grant terms per bit
+            for (ie = 0; ie < N; ie = ie + 1) begin : g_term
+                if ((ie >> ib) & 1) begin : g_set
+                    assign terms[ie] = grant_onehot[ie];
+                end else begin : g_clear
+                    assign terms[ie] = 1'b0;
+                end
+            end
+            assign picked_index[ib] = |terms;
+        end
+    endgenerate
     always @* begin
         grant_onehot = use_masked ? gm : gu;
-        grant_index  = use_masked ? im : iu;
+        grant_index = picked_index;
     end
-
-    // any_request = at least one requester asks (grant_onehot is then non-zero)
     assign any_request = |request_bits;
 
-    // ---- the memory: the mask of the requesters above the one served last ----
-    // TIMING OPT (P1): the mask after the grant, for both candidate winners in parallel with the grant itself; use_masked picks one.
-    // mask_next[j] = 1 when a lower bit of the grant is set (j > granted requester).
-    reg  [N-1:0] mm, mu;                                  // mask after the masked winner gm / after the unmasked winner gu, N bits each
-    reg          bm, bu;
-    integer      m;
-    always @* begin
-        bm = 1'b0;  bu = 1'b0;
-        for (m = 0; m < N; m = m + 1) begin
-            mm[m] = bm;  bm = bm | gm[m];
-            mu[m] = bu;  bu = bu | gu[m];
-        end
-    end
     wire [N-1:0] mask_next = use_masked ? mm : mu;
     always @(posedge clk) begin
         if (rst)
