@@ -1139,6 +1139,6 @@ SAT proof finished - no model found: SUCCESS!
                        \__/                              
 
 Warnings: 1 unique messages, 1 total
-End of script. Logfile hash: 76e02d7097, time: 31.75s, user: 31.24s, system: 0.55s, MEM: 900.14 MB peak
+End of script. Logfile hash: 76e02d7097, time: 36.60s, user: 36.19s, system: 0.45s, MEM: 900.41 MB peak
 Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
-Time spent: 95% 1x sat (30 sec), 1% 13x opt_clean (0 sec), ...
+Time spent: 95% 1x sat (35 sec), 1% 13x opt_clean (0 sec), ...
