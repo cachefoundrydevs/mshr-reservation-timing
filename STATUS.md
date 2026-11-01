@@ -13,15 +13,12 @@
 | 5 | 2026-11-01 | M-7 | all-channel round selects last | iverilog | 12/12 | EQUIVALENT | 270.7 | 264.6 | 268.2 | -20.7 | WIN | yes |
 | 5 | 2026-11-01 | M-8 | absorb redundant masked-round gating | iverilog | 12/12 | EQUIVALENT | 271.7 | 264.6 | 269.2 | -21.7 | WIN (smaller gain) | no |
 | 5 | 2026-11-01 | M-9 | parallel circular one-hot last pick | iverilog | 12/12 | EQUIVALENT | 281.3 | 268.9 | 278.8 | -31.3 | LOSE | no |
-
 | 6 | 2026-11-01 | M-10 | M-7 plus absorbed arbiter | iverilog | 12/12 | EQUIVALENT | 264.9 | 256.6 | 262.4 | -14.9 | WIN (smaller gain) | no |
 | 6 | 2026-11-01 | M-11 | state-local token next value | iverilog | 12/12 | EQUIVALENT | 259.3 | 253.8 | 256.8 | -9.3 | WIN | yes |
 | 6 | 2026-11-01 | M-12 | control-only circular picks | iverilog | 12/12 | EQUIVALENT | 260.1 | 254.2 | 257.6 | -10.1 | WIN (smaller gain) | no |
-
 | 7 | 2026-11-01 | M-13 | direct blocker picks | iverilog | 12/12 | EQUIVALENT | 261.0 | 250.8 | 258.5 | -11.0 | LOSE | no |
 | 7 | 2026-11-01 | M-14 | M-10 plus M-11 combination | iverilog | 12/12 | EQUIVALENT | 265.0 | 257.4 | 262.5 | -15.0 | LOSE | no |
 | 7 | 2026-11-01 | M-15 | control circular picks plus absorption and M-11 | iverilog | 12/12 | EQUIVALENT | 269.4 | 254.9 | 266.9 | -19.4 | LOSE | no |
-
 | 8 | 2026-11-01 | M-16 | response error selects busy outcome last | iverilog | 12/12 | EQUIVALENT | 276.3 | 269.0 | 273.8 | -26.3 | LOSE | no |
 | 8 | 2026-11-01 | M-17 | predecoded error-response state | iverilog | 12/12 | EQUIVALENT | 257.1 | 253.8 | 254.6 | -7.1 | LOSE (entry +4.5 ps) | no |
 | 8 | 2026-11-01 | M-18 | allocation-only busy copies | iverilog | 12/12 | EQUIVALENT | 277.3 | 262.4 | 274.8 | -27.3 | LOSE | no |
@@ -34,11 +31,8 @@
 | 3 | 275.6 / 263.7 / 273.1 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 75074d0 (M-4 source) | 41290245424 |
 | 4 | 275.6 / 263.7 / 273.1 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 5aa332c (opt unchanged) | 41332990431 |
 | 5 | 270.7 / 264.6 / 268.2 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 81c1a83 (M-7 source) | 41337210471 |
-
 | 6 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | d288b0d (M-11 source) | 41341553133 |
-
 | 7 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | b62dced (opt unchanged) | 41345585336 |
-
 | 8 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | 30af1b0 (opt unchanged) | 41349607446 |
 
 | id | idea | status | reason |
