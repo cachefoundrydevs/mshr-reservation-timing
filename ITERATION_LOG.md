@@ -464,3 +464,103 @@ The consecutive-no-win counter resets to zero. No main merge or push.
 The written arguments, complete added-signal inventories and per-pin
 self-review for every candidate are above. All old comparisons and all
 protected paths are preserved; this remains a proposal for user re-check.
+
+## Iteration 6 (2026-11-01): candidates awaiting Actions
+
+Baseline M-7 passed all iteration 5 checks in run 41337210471 on commit
+81c1a8396ac77b2215ab0bb00936251daae9e75d and is now promoted on this branch.
+Its timing is
+270.7 / 264.6 / 268.2 ps, area 11801; entry and reservation are unchanged.
+The sized value is +0.9 ps vs the preceding baseline, within the allowed
+1.0 ps limit; unsized and 200 improve by 4.9 ps. M-8 independently gives
+271.7 / 264.6 / 269.2, with unchanged entry/reservation. Prefer M-7's larger
+gain and test combination under a fresh id, not by assuming additive gains.
+
+A: M-7's worst 250 ps path is rs_c_q -> response control arbitration ->
+token-entry next function -> tk_arb_q, slack -20.7 ps; busy D follows at
+-18.8 and state D -15.4. M-8 instead limits on tk_c_q -> token control
+arbitration -> tk_arb_q (-21.7). Target control feedback rather than copying
+payloads again. M-9's generic circular arbiter loses globally because CAM
+has-data becomes -31.3; the control-only scope below is a different design.
+
+| id | module | idea | target | expected gain (estimate) | expected area | risk |
+|---|---|---|---|---|---|---|
+| M-10 | l1d_mshr via arbiter | combine M-7 and M-8 | control feedback | 1-10 ps | roughly M-7, within 1% | gains may not compose; mapping can regress |
+| M-11 | l1d_mshr via entry | choose token next value from exclusive current states | tk_q and both copies | 2-12 ps | roughly M-7, within 1% | relies on stated state/flag invariant; other paths may become worst |
+| M-12 | l1d_mshr | circular one-hot arbitration for control copies only | all three entry handshakes | 5-20 ps | +0-2% vs M-7 | request fanout and global remapping can erase depth gain |
+
+Exactness and self-review:
+
+M-10, complete file variants/M-10/l1d_arb_rr.v:
+* Reuse M-8's exact absorption functions with the M-7 top as the new baseline.
+  gm and mm imply use_masked, so the rewritten grant and next-mask equations
+  equal the original ones for all binary input/mask values. Reset, state
+  enable and index encoding stay unchanged. Identical arbiter ports preserve
+  every top-level output; M-7's mask copies still equal the same original
+  masks. This new combination requires its own Actions result.
+* No added signals or flops, no width/reset/parameter/port/latency changes.
+  The two absorbed assignments and combination comment are marked M-10.
+  Existing M-8 absorption and M-7 mask/pick/mux checkers remain active.
+
+M-11, complete file variants/M-11/l1d_mshr_entry.v:
+* Use the inductive invariant that tk_q/rs_q/inst_q/busy_r decode the current
+  FSM state. Reset establishes it. Enumerating the unchanged original
+  transitions preserves it for every input sequence after reset: IDLE
+  allocates AR or TOKEN, AR enters DATA on acceptance, DATA enters MERGE on
+  last beat, MERGE enters RESP, RESP enters IDLE on accepted error or TOKEN
+  on accepted success, TOKEN enters INSTALL on grant, INSTALL returns TOKEN
+  on held token or IDLE on done, otherwise each state holds as before.
+* In TOKEN, the old tk_n reduces to !refill_token_granted; in RESP it reduces
+  to response_taken && !err_r; otherwise it equals the unchanged idle-swap
+  allocation OR install-held term. Compute these small leaves in parallel
+  and select by the existing current-state flags. It is the same next value
+  on every reachable state. This uses no new environmental assumption.
+* Added scalar wire m11_other. Existing scalar tk_n is rewritten; all three
+  token flag flops retain the original zero reset and update block. No new
+  flops, changed widths, ports, parameters or latency. Every entry pin,
+  including token request, and hence every top-level pin retains its
+  original same-cycle function by induction. Payload logic/FSM case is
+  unchanged; no output-valid comparison exception is added.
+* L1D_CHECK_M11 enables a new tb_mshr_entry_equiv block checking valid state,
+  all four decoder equalities, and tk_n against the old equation. It adds
+  to errors and prints TEST FAILED. A new-checker elaboration issue was
+  fixed before simulation by using the DUT's local state constants; RTL
+  did not change. Existing comparisons remain untouched.
+
+M-12, complete file variants/M-12/l1d_mshr.v:
+* Keep all M-7 data arbiters and payload logic unchanged. Replace only the
+  control-copy instances u_ar_arb_c/u_rs_arb_c/u_tk_arb_c with parallel
+  circular picks. For each channel a one-hot last state resets to N-1,
+  advances to the granted requester only on taken-and-any-request, and
+  otherwise holds. Each candidate wins exactly when it requests and the
+  constant circular interval after last and before it is empty, the same
+  circular order as the original. All modulo expressions are constants.
+* Control and data request flops are equal after reset and have identical
+  next functions in the unchanged entries. Inductively, the new control
+  last is the one-hot decode of the data arbiter's above-last mask:
+  last[j] = mask[j+1] && !mask[j], except last[N-1] = !mask[N-1]. This gives
+  exactly the same ar_gc/rs_gc/tk_gc in the same cycle. Entry inputs and
+  state therefore stay identical; all top-level output pins, valid or
+  invalid, have unchanged functions and latency. No new data feedback.
+* Added for each ar/rs/tk channel: N-bit m12_<channel>_last state, N-bit
+  m12_<channel>_grant, three genvars, per-winner N-bit turns, per-last
+  N-bit blockers and localparam BEFORE. Default N=8. New one-hot reset has
+  highest bit=1 and other bits=0, exactly encoding the former zero mask's
+  last=N-1; externally visible reset behavior is unchanged. The three old
+  control mask-state instances are removed; their only used output wires
+  ar_gc/rs_gc/tk_gc remain N bits with identical values. No port, parameter,
+  output width or latency changes. No payload or 512-bit buffer copies.
+* L1D_CHECK_M12 enables a generated tb_mshr_equiv checker for every new
+  state bit against that mask decode and for every control/data grant bit.
+  m12_bad adds into errors and prints TEST FAILED before input drive. The
+  existing control/data grant comparison is preserved as well. All M-7
+  mask-copy and payload checkers remain active; no old comparison changes.
+
+Local compile and Verilator lint pass for all three. Each passes a
+100000-cycle whole-MSHR lockstep run with the new invariant checkers.
+M-11 also passes 150000-cycle entry lockstep and its six-cycle bounded
+entry proof (FORMAL: ALL EQUIVALENT (mshr_entry)). No TEST FAILED or
+MISMATCH occurs. Every built RTL file matches the promoted M-7 tuple plus
+its own candidate overlay byte-for-byte. Only later single-commit Actions
+lint/12-of-12/all-formal evidence can verify these combinations.
+Decision: pending. No iteration 6 promotion yet.

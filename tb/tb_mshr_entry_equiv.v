@@ -175,6 +175,19 @@ module tb_mshr_entry_equiv #(`L1D_PARAMS) ();
                 if (errors <= 10) $display("TEST FAILED: M-3 NEXT FUNCTION cycle %0d", cyc);
             end
 `endif
+`ifdef L1D_CHECK_M11
+            if (dut_opt.state > dut_opt.E_INSTALL ||
+                dut_opt.tk_q !== (dut_opt.state == dut_opt.E_TOKEN) ||
+                dut_opt.rs_q !== (dut_opt.state == dut_opt.E_RESP) ||
+                dut_opt.inst_q !== (dut_opt.state == dut_opt.E_INSTALL) ||
+                dut_opt.busy_r !== (dut_opt.state != dut_opt.E_IDLE) ||
+                dut_opt.tk_n !== ((!dut_opt.busy_r && allocate_valid && allocate_is_swap) ||
+                    (dut_opt.rs_q && response_taken && !dut_opt.err_r) ||
+                    (dut_opt.inst_q && refill_token_held_by_s1) || (dut_opt.tk_q && !refill_token_granted))) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-11 STATE/NEXT INVARIANT cycle %0d", cyc);
+            end
+`endif
         end
     endtask
 

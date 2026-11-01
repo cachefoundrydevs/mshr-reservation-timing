@@ -44,3 +44,6 @@
 | M-7 | all-channel parallel payload outcomes, round selects last | won | iteration 5: -4.9 ps at 250/200, +0.9 sized allowed; promoted |
 | M-8 | absorb redundant masked-round gating | won | iteration 5: -3.9 ps; smaller gain, combine in fresh candidate |
 | M-9 | parallel circular pick with one-hot last-served state | lost | iteration 5: +5.7 ps at 250; CAM becomes critical |
+| M-10 | combine M-7 payload factoring and M-8 arbiter absorption | running | iteration 6; fresh combined measurement, not assumed additive |
+| M-11 | state-local token next value | running | iteration 6; decoder invariant and old-equation checker |
+| M-12 | circular arbitration for control copies only | running | iteration 6; new control state decoded against original data masks |

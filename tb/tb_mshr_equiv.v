@@ -203,6 +203,42 @@ module tb_mshr_equiv #(`L1D_PARAMS) ();
     endgenerate
 `endif
 
+`ifdef L1D_CHECK_M12
+    wire [3*N-1:0] m12_bad;
+    genvar m12j;
+    generate
+        for (m12j = 0; m12j < N; m12j = m12j + 1) begin : g_check_m12
+            if (m12j == N-1) begin : g_ar_last
+                assign m12_bad[0*N+m12j] =
+                    (dut_opt.m12_ar_last[m12j] !== !dut_opt.u_ar_arb.mask_r[m12j]) ||
+                    (dut_opt.ar_gc[m12j] !== dut_opt.ar_g[m12j]);
+            end else begin : g_ar_other
+                assign m12_bad[0*N+m12j] =
+                    (dut_opt.m12_ar_last[m12j] !== (dut_opt.u_ar_arb.mask_r[m12j+1] && !dut_opt.u_ar_arb.mask_r[m12j])) ||
+                    (dut_opt.ar_gc[m12j] !== dut_opt.ar_g[m12j]);
+            end
+            if (m12j == N-1) begin : g_rs_last
+                assign m12_bad[1*N+m12j] =
+                    (dut_opt.m12_rs_last[m12j] !== !dut_opt.u_rs_arb.mask_r[m12j]) ||
+                    (dut_opt.rs_gc[m12j] !== dut_opt.rs_g[m12j]);
+            end else begin : g_rs_other
+                assign m12_bad[1*N+m12j] =
+                    (dut_opt.m12_rs_last[m12j] !== (dut_opt.u_rs_arb.mask_r[m12j+1] && !dut_opt.u_rs_arb.mask_r[m12j])) ||
+                    (dut_opt.rs_gc[m12j] !== dut_opt.rs_g[m12j]);
+            end
+            if (m12j == N-1) begin : g_tk_last
+                assign m12_bad[2*N+m12j] =
+                    (dut_opt.m12_tk_last[m12j] !== !dut_opt.u_tk_arb.mask_r[m12j]) ||
+                    (dut_opt.tk_gc[m12j] !== dut_opt.tk_g[m12j]);
+            end else begin : g_tk_other
+                assign m12_bad[2*N+m12j] =
+                    (dut_opt.m12_tk_last[m12j] !== (dut_opt.u_tk_arb.mask_r[m12j+1] && !dut_opt.u_tk_arb.mask_r[m12j])) ||
+                    (dut_opt.tk_gc[m12j] !== dut_opt.tk_g[m12j]);
+            end
+        end
+    endgenerate
+`endif
+
     task check;
         begin
             if (o_hit !== r_hit || o_hid !== r_hid || (r_hit === 1'b1 && o_hasd !== r_hasd) ||
@@ -276,6 +312,12 @@ module tb_mshr_equiv #(`L1D_PARAMS) ();
                 popcount(dut_opt.m7_tk_sm) != 1 || popcount(dut_opt.m7_tk_su) != 1) begin
                 errors = errors + 1;
                 if (errors <= 10) $display("TEST FAILED: M-7 tk MASK/PICK INVARIANT cycle %0d", cyc);
+            end
+`endif
+`ifdef L1D_CHECK_M12
+            if (|m12_bad) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-12 CONTROL STATE/GRANT cycle %0d bad=%h", cyc, m12_bad);
             end
 `endif
             // N-1 inside the optimised MSHR: the control arbiters give the same grants as the data arbiters in every cycle
