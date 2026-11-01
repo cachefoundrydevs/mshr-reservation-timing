@@ -164,6 +164,17 @@ module tb_mshr_entry_equiv #(`L1D_PARAMS) ();
                     $display("   primary: wr=%b size=%0d off=%0d", dut_ref.p_rd_wr, dut_ref.p_size, dut_ref.p_off);
                 end
             end
+`ifdef L1D_CHECK_M3
+            if ((response_taken ? dut_opt.m3_busy_taken : dut_opt.m3_busy_wait) !==
+                    (dut_opt.busy_r ? !dut_opt.entry_freed_pulse : allocate_valid) ||
+                dut_opt.rs_n !== (dut_opt.mrg_q || (dut_opt.rs_q && !response_taken)) ||
+                dut_opt.tk_n !== ((!dut_opt.busy_r && allocate_valid && allocate_is_swap) ||
+                    (dut_opt.rs_q && response_taken && !dut_opt.err_r) ||
+                    (dut_opt.inst_q && refill_token_held_by_s1) || (dut_opt.tk_q && !refill_token_granted))) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-3 NEXT FUNCTION cycle %0d", cyc);
+            end
+`endif
         end
     endtask
 

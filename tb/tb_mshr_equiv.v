@@ -185,6 +185,24 @@ module tb_mshr_equiv #(`L1D_PARAMS) ();
         end
     endtask
 
+`ifdef L1D_CHECK_M1
+    wire [AXI_BEATS*N-1:0] m1_bad;
+    genvar m1s, m1g;
+    generate
+        for (m1s = 0; m1s < AXI_BEATS; m1s = m1s + 1) begin : g_check_m1_slice
+            for (m1g = 0; m1g < N; m1g = m1g + 1) begin : g_check_m1_copy
+                assign m1_bad[m1s*N+m1g] =
+                    (dut_opt.g_m1_slice[m1s].g_copy[m1g].dat_copy !== dut_opt.g_entry[m1g].u_entry.dat_q) ||
+                    (dut_opt.g_m1_slice[m1s].g_copy[m1g].mrg_copy !== dut_opt.g_entry[m1g].u_entry.mrg_q) ||
+                    (dut_opt.g_m1_slice[m1s].requests[m1g] !== dut_opt.e_resp[m1g]) ||
+                    (dut_opt.g_m1_slice[m1s].grants[m1g] !== dut_opt.rs_g[m1g]) ||
+                    (dut_opt.g_m1_slice[m1s].select_bits[m1g] !== dut_opt.rs_sel[m1g]) ||
+                    (dut_opt.g_m1_slice[m1s].u_arb.mask_r[m1g] !== dut_opt.u_rs_arb.mask_r[m1g]);
+            end
+        end
+    endgenerate
+`endif
+
     task check;
         begin
             if (o_hit !== r_hit || o_hid !== r_hid || (r_hit === 1'b1 && o_hasd !== r_hasd) ||
@@ -226,6 +244,20 @@ module tb_mshr_equiv #(`L1D_PARAMS) ();
                 errors = errors + 1;
                 if (errors <= 10) $display("TEST FAILED: MUX INVARIANT cycle %0d", cyc);
             end
+`ifdef L1D_CHECK_M1
+            if (|m1_bad) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-1 COPY INVARIANT cycle %0d bad=%h", cyc, m1_bad);
+            end
+`endif
+`ifdef L1D_CHECK_M6
+            if (dut_opt.m6_mask !== dut_opt.u_rs_arb.mask_r ||
+                dut_opt.m6_gm !== dut_opt.u_rs_arb.gm || dut_opt.m6_gu !== dut_opt.u_rs_arb.gu ||
+                popcount(dut_opt.m6_sm) != 1 || popcount(dut_opt.m6_su) != 1) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-6 MASK/PICK INVARIANT cycle %0d", cyc);
+            end
+`endif
             // N-1 inside the optimised MSHR: the control arbiters give the same grants as the data arbiters in every cycle
             if (dut_opt.ar_gc !== dut_opt.ar_g || dut_opt.rs_gc !== dut_opt.rs_g || dut_opt.tk_gc !== dut_opt.tk_g) begin
                 n1_err = n1_err + 1;

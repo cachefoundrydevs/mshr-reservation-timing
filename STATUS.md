@@ -24,3 +24,6 @@
 | M-3 | compute granted / not-granted next state in parallel, grant selects last | untried | targets entry tk_q, busy_r, state |
 | M-4 | parallel-prefix pick in arb_rr | won | -2.4 ps at 250/200; -7.6 ps sized; promoted on timing branch |
 | M-5 | one CAM match vector per consumer | untried | targets lookup_* pins |
+| M-1 | per-slice response control/request copies and arbitration | running | iteration 4; same-cycle flags/masks/grants checked; estimate +1-5% area |
+| M-6 | parallel response payload outcomes, arbitration round selects last | running | iteration 4; copied-mask invariant; estimate +2-6% area |
+| M-3 | granted/not-granted response flag updates in parallel | running | iteration 4; exact Shannon expansion; near unchanged area |

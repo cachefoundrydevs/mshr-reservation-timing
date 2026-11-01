@@ -165,3 +165,102 @@ in this run, but its slower timing remains rejected. Documentation has no
 hardware behavior; checker additions only strengthen existing verification.
 
 This is a proposal for user re-check. Nothing is merged into main.
+
+
+## Iteration 4 (2026-11-01): candidates awaiting Actions
+
+Branch: timing/iteration-4-response, created from timing/iteration-1-r1 at
+7c89d0c98fd024afbea47bccc81ada9365f74596. Latest baseline evidence is Actions
+41293960919 on that exact promotion commit: opt 275.6 / 263.7 / 273.1 ps,
+entry 230.5 / 230.5 / 228.0, reservation 242.9 / 242.9 / 240.4. Compile,
+12/12 lockstep and all bounded formal checks pass. Read latest/RUN.txt,
+latest/comparison.md and the full opt t250 violations report from results.
+
+A: rs_arb_q -> masked/wraparound round-robin pick -> response mux/buffers
+-> response_packet[70], -25.6 ps slack at 250. Response seat follows at
+-25.5, token line at -22.1, entry line/seat/size at -20.1, token flags at
+-18.6, AXI line at -18.4. The response request flop has fanout 7 and
+47.8 ps clock-to-Q; the path includes two output-buffer stages totaling
+42.8 ps. A response-only improvement can expose the token/address paths.
+
+| id | module | idea | target | expected gain (estimate) | expected area | risk |
+|---|---|---|---|---|---|---|
+| M-1 | l1d_mshr | per-slice response control/request copies and arbitration | response packet/seat | response group 10-25 ps; module 0-8 ps | +1-5% vs 11643 | control input fanout, duplicated arbitration, unrelated remapping |
+| M-6 | l1d_mshr | parallel masked/wraparound payload outcomes, round select last | response packet/seat | response group 5-20 ps; module 0-8 ps | +2-6% | round-select fanout and larger mux cone |
+| M-3 | l1d_mshr via entry control | compute response-taken/not-taken flag updates in parallel | busy_r, tk_q and copies | module 1-10 ps | near unchanged | ABC may refactor identically or worsen other paths |
+
+Exactness and self-review (before verification):
+
+M-1, complete file variants/M-1/l1d_mshr.v:
+* Baseline has request flops, not registered grants. Preserve every port by
+  copying just dat/mrg/response-request control locally, not whole entries.
+  For each entry and each slice, dat_copy has the original dat_q recurrence
+  using e_ar == ar_q and the original accepted and beat-valid handshakes;
+  mrg_copy is its last-beat pulse; rs_copy has the original response-request
+  recurrence. All reset to zero at the same synchronous edge. Induction
+  proves equality with dat_q, mrg_q and rs_arb_q after every edge.
+* Each slice arbiter sees equal requests, the same reset and response_taken,
+  hence equal masks and grants in every cycle. Its select has the identical
+  entry-0 fallback. Only response_packet and response_seat use copied grants;
+  original arbitration still drives valid/control, so no new feedback path.
+  All response payload values are identical even when invalid. Every lookup,
+  allocation, AXI, refill, install, busy and freed output is unchanged.
+* Added: localparams M1_SLICES=AXI_BEATS, M1_SLICE_W=ceil(RESP_W/slices);
+  RESP_W-bit m1_packet; N-bit m1_seat_sel; genvars ms/mg/mb; per-slice
+  N-bit requests/grants/select_bits, RESP_W-bit combinational packet,
+  integer k, and an unchanged l1d_arb_rr instance (its mask is N bits);
+  per-entry scalar dat_copy/mrg_copy/rs_copy flops and beat_valid/last_copy
+  wires. rs_pkt becomes wire, same RESP_W width. Default: 4 slices, 18 bits,
+  96 scalar control copies plus the arbiters' masks. No buffer/data flops
+  are copied. No old width/reset, parameter, port or latency changes.
+* L1D_CHECK_M1 enables additional tb_mshr_equiv checks only for this shape:
+  every copy against original dat/mrg/response flag, every slice mask,
+  grant and fallback select against original arbitration. m1_bad is checked
+  before input drive and adds to existing errors with TEST FAILED. The
+  original comparisons are untouched. A local elaboration issue in the new
+  checker was fixed before testing by using the test's AXI_BEATS constant
+  rather than a hierarchical constant in generate bounds; RTL did not change.
+
+M-6, complete file variants/M-6/l1d_mshr.v:
+* m6_mask resets to the same zero mask and, only when a response is taken
+  and valid, loads OR of the lower original grant bits. This is precisely
+  the original next-mask function, so m6_mask == u_rs_arb.mask_r by induction.
+  Masked and wraparound lowest picks are the same original gm/gu functions.
+* Distribute selection over the two payload mux outcomes, then select with
+  any masked request: mux(use, mux(gm,data), mux(gu,data)) equals the original
+  mux(mux(use,gm,gu),data). Each outcome retains the entry-0 fallback. This
+  changes only packet/seat cones. Valid, control and every other MSHR output
+  use unchanged logic and state; no extra cycle or output-valid exception.
+* Added: N-bit kept m6_mask state, zero reset; N-bit m6_mask_next/m6_masked/
+  m6_gm/m6_gu/m6_sm/m6_su wires, scalar m6_use, genvar m6j, integer m6k,
+  RESP_W-bit combinational m6_pm/m6_pu, SEAT_W-bit m6_tm/m6_tu.
+  rs_pkt/rs_seat become wires with unchanged widths. No old reset, width,
+  parameter, port or latency changes. No data-register copies.
+* L1D_CHECK_M6 enables the new mask-equality, pick-equality and fallback
+  one-hot checks in tb_mshr_equiv; the existing binary mux checker also
+  checks actual payloads including invalid cycles. Failures add to errors
+  and print TEST FAILED. Existing comparisons remain untouched.
+
+M-3, complete file variants/M-3/l1d_mshr_entry.v:
+* Shannon expansion on response_taken computes exactly F(0) and F(1) for
+  busy_r, rs_n and tk_n, then selects the same-cycle result. This is a pure
+  Boolean identity, including error/free and install priorities. State case,
+  flag flop reset/update blocks and payload blocks otherwise stay unchanged.
+* Added scalar wires m3_install_free, m3_busy_wait/m3_busy_taken,
+  m3_tk_wait/m3_tk_taken. Existing rs_n/tk_n and busy_r D functions are
+  rewritten but remain identical. No new flops, changed widths/reset,
+  parameters, ports or latency. All entry output pins (busy, requests,
+  unique, response/seat, buffer/has-data, install state, swap/slot, freed)
+  therefore preserve the original same-cycle function by induction; all
+  containing MSHR output pins also preserve their functions.
+* L1D_CHECK_M3 enables an extra tb_mshr_entry_equiv checker comparing each
+  rewritten next function directly with the old Boolean expression. It
+  adds to errors, prints TEST FAILED, and does not alter old comparisons.
+
+Local pre-checks: all three pass Verilog-2005 RTL compile, Verilator lint,
+and 100000-cycle whole-MSHR lockstep with the new invariant checkers. M-3
+also passes 150000-cycle entry lockstep and the six-cycle bounded entry
+proof (FORMAL: ALL EQUIVALENT (mshr_entry)). No TEST FAILED or MISMATCH.
+Local results are preliminary only. Actions on one source commit must
+provide lint, 12/12 and all five formal results before any promotion.
+Decision: pending. No RTL promotion in iteration 4 yet.
