@@ -186,13 +186,12 @@ Removed 0 unused modules.
 Cleaned up 0 empty switches.
 
 13.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
-Marked 6 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183 in module l1d_arb_rr.
-Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:117$214 in module l1d_arb_rr.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:121$174 in module l1d_arb_rr.
 Removed a total of 0 dead cases.
 
 13.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
 Removed 0 redundant assignments.
-Promoted 22 assignments to connections.
+Promoted 2 assignments to connections.
 
 13.4. Executing PROC_INIT pass (extract init attributes).
 
@@ -200,57 +199,28 @@ Promoted 22 assignments to connections.
 
 13.6. Executing PROC_ROM pass (convert switches to ROMs).
 Converted 0 switches.
-<suppressed ~8 debug messages>
+<suppressed ~2 debug messages>
 
 13.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
-Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-     1/12: $3\iu[1:0]
-     2/12: $3\gu[2:2]
-     3/12: $3\im[1:0]
-     4/12: $3\gm[2:2]
-     5/12: $2\iu[1:0]
-     6/12: $2\gu[1:1]
-     7/12: $2\im[1:0]
-     8/12: $2\gm[1:1]
-     9/12: $1\iu[1:0]
-    10/12: $1\gu[0:0]
-    11/12: $1\im[1:0]
-    12/12: $1\gm[0:0]
-Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:95$202'.
-Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:109$206'.
-Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:117$214'.
+Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:114$170'.
+Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:121$174'.
      1/1: $0\mask_r[2:0]
 
 13.8. Executing PROC_DLATCH pass (convert process syncs to latches).
-No latch inferred for signal `\l1d_arb_rr.\i' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-No latch inferred for signal `\l1d_arb_rr.\gm' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-No latch inferred for signal `\l1d_arb_rr.\seen_u' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-No latch inferred for signal `\l1d_arb_rr.\seen_m' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-No latch inferred for signal `\l1d_arb_rr.\iu' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-No latch inferred for signal `\l1d_arb_rr.\im' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-No latch inferred for signal `\l1d_arb_rr.\gu' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-No latch inferred for signal `\l1d_arb_rr.\grant_onehot' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:95$202'.
-No latch inferred for signal `\l1d_arb_rr.\grant_index' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:95$202'.
-No latch inferred for signal `\l1d_arb_rr.\m' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:109$206'.
-No latch inferred for signal `\l1d_arb_rr.\bu' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:109$206'.
-No latch inferred for signal `\l1d_arb_rr.\bm' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:109$206'.
-No latch inferred for signal `\l1d_arb_rr.\mu' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:109$206'.
-No latch inferred for signal `\l1d_arb_rr.\mm' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:109$206'.
+No latch inferred for signal `\l1d_arb_rr.\grant_onehot' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:114$170'.
+No latch inferred for signal `\l1d_arb_rr.\grant_index' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:114$170'.
 
 13.9. Executing PROC_DFF pass (convert process syncs to FFs).
-Creating register for signal `\l1d_arb_rr.\mask_r' using process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:117$214'.
-  created $dff cell `$procdff$255' with positive edge clock.
+Creating register for signal `\l1d_arb_rr.\mask_r' using process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:121$174'.
+  created $dff cell `$procdff$199' with positive edge clock.
 
 13.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
 
 13.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
-Found and cleaned up 6 empty switches in `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:83$183'.
-Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:95$202'.
-Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:109$206'.
-Found and cleaned up 2 empty switches in `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:117$214'.
-Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:117$214'.
-Cleaned up 8 empty switches.
+Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:114$170'.
+Found and cleaned up 2 empty switches in `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:121$174'.
+Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_R-2/l1d_arb_rr.v:121$174'.
+Cleaned up 2 empty switches.
 
 13.12. Executing OPT_EXPR pass (perform const folding).
 Optimizing module l1d_arb_rr.
@@ -260,8 +230,8 @@ Optimizing module l1d_arb_rr.
 
 15. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \l1d_arb_rr..
-Removed 4 unused cells and 71 unused wires.
-<suppressed ~9 debug messages>
+Removed 0 unused cells and 24 unused wires.
+<suppressed ~1 debug messages>
 
 16. Executing MEMORY pass.
 
@@ -299,13 +269,13 @@ Optimizing module l1d_arb_rr.
 
 18.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\l1d_arb_rr'.
-Computing hashes of 32 cells of `\l1d_arb_rr'.
+Computing hashes of 19 cells of `\l1d_arb_rr'.
 Finding duplicate cells in `\l1d_arb_rr'.
 Removed a total of 0 cells.
 
 18.3. Executing OPT_DFF pass (perform DFF optimizations).
-Adding SRST signal on $procdff$255 ($dff) from module l1d_arb_rr (D = $procmux$250_Y, Q = \mask_r, rval = 3'000).
-Adding EN signal on $auto$ff.cc:337:slice$256 ($sdff) from module l1d_arb_rr (D = \mask_next, Q = \mask_r).
+Adding SRST signal on $procdff$199 ($dff) from module l1d_arb_rr (D = $procmux$194_Y, Q = \mask_r, rval = 3'000).
+Adding EN signal on $auto$ff.cc:337:slice$200 ($sdff) from module l1d_arb_rr (D = \mask_next, Q = \mask_r).
 
 18.4. Executing OPT_CLEAN pass (remove unused cells and wires).
 Finding unused cells or wires in module \l1d_arb_rr..
@@ -319,7 +289,7 @@ Optimizing module l1d_arb_rr.
 
 18.7. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\l1d_arb_rr'.
-Computing hashes of 30 cells of `\l1d_arb_rr'.
+Computing hashes of 17 cells of `\l1d_arb_rr'.
 Finding duplicate cells in `\l1d_arb_rr'.
 Removed a total of 0 cells.
 
@@ -358,11 +328,11 @@ Optimizing module miter.
 
 21.2. Executing OPT_MERGE pass (detect identical cells).
 Finding identical cells in module `\miter'.
-Computing hashes of 61 cells of `\miter'.
+Computing hashes of 48 cells of `\miter'.
 Finding duplicate cells in `\miter'.
-Computing hashes of 60 cells of `\miter'.
+Computing hashes of 47 cells of `\miter'.
 Finding duplicate cells in `\miter'.
-Computing hashes of 59 cells of `\miter'.
+Computing hashes of 46 cells of `\miter'.
 Finding duplicate cells in `\miter'.
 <suppressed ~6 debug messages>
 Removed a total of 2 cells.
@@ -382,120 +352,120 @@ Using SAT solver `minisat`.
 Setting up time step 1:
 Import set-constraint for this timestep: \in_rst = 1'1
 Final constraint equation: \in_rst = 1'1
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Final init constraint equation: { \gold.last \gate.mask_r } = 5'00000
 
 Setting up time step 2:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 3:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 4:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 5:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 6:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 7:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 8:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 9:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 10:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 11:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 12:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 13:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 14:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 15:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 16:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 17:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 18:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 19:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 
 Setting up time step 20:
 Final constraint equation: { } = { }
-Imported 59 cells to SAT database.
+Imported 46 cells to SAT database.
 Import proof-constraint: \trigger = 1'0
 Final proof equation: \trigger = 1'0
 Import show expression: \in_clk
@@ -510,7 +480,7 @@ Import show expression: \gold_grant_index
 Import show expression: \gate_any_request
 Import show expression: \gold_any_request
 
-Solving problem with 561430 variables and 1665244 clauses..
+Solving problem with 559310 variables and 1659604 clauses..
 SAT proof finished - no model found: SUCCESS!
 
                   /$$$$$$      /$$$$$$$$     /$$$$$$$    
@@ -523,6 +493,6 @@ SAT proof finished - no model found: SUCCESS!
                  \____ $$$|__/|________/|__/|_______/|__/
                        \__/                              
 
-End of script. Logfile hash: 859885f71f, time: 2.48s, user: 2.22s, system: 0.26s, MEM: 499.48 MB peak
+End of script. Logfile hash: b7157e6012, time: 2.33s, user: 2.14s, system: 0.20s, MEM: 491.17 MB peak
 Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
 Time spent: 99% 1x sat (2 sec), 0% 4x read_verilog (0 sec), ...
