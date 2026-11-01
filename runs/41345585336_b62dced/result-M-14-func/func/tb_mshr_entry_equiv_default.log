@@ -1,0 +1,3 @@
+cycles 400000  store merges 4234 (running over the line end: 505)  load answers 4226  responses 17091  swaps in TOKEN 9610  installs 5206  read-error frees 1502
+TEST PASSED
+/__w/mshr-reservation-timing/mshr-reservation-timing/tb/tb_mshr_entry_equiv.v:224: $finish called at 4000020000 (1ps)

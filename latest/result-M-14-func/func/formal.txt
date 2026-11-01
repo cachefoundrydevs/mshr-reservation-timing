@@ -1,0 +1,6 @@
+arb_rr: EQUIVALENT for 20 cycles after reset (0 s)
+arb_rr3: EQUIVALENT for 20 cycles after reset (3 s)
+mshr_entry: EQUIVALENT for 6 cycles after reset (46 s)
+rsv: EQUIVALENT for 12 cycles after reset (2 s)
+rsv_to: EQUIVALENT for 16 cycles after reset (3 s)
+FORMAL: ALL EQUIVALENT (arb_rr arb_rr3 mshr_entry rsv rsv_to)
