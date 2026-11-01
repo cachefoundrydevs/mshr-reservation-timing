@@ -34,3 +34,6 @@
 | M-1 | per-slice response request/control copies | lost | iteration 4: +20.6 ps at 250; buffer chain remains |
 | M-3 | response grant selects flag updates last | lost | iteration 4: entry -9 ps but full MSHR +6.5 ps |
 | M-6 | parallel response round outcomes, select last | lost | iteration 4: response improves but full MSHR +3.5 ps |
+| M-7 | all-channel parallel payload outcomes, round selects last | running | iteration 5; extends the measured response benefit without promoting M-6 |
+| M-8 | absorb redundant masked-round grant and next-mask gating | running | iteration 5; exact Boolean absorption, no new state |
+| M-9 | parallel circular pick with one-hot last-served state | running | iteration 5; each last bit checked directly against reference last |

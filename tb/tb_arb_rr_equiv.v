@@ -62,12 +62,34 @@ module tb_arb_rr_equiv;
                 seen_m = seen_m | masked[j];
                 seen_u = seen_u | requests[j];
             end
+            // M-8: a masked winner or masked lower prefix implies a masked request.
+            if (((|gm) || (|mm)) && !(|masked)) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: MASK ABSORPTION INVARIANT cycle %0d N=%0d", cyc, width);
+            end
             if (gm !== expect_gm || gu !== expect_gu || mm !== expect_mm || mu !== expect_mu) begin
                 errors = errors + 1;
                 if (errors <= 10) $display("TEST FAILED: PARALLEL PICK INVARIANT cycle %0d N=%0d", cyc, width);
             end
         end
     endtask
+
+`ifdef L1D_CHECK_M9
+    // Compare every one-hot state bit directly with the original binary last.
+    task check_circular_last;
+        input integer width, reference_last;
+        input [7:0] last_bits;
+        integer j;
+        begin
+            for (j = 0; j < width; j = j + 1) begin
+                if (last_bits[j] !== (reference_last == j)) begin
+                    errors = errors + 1;
+                    if (errors <= 10) $display("TEST FAILED: M-9 LAST INVARIANT cycle %0d N=%0d bit=%0d", cyc, width, j);
+                end
+            end
+        end
+    endtask
+`endif
 
     integer n_g2, n_g3, n_g4, n_g5, n_g8;
     initial begin
@@ -89,6 +111,13 @@ module tb_arb_rr_equiv;
             check_parallel_pick(4, req[3:0], u_o4.masked, u_o4.gm, u_o4.gu, u_o4.mm, u_o4.mu);
             check_parallel_pick(5, req[4:0], u_o5.masked, u_o5.gm, u_o5.gu, u_o5.mm, u_o5.mu);
             check_parallel_pick(8, req[7:0], u_o8.masked, u_o8.gm, u_o8.gu, u_o8.mm, u_o8.mu);
+`ifdef L1D_CHECK_M9
+            check_circular_last(2, u_r2.last, u_o2.m9_last);
+            check_circular_last(3, u_r3.last, u_o3.m9_last);
+            check_circular_last(4, u_r4.last, u_o4.m9_last);
+            check_circular_last(5, u_r5.last, u_o5.m9_last);
+            check_circular_last(8, u_r8.last, u_o8.m9_last);
+`endif
             if (|o2) n_g2 = n_g2 + 1;
             if (|o3) n_g3 = n_g3 + 1;
             if (|o4) n_g4 = n_g4 + 1;

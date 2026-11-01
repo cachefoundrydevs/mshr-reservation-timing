@@ -258,6 +258,26 @@ module tb_mshr_equiv #(`L1D_PARAMS) ();
                 if (errors <= 10) $display("TEST FAILED: M-6 MASK/PICK INVARIANT cycle %0d", cyc);
             end
 `endif
+`ifdef L1D_CHECK_M7
+            if (dut_opt.m7_ar_mask !== dut_opt.u_ar_arb.mask_r ||
+                dut_opt.m7_ar_gm !== dut_opt.u_ar_arb.gm || dut_opt.m7_ar_gu !== dut_opt.u_ar_arb.gu ||
+                popcount(dut_opt.m7_ar_sm) != 1 || popcount(dut_opt.m7_ar_su) != 1) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-7 ar MASK/PICK INVARIANT cycle %0d", cyc);
+            end
+            if (dut_opt.m7_rs_mask !== dut_opt.u_rs_arb.mask_r ||
+                dut_opt.m7_rs_gm !== dut_opt.u_rs_arb.gm || dut_opt.m7_rs_gu !== dut_opt.u_rs_arb.gu ||
+                popcount(dut_opt.m7_rs_sm) != 1 || popcount(dut_opt.m7_rs_su) != 1) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-7 rs MASK/PICK INVARIANT cycle %0d", cyc);
+            end
+            if (dut_opt.m7_tk_mask !== dut_opt.u_tk_arb.mask_r ||
+                dut_opt.m7_tk_gm !== dut_opt.u_tk_arb.gm || dut_opt.m7_tk_gu !== dut_opt.u_tk_arb.gu ||
+                popcount(dut_opt.m7_tk_sm) != 1 || popcount(dut_opt.m7_tk_su) != 1) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-7 tk MASK/PICK INVARIANT cycle %0d", cyc);
+            end
+`endif
             // N-1 inside the optimised MSHR: the control arbiters give the same grants as the data arbiters in every cycle
             if (dut_opt.ar_gc !== dut_opt.ar_g || dut_opt.rs_gc !== dut_opt.rs_g || dut_opt.tk_gc !== dut_opt.tk_g) begin
                 n1_err = n1_err + 1;

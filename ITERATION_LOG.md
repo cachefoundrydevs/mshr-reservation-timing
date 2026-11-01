@@ -311,3 +311,101 @@ No opt or protected path changed in this iteration. New baseline stays
 242.9 / 242.9 / 240.4 reservation. Goal gap remains 45.6 ps to 230 unsized.
 Nothing is merged to main; all work remains a proposal for user re-check.
 
+## Iteration 5 (2026-11-01): candidates awaiting Actions
+
+No iteration 4 timing candidate can satisfy the keep rule, so the baseline
+remains M-4: MSHR 275.6 / 263.7 / 273.1 ps; entry 230.5 / 230.5 / 228.0;
+reservation 242.9 / 242.9 / 240.4. Source is the unchanged opt tuple from
+7c89d0c. Current response path remains rs_arb_q -> round-robin pick ->
+response mux/buffers -> response_packet[70], -25.6 ps at 250. All estimates
+below target the full MSHR. No claim is made from local tests alone.
+
+Iteration 4 guidance: M-6's response group improves to -12.6 ps, but AXI
+address becomes -29.1 and token flags -28.3. Generalize late round selection
+across the channels rather than promoting the regressing M-6. M-1's copied
+request still has fanout 7 and 47.6 ps clock-to-Q, followed by a long mux/
+buffer chain; it did not remove that dependency. M-3 exposes a -32.1 ps CAM
+path and worsens full-MSHR timing despite the standalone entry gain. M-5 is
+deferred: the retained baseline CAM path is 14.9 ps behind its response
+maximum, so a CAM-only change does not address the current limiting path.
+
+| id | module | idea | target | expected gain (estimate) | expected area | risk |
+|---|---|---|---|---|---|---|
+| M-7 | l1d_mshr | parallel masked/wraparound payloads on all three channels, round selects last | AXI/response/token outputs | 5-20 ps | +1-3% vs 11643 | new copy-mask D paths or remaining entry-control paths can dominate |
+| M-8 | l1d_arb_rr within MSHR | absorb redundant masked-round gating in grant and mask next | all grants, output muxes and entry control | 2-15 ps | near unchanged, within roughly 1% | synthesis may refactor identically or remap another cone adversely |
+| M-9 | l1d_arb_rr within MSHR | parallel circular interval picks with one-hot last-served state | all three grant/mux and control paths | 5-25 ps | +1-5% | request fanout and interval logic area can erase the depth gain |
+
+Exactness and self-review:
+
+M-7, complete file variants/M-7/l1d_mshr.v:
+* For each ar/rs/tk channel, the new kept mask resets to zero and loads the
+  prefix of the original grant only on the original taken-and-valid enable.
+  This is the original next-mask function; induction gives equality with
+  the original arbiter mask every cycle. The masked and unmasked lowest
+  picks are identical to its gm/gu. Each outcome preserves the entry-0
+  fallback. Distribute the unchanged selected payload function across its
+  two round choices and select the round last; no cycle is moved.
+* AXI line and unique, response packet and seat, and token line therefore
+  retain their values in every cycle, including invalid cycles. AXI sub-ID,
+  response valid, token ID/valid and all control remain on the original
+  arbiters. Lookup, allocation, install state/swap/slot/data, busy and freed
+  pins are unchanged. No new feedback into the original control state.
+* Added for each channel: N-bit m7_<channel>_mask state (zero reset), N-bit
+  m7_<channel>_next/masked/gm/gu/sm/su wires, scalar m7_<channel>_use, and
+  genvar m7_<channel>_j. Added combinational LINE_ADDR_W-bit m7_am/au/km/ku,
+  scalar m7_um/uu, RESP_W-bit m7_pm/pu, SEAT_W-bit m7_tm/tu, integer m7k.
+  ar_line/tk_line/ar_unique/rs_pkt/rs_seat become wires with the same widths;
+  procedural integer s is removed. Default widths: N=8, line=58, packet=72,
+  seat=3. No old reset value, parameter, port, width or latency changes.
+  No payload register or 512-bit buffer is copied.
+* L1D_CHECK_M7 enables a new tb_mshr_equiv block for each channel checking
+  copied masks, both picks and one-hot fallback selects. Existing raw mux
+  checks also compare all affected outputs to independent binary selection.
+  Errors add to the existing counter and print TEST FAILED; original
+  comparison lines remain intact.
+
+M-8, complete file variants/M-8/l1d_arb_rr.v:
+* A nonzero masked winner or masked lower prefix implies use_masked=1.
+  Thus use_masked ? gm : gu equals gm OR (gu AND NOT use_masked), and the
+  same absorption holds for mm/mu in mask_next. These are exact Boolean
+  identities on the original gm/gu/mm/mu functions. Mask reset, width and
+  update enable are unchanged. Induction preserves state; grant, index
+  and any-request ports are identical, hence every containing MSHR pin is
+  unchanged in every cycle. No added signals, flops, widths, resets, ports,
+  parameters or latency. Both changed assignments are marked M-8.
+* An additional block in check_parallel_pick in tb_arb_rr_equiv checks the
+  implication for every existing N=2,3,4,5,8 instance, counts into errors,
+  and prints TEST FAILED. No old comparison or checker was removed.
+
+M-9, complete file variants/M-9/l1d_arb_rr.v:
+* New invariant m9_last[j] == (reference last == j). Reset sets bit N-1,
+  exactly encoding the original last=N-1; a taken valid grant loads its
+  one-hot winner, otherwise state holds. For each candidate winner i and
+  last j, a constant circular interval covers j+1 through i-1, excluding i.
+  A request wins iff its bit is set and that preceding interval is empty.
+  Exactly one term is active in the one-hot last vector, so this is the
+  original circular priority order. All modulo operations are elaboration
+  constants, not runtime arithmetic. Grant is zero with no requests, and
+  the unchanged one-hot index encoder returns zero then. any_request is
+  unchanged. This proves same port values and turn updates by induction.
+* Added N-bit m9_last state (reset highest bit=1, remaining bits=0), N-bit
+  m9_grant, genvars m9i/m9j/m9k, per-winner N-bit turns, per-last N-bit
+  blockers and localparam BEFORE. mask_r changes from N-bit register to
+  N-bit derived wire: its bit j is OR of m9_last below j, exactly the old
+  above-last thermometer value (zero at reset). Old mask clocked block is
+  removed; no existing externally visible reset behavior, port, parameter,
+  width or latency changes. Existing mask/gm/gu/mm/mu probe names remain
+  valid; unused compatibility logic is pruned from synthesis.
+* L1D_CHECK_M9 enables check_circular_last in tb_arb_rr_equiv, comparing
+  every new state bit directly with the corresponding reference binary
+  last for N=2,3,4,5,8, thereby checking the one-hot invariant as well.
+  It counts into errors and prints TEST FAILED; all old comparisons remain.
+  Identical arbiter ports preserve every containing MSHR output function.
+
+Local pre-checks: M-7/M-8/M-9 pass Verilog-2005 RTL compile, Verilator
+lint, and 100000-cycle MSHR lockstep. M-8/M-9 also pass 20000-cycle arbiter
+lockstep for N=2,3,4,5,8 (including the new invariant checkers) and the
+20-cycle N=4 and N=3 bounded arbiter proofs. No TEST FAILED or MISMATCH.
+Local evidence is preliminary only. One Actions commit must provide lint,
+12/12, all five EQUIVALENT checks and acceptable timing before promotion.
+Decision: pending. No iteration 5 RTL promotion yet.
