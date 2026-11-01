@@ -1,4 +1,4 @@
-4 GHz target (250 ps): l1d_mshr 270.7 ps, NOT met, working goal 230 ps
+4 GHz target (250 ps): l1d_mshr 259.3 ps, NOT met, working goal 230 ps
 
 | iteration | date (UTC) | candidate | idea | lint | lockstep | formal | mshr 250 | mshr 250 sized | mshr 200 | slack at 250 | decision | promoted |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -14,6 +14,10 @@
 | 5 | 2026-11-01 | M-8 | absorb redundant masked-round gating | iverilog | 12/12 | EQUIVALENT | 271.7 | 264.6 | 269.2 | -21.7 | WIN (smaller gain) | no |
 | 5 | 2026-11-01 | M-9 | parallel circular one-hot last pick | iverilog | 12/12 | EQUIVALENT | 281.3 | 268.9 | 278.8 | -31.3 | LOSE | no |
 
+| 6 | 2026-11-01 | M-10 | M-7 plus absorbed arbiter | iverilog | 12/12 | EQUIVALENT | 264.9 | 256.6 | 262.4 | -14.9 | WIN (smaller gain) | no |
+| 6 | 2026-11-01 | M-11 | state-local token next value | iverilog | 12/12 | EQUIVALENT | 259.3 | 253.8 | 256.8 | -9.3 | WIN | yes |
+| 6 | 2026-11-01 | M-12 | control-only circular picks | iverilog | 12/12 | EQUIVALENT | 260.1 | 254.2 | 257.6 | -10.1 | WIN (smaller gain) | no |
+
 | iteration | mshr | entry | rsv | commit | Actions run |
 |---|---|---|---|---|---|
 | 0 | 278.0 / 271.3 / 275.5 | 230.5 / 230.5 / 228.0 | 252.3 / 248.2 / 249.8 | bb49958 | first run |
@@ -22,6 +26,8 @@
 | 3 | 275.6 / 263.7 / 273.1 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 75074d0 (M-4 source) | 41290245424 |
 | 4 | 275.6 / 263.7 / 273.1 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 5aa332c (opt unchanged) | 41332990431 |
 | 5 | 270.7 / 264.6 / 268.2 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 81c1a83 (M-7 source) | 41337210471 |
+
+| 6 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | d288b0d (M-11 source) | 41341553133 |
 
 | id | idea | status | reason |
 |---|---|---|---|
@@ -47,3 +53,6 @@
 | M-10 | combine M-7 payload factoring and M-8 arbiter absorption | running | iteration 6; fresh combined measurement, not assumed additive |
 | M-11 | state-local token next value | running | iteration 6; decoder invariant and old-equation checker |
 | M-12 | circular arbitration for control copies only | running | iteration 6; new control state decoded against original data masks |
+| M-10 | combine M-7 payload factoring and M-8 arbiter absorption | won | iteration 6: -5.8 ps; smaller gain, fresh combination next |
+| M-11 | state-local token next value | won | iteration 6: -11.4 ps mshr, -14.6 ps entry; promoted |
+| M-12 | circular arbitration for control copies only | won | iteration 6: -10.6 ps; smaller gain, fresh combination next |

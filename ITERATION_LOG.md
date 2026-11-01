@@ -563,4 +563,39 @@ entry proof (FORMAL: ALL EQUIVALENT (mshr_entry)). No TEST FAILED or
 MISMATCH occurs. Every built RTL file matches the promoted M-7 tuple plus
 its own candidate overlay byte-for-byte. Only later single-commit Actions
 lint/12-of-12/all-formal evidence can verify these combinations.
-Decision: pending. No iteration 6 promotion yet.
+
+Decision: M-11 WIN and promoted byte-for-byte; M-10/M-12 also meet the
+keep rule but have smaller gains and are not promoted. All candidates and
+opt have lint=iverilog, lockstep=12/12 and all five formal checks EQUIVALENT
+in run 41341553133, source d288b0dd3afec51e4eb1f949f56a85e3a97e9736.
+Read latest/RUN.txt, comparison.md and the complete PASTE_TO_CHATGPT.md;
+its failure-log section is empty. Formal is bounded as configured, not an
+unbounded proof; the inductive arguments above supply the state reasoning.
+
+| version | mshr 250 / sized / 200 | entry 250 / sized / 200 | rsv 250 / sized / 200 | mshr area |
+|---|---|---|---|---|
+| opt | 270.7 / 264.6 / 268.2 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 11801 |
+| M-10 | 264.9 / 256.6 / 262.4 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 11807 |
+| M-11 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | 11797 |
+| M-12 | 260.1 / 254.2 / 257.6 | 230.5 / 230.5 / 228.0 | 242.9 / 242.9 / 240.4 | 11806 |
+
+M-11 gains 11.4/10.8/11.4 ps on mshr and 14.6 ps in each entry column;
+reservation is unchanged. Exact decimal checks show no column regresses.
+No individual gain exceeds 30 ps. Working goal remains unmet by 29.3 ps;
+4 GHz remains unmet by 9.3 ps unsized and 3.8 ps sized. No-win counter=0.
+
+M-11's new 250 ps groups: busy D -9.3, line D -7.0, token flags -6.5,
+state D -6.1, lookup ID -4.3, size/seat -4.1, has-data -1.9 and response
+packet/seat -1.1. Worst path: entry3.rs_c_q -> OAI22 -> OR5 -> BUF ->
+AND2 -> OR2 -> AOI22 -> NOR2 -> AO33 -> BUF (entry_freed_pulse) -> OAI22
+-> entry4.busy_r D; arrival 233.0, required 223.7 ps, slack -9.3.
+M-10 instead limits on busy -> free pick -> allocation -> line/metadata D
+(-14.9). M-12 limits on response arbitration -> response mask feedback
+(-10.1). The next iteration targets these blocks rather than wide data.
+
+Source files archived in the source commit: M-10 arb 135 lines, M-11
+entry 551 lines, M-12 top 556 lines. Remove the tested candidate folders
+from the active matrix, retain all additional invariant checkers. Only
+rtl/opt/l1d_mshr_entry.v changes for promotion; other three opt files
+match the tested M-11 tuple byte-for-byte. No merge to main.
+Promoted entry SHA256: 8b5c4f72064138e7ee6b7ae77ffe243a0d1f56bb189bd14d0c232aacf9c7db25.

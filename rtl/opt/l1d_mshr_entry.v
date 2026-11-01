@@ -93,6 +93,7 @@
 //   integer b, m                 loop counters used to build the byte-mask logic (unrolled)
 // ============================================================================
 
+`define L1D_CHECK_M11
 `default_nettype none
 `include "l1d_defines.vh"
 
@@ -385,10 +386,14 @@ module l1d_mshr_entry #(`L1D_PARAMS) (
     wire last_beat = dat_q && axi_read_beat_valid && axi_read_beat_last;
     wire ar_n = (!busy_r && allocate_valid && !allocate_is_swap) || (ar_q && !axi_read_addr_accepted);
     wire rs_n = mrg_q || (rs_q && !response_taken);
-    wire tk_n = (!busy_r && allocate_valid && allocate_is_swap) ||
-                (rs_q && response_taken && !err_r) ||
-                (inst_q && refill_token_held_by_s1) ||
-                (tk_q && !refill_token_granted);
+    // TIMING OPT (M-11): the current-state flags are exclusive. Compute
+    // each state's token outcome in parallel; only its state's leaf matters.
+    // TOKEN holds unless granted, RESP enters only on a non-error response,
+    // and IDLE/INSTALL use the same allocation/held conditions as before.
+    wire m11_other = (!busy_r && allocate_valid && allocate_is_swap) ||
+                     (inst_q && refill_token_held_by_s1);
+    wire tk_n = tk_q ? !refill_token_granted :
+                (rs_q ? (response_taken && !err_r) : m11_other);
     // (* keep *) on both blocks: the second copies (..._arb_q) have the same inputs as the primary ones, and a plain synthesis would merge
     // them again. The primary copies feed the state logic of the entry, the _arb_ copies feed only the three arbiters of l1d_mshr (P8:
     // the worst path of l1d_mshr started at tk_q with 47 ps clock-to-q because of its fan-out of 7).
