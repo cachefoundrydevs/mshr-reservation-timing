@@ -27,7 +27,7 @@ Critical delay in ps, ASAP7, ideal clock, no wires. Smaller is faster.
 | R-1 | rsv timeout predecessor compare | won | rsv -9.4 ps at 200 |
 | R-2 | rsv snoop-hold factoring | lost | 3.6 ps slower than opt |
 | M-1 | per-slice parallel copies of the grant flops for the output muxes | untried | targets axi_read_req_line_addr path |
-| M-2 | flat AND-OR output muxes | untried | |
+| M-2 | flat AND-OR output muxes | running | iteration 3: independent per-bit reductions; expected 2-15 ps, unmeasured |
 | M-3 | compute granted / not-granted next state in parallel, grant selects last | untried | targets entry tk_q, busy_r, state |
-| M-4 | parallel-prefix pick in pri_enc / arb_rr | untried | check code first |
+| M-4 | parallel-prefix pick in arb_rr | running | iteration 3: request-prefix reductions and parallel index encoding; expected 5-20 ps, unmeasured |
 | M-5 | one CAM match vector per consumer | untried | targets lookup_* pins |

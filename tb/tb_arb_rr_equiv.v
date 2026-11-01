@@ -43,6 +43,32 @@ module tb_arb_rr_equiv;
     l1d_arb_rr     #(.N(8), .IDX_W(3)) u_o8 (.clk(clk), .rst(rst), .request_bits(req[7:0]), .grant_taken(taken), .grant_onehot(o8), .grant_index(g8), .any_request(a8));
     l1d_arb_rr_ref #(.N(8), .IDX_W(3)) u_r8 (.clk(clk), .rst(rst), .request_bits(req[7:0]), .grant_taken(taken), .grant_onehot(r8), .grant_index(h8), .any_request(b8));
 
+    // Iteration 3: independently scan requests to check both parallel picks
+    // and both next-mask prefixes. Width pads smaller instances with zeroes.
+    task check_parallel_pick;
+        input integer width;
+        input [7:0] requests, masked, gm, gu, mm, mu;
+        reg [7:0] expect_gm, expect_gu, expect_mm, expect_mu;
+        reg seen_m, seen_u;
+        integer j;
+        begin
+            expect_gm = 0; expect_gu = 0; expect_mm = 0; expect_mu = 0;
+            seen_m = 0; seen_u = 0;
+            for (j = 0; j < width; j = j + 1) begin
+                expect_mm[j] = seen_m;
+                expect_mu[j] = seen_u;
+                expect_gm[j] = masked[j] & ~seen_m;
+                expect_gu[j] = requests[j] & ~seen_u;
+                seen_m = seen_m | masked[j];
+                seen_u = seen_u | requests[j];
+            end
+            if (gm !== expect_gm || gu !== expect_gu || mm !== expect_mm || mu !== expect_mu) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: PARALLEL PICK INVARIANT cycle %0d N=%0d", cyc, width);
+            end
+        end
+    endtask
+
     integer n_g2, n_g3, n_g4, n_g5, n_g8;
     initial begin
         seed = SEED0; errors = 0; n_g2 = 0; n_g3 = 0; n_g4 = 0; n_g5 = 0; n_g8 = 0;
@@ -58,6 +84,11 @@ module tb_arb_rr_equiv;
                     $display("MISMATCH cycle %0d req=%b taken=%b: one-hot opt/ref  N=2 %b/%b  N=3 %b/%b  N=4 %b/%b  N=5 %b/%b  N=8 %b/%b",
                              cyc, req, taken, o2, r2, o3, r3, o4, r4, o5, r5, o8, r8);
             end
+            check_parallel_pick(2, req[1:0], u_o2.masked, u_o2.gm, u_o2.gu, u_o2.mm, u_o2.mu);
+            check_parallel_pick(3, req[2:0], u_o3.masked, u_o3.gm, u_o3.gu, u_o3.mm, u_o3.mu);
+            check_parallel_pick(4, req[3:0], u_o4.masked, u_o4.gm, u_o4.gu, u_o4.mm, u_o4.mu);
+            check_parallel_pick(5, req[4:0], u_o5.masked, u_o5.gm, u_o5.gu, u_o5.mm, u_o5.mu);
+            check_parallel_pick(8, req[7:0], u_o8.masked, u_o8.gm, u_o8.gu, u_o8.mm, u_o8.mu);
             if (|o2) n_g2 = n_g2 + 1;
             if (|o3) n_g3 = n_g3 + 1;
             if (|o4) n_g4 = n_g4 + 1;

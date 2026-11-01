@@ -211,6 +211,21 @@ module tb_mshr_equiv #(`L1D_PARAMS) ();
                     if (o_any !== r_any || o_freed !== r_freed) $display("   busy %b/%b freed %b/%b", o_any, r_any, o_freed, r_freed);
                 end
             end
+            // Iteration 3: one-hot mux selects, idle fallback, and selected data.
+            // Sample here before drive changes inputs; count into existing errors.
+            if (popcount(dut_opt.ar_sel) != 1 || popcount(dut_opt.rs_sel) != 1 ||
+                popcount(dut_opt.tk_sel) != 1 ||
+                (dut_opt.ar_g == 0 && !dut_opt.ar_sel[0]) ||
+                (dut_opt.rs_g == 0 && !dut_opt.rs_sel[0]) ||
+                (dut_opt.tk_g == 0 && !dut_opt.tk_sel[0]) ||
+                o_aline !== dut_opt.e_line[dut_opt.ar_i*LINE_ADDR_W +: LINE_ADDR_W] ||
+                o_tline !== dut_opt.e_line[dut_opt.tk_i*LINE_ADDR_W +: LINE_ADDR_W] ||
+                o_aru !== dut_opt.e_uniq[dut_opt.ar_i] ||
+                o_seat !== dut_opt.e_seat[dut_opt.rs_i*SEAT_W +: SEAT_W] ||
+                o_pkt !== dut_opt.e_pkt[dut_opt.rs_i*RESP_W +: RESP_W]) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: MUX INVARIANT cycle %0d", cyc);
+            end
             // N-1 inside the optimised MSHR: the control arbiters give the same grants as the data arbiters in every cycle
             if (dut_opt.ar_gc !== dut_opt.ar_g || dut_opt.rs_gc !== dut_opt.rs_g || dut_opt.tk_gc !== dut_opt.tk_g) begin
                 n1_err = n1_err + 1;
