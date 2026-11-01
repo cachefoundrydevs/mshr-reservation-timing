@@ -22,6 +22,10 @@
 | 7 | 2026-11-01 | M-14 | M-10 plus M-11 combination | iverilog | 12/12 | EQUIVALENT | 265.0 | 257.4 | 262.5 | -15.0 | LOSE | no |
 | 7 | 2026-11-01 | M-15 | control circular picks plus absorption and M-11 | iverilog | 12/12 | EQUIVALENT | 269.4 | 254.9 | 266.9 | -19.4 | LOSE | no |
 
+| 8 | 2026-11-01 | M-16 | response error selects busy outcome last | iverilog | 12/12 | EQUIVALENT | 276.3 | 269.0 | 273.8 | -26.3 | LOSE | no |
+| 8 | 2026-11-01 | M-17 | predecoded error-response state | iverilog | 12/12 | EQUIVALENT | 257.1 | 253.8 | 254.6 | -7.1 | LOSE (entry +4.5 ps) | no |
+| 8 | 2026-11-01 | M-18 | allocation-only busy copies | iverilog | 12/12 | EQUIVALENT | 277.3 | 262.4 | 274.8 | -27.3 | LOSE | no |
+
 | iteration | mshr | entry | rsv | commit | Actions run |
 |---|---|---|---|---|---|
 | 0 | 278.0 / 271.3 / 275.5 | 230.5 / 230.5 / 228.0 | 252.3 / 248.2 / 249.8 | bb49958 | first run |
@@ -34,6 +38,8 @@
 | 6 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | d288b0d (M-11 source) | 41341553133 |
 
 | 7 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | b62dced (opt unchanged) | 41345585336 |
+
+| 8 | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 | 30af1b0 (opt unchanged) | 41349607446 |
 
 | id | idea | status | reason |
 |---|---|---|---|
@@ -71,3 +77,6 @@
 | M-16 | response error selects busy outcome last | running | iteration 8; exclusive-state proof and old busy-equation checker |
 | M-17 | predecoded error-response state | running | iteration 8; one new flop checked against rs_q and err_r |
 | M-18 | dedicated busy copies for free-entry allocation | running | iteration 8; each bit checked equal to entry busy |
+| M-16 | response error selects busy outcome last | lost | iteration 8: +17.0 ps at 250/200; CAM has-data path dominates |
+| M-17 | predecoded error-response state | lost | iteration 8: mshr -2.2 ps but entry +4.5 ps violates keep rule |
+| M-18 | dedicated busy copies for free-entry allocation | lost | iteration 8: +18.0 ps at 250/200; token control feedback dominates |

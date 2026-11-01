@@ -465,7 +465,7 @@ The written arguments, complete added-signal inventories and per-pin
 self-review for every candidate are above. All old comparisons and all
 protected paths are preserved; this remains a proposal for user re-check.
 
-## Iteration 6 (2026-11-01): candidates awaiting Actions
+## Iteration 6 (2026-11-01): state-local token update
 
 Baseline M-7 passed all iteration 5 checks in run 41337210471 on commit
 81c1a8396ac77b2215ab0bb00936251daae9e75d and is now promoted on this branch.
@@ -781,4 +781,77 @@ file-generation script stopped before adding M-18's checker; its insertion
 locator was fixed before compilation, with no RTL change or verification
 failure. All inherited testbench lines remain in order. Built files match
 the M-11 opt tuple plus each candidate overlay byte-for-byte.
-Decision pending; no iteration 8 promotion.
+Decision: no eligible winner. All three have lint=iverilog, lockstep
+12/12 and every configured formal check EQUIVALENT in run 41349607446,
+source 30af1b0192ef74989dbe6f299cac2e545543c398. Read RUN.txt,
+comparison.md and complete PASTE_TO_CHATGPT.md; failure-log section empty.
+All invariant checkers are present and original comparisons are intact.
+
+| version | mshr 250 / sized / 200 | entry 250 / sized / 200 | rsv 250 / sized / 200 |
+|---|---|---|---|
+| opt | 259.3 / 253.8 / 256.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 |
+| M-16 | 276.3 / 269.0 / 273.8 | 225.9 / 225.9 / 223.4 | 242.9 / 242.9 / 240.4 |
+| M-17 | 257.1 / 253.8 / 254.6 | 220.4 / 220.4 / 217.9 | 242.9 / 242.9 / 240.4 |
+| M-18 | 277.3 / 262.4 / 274.8 | 215.9 / 215.9 / 213.4 | 242.9 / 242.9 / 240.4 |
+
+M-16 LOSE: +17.0/+15.2/+17.0 ps on mshr; area 11784. Its worst is
+line_r[52] -> CAM compare/reduction/priority -> lookup_entry_has_data,
+-26.3 ps. Allocation line D follows at -24.2, size D -23.1. The local
+busy equation is exact but changes mapping/fanout throughout the module.
+
+M-17 LOSE: mshr improves 2.2/0.0/2.2 ps (257.1/253.8/254.6), area 11802,
+but entry slows 4.5 ps in ALL columns (220.4/220.4/217.9), exceeding the
+1 ps regression limit. Exact decimal checks reject it, despite its main
+improvement and function passes. Its main worst is ar_arb_q -> data
+arbitration -> m7_ar_mask D (-7.1); state/install D -6.7, line D -4.1.
+Arrival 229.4, required 222.3 ps. Added state does not qualify for promotion.
+
+M-18 LOSE: +18.0/+8.6/+18.0 ps on mshr; area 11800. Worst is tk_c_q ->
+token control arbitration -> tk_arb_q, -27.3; line D -22.6, install D -21.1,
+new busy-copy D -20.6. Extra busy copies do not improve the whole design.
+
+No candidate is promoted. M-11 opt reproduces 259.3/253.8/256.8 ps,
+entry 215.9/215.9/213.4, reservation 242.9/242.9/240.4. Source files
+remain archived at 30af1b0: M-16 entry 559 lines, M-17 entry 561,
+M-18 top 495. Delete the three candidate folders as variants/README
+requires and retain their added checkers. No reference/common/include,
+formal/flow/scripts/workflow files or old comparison is modified.
+
+## Stop after iteration 8
+
+Iterations 7 and 8 have no eligible winner consecutively: stop under the
+explicit rule. Iterations 9 and 10 are not started. The working goal is
+NOT met: main is 29.3 ps above 230; 4 GHz still misses by 9.3 ps unsized
+and 3.8 ps sized. These experiments do not prove the target impossible.
+Compared with the iteration-3 handoff, main improves 16.3/9.9/16.3 ps and
+entry improves 14.6 ps in every column. Reservation remains unchanged.
+
+Retained worst 250 ps path is entry3.rs_c_q -> response control round-robin
+selection -> entry4.entry_freed_pulse -> entry4.busy_r D. Clock-to-Q 47.9;
+OAI22 13.8, OR5 29.8, BUF 17.9, AND2 17.9, OR2 19.1, AOI22 12.9,
+NOR2 19.5, AO33 31.4, BUF 13.9, OAI22 9.1 ps. Arrival 233.0, required
+223.7 after 12.5 uncertainty and 13.8 setup; slack -9.3. Near-critical
+line allocation (-7.0), token flags (-6.5), state (-6.1), lookup index
+(-4.3) and response/seat paths explain why improving one leaf can expose
+another. Arbitration, allocation and CAM fanout/mapping all matter; a
+same-cycle change cannot simply add a pipeline stage under exactness.
+
+Retained exactness review: inherited M-4 computes the same circular
+lowest-request pick and mask prefixes; inherited R-1 compares the timeout
+predecessor with the same update/reset behavior. M-7's three N-bit mask
+copies equal original arbiter masks; parallel masked/unmasked payload
+muxes preserve valid, index and entry-zero invalid fallback. M-11 adds
+only m11_other and uses exclusive checked state flags to select the same
+token next value. Full added-signal inventories and per-output arguments
+are in their iteration sections. No existing ports, parameters, widths,
+observable reset values or latency change; no 512-bit buffer replication.
+All new state invariants have errors/TEST FAILED checkers. All inherited
+testbench lines remain in order. Bounded formal evidence is not described
+as an unbounded proof. No merge or push to main; user re-check is still
+required before acceptance.
+
+Published result snapshot commit: 54d461869ae2768cbfdb6fc1b5268396ffca4328.
+Tested opt SHA256 l1d_arb_rr.v: e513301e34c32c7f2cc0f50b7429c6b1374f861ee87047f8ec12c83f01939257.
+Tested opt SHA256 l1d_mshr.v: b1aae73a804175162f84a58e0550ec7f5b09c746332588ca8b89ee6193802fae.
+Tested opt SHA256 l1d_mshr_entry.v: 8b5c4f72064138e7ee6b7ae77ffe243a0d1f56bb189bd14d0c232aacf9c7db25.
+Tested opt SHA256 l1d_reservation_unit.v: d70715f7de4f01d70cdcadd02eb477ef5fb4a715621bb69ae4d970f3002e307d.
