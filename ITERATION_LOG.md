@@ -599,3 +599,79 @@ from the active matrix, retain all additional invariant checkers. Only
 rtl/opt/l1d_mshr_entry.v changes for promotion; other three opt files
 match the tested M-11 tuple byte-for-byte. No merge to main.
 Promoted entry SHA256: 8b5c4f72064138e7ee6b7ae77ffe243a0d1f56bb189bd14d0c232aacf9c7db25.
+
+## Iteration 7: direct blockers and measured-component combinations
+
+A: Iteration 6 M-11's 250 ps path is rs_c_q -> control response
+round-robin arbitration -> entry_freed_pulse -> busy_r D, slack -9.3 ps.
+Line-address register D follows at -7.0 and token flags at -6.5.
+M-12's worst instead is response request -> data arbitration -> response
+mask feedback, -10.1 ps. M-10 shows free-entry allocation -> metadata/line
+register D at -14.9. These are same-cycle control feedback paths, after
+M-7 shortened the payload selection. No new buffer copies are proposed.
+
+| id | module | idea | expected gain (estimate) | expected area | risk |
+|---|---|---|---|---|---|
+| M-13 | l1d_mshr via arbiter | per-winner direct blocker reduction | 3-15 ps | +0-2% | request/mask fanout; unchanged mask feedback may dominate |
+| M-14 | l1d_mshr via arbiter | M-10 absorption plus M-11 entry baseline | 1-8 ps | within 1% | component gains need not compose |
+| M-15 | l1d_mshr | M-12 control-only circular picks plus M-10 absorption and M-11 entry | 2-15 ps | +0-2% | area/fanout and mapping; CAM/free allocation can become critical |
+
+Exactness and written self-review:
+
+M-13, complete file variants/M-13/l1d_arb_rr.v:
+* For candidate i with mask[i]=1, request[i] establishes the masked round;
+  it wins iff no lower masked request exists. For mask[i]=0, it wins iff
+  no lower request and no upper masked request exists. This is exactly
+  the old masked-then-unmasked priority for every binary mask, including
+  non-thermometer masks. Thus grant_onehot is identical combinationally.
+* Added N-bit m13_grant, genvars m13i/m13k, and N-bit blockers per winner.
+  No new flops. Original mask_r reset/enable/next function, gm/gu/mm/mu
+  probes, index encoding and request_present are unchanged. No changed
+  widths, reset values, ports, parameters or latency. Each arbiter output
+  is identical; all entry inputs and every top-level output pin therefore
+  have the original functions, including invalid payload values.
+* L1D_CHECK_M13 adds check_blocker_pick to the existing arbiter testbench:
+  for N=2,3,4,5,8 it compares the new grant against the independent old
+  round-select equation, increments errors and prints TEST FAILED.
+  All existing comparisons and M-7 mask/payload checkers remain intact.
+
+M-14, complete file variants/M-14/l1d_arb_rr.v:
+* Absorb use_masked from gm/mm because each implies a masked request:
+  gm | (gu & !use_masked), mm | (mu & !use_masked). This equals the old
+  mux for all binary inputs and masks. No added signals, flops, widths,
+  reset, ports, parameters or latency. All three arbiter outputs retain
+  the same function. The inherited M-11 entry invariant and M-7 payload
+  proofs compose through identical interfaces; all top-level pins remain
+  cycle-exact. Existing absorption and component checkers stay active.
+* This is a fresh combination, not a promotion of the uncombined M-10.
+
+M-15, complete files variants/M-15/l1d_arb_rr.v and l1d_mshr.v:
+* Combine the identical absorption function above with M-12 control-only
+  circular arbiters. For each ar/rs/tk channel, added N-bit m12_*_last
+  state resets one-hot at N-1 and updates to the selected request only
+  on taken-and-any. Added N-bit m12_*_grant, three genvars per channel,
+  per-winner N-bit turns, per-last N-bit blockers and constant BEFORE.
+  Keep component probe names and L1D_CHECK_M12 for the existing checker.
+* No external widths/reset/ports/parameters/latency change. Internal
+  control mask-state instances are replaced by one-hot last encoding:
+  last[j]=mask[j+1]&&!mask[j], last[N-1]=!mask[N-1]. The original zero
+  mask maps exactly to the new reset. Control/data request copies have
+  identical reset and next functions, so new control grants equal the
+  original data grants in every cycle. The checker compares every state
+  bit to this encoding and every control grant bit to its data grant;
+  errors/TEST FAILED remain active. No new invariant without a checker.
+* M-7 data payload factoring and all entry payload/FSM logic stay as in
+  the verified baseline. Identical grants preserve all entry handshakes,
+  valids, indices, AXI line/unique, response packet/seat, token line and
+  lookup outputs, even when valid is low. No 512-bit buffer copies.
+
+No existing comparison is changed or weakened. Local tests are preliminary;
+only a single-commit Actions run can verify the candidates.
+
+Baseline: verified M-11 promoted tuple, 259.3/253.8/256.8 ps mshr,
+215.9/215.9/213.4 entry, 242.9/242.9/240.4 reservation. Local RTL g2005
+compile, Verilator lint and 100000-cycle whole-MSHR lockstep pass for all
+three; M-13 also passes 20000-cycle arbiter lockstep and both 20-cycle
+arbiter bounded formal checks. No failures/mismatches. Each built RTL
+file is byte-identical to the promoted tuple plus its candidate overlay.
+Decision pending; no iteration 7 promotion.

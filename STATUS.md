@@ -56,3 +56,6 @@
 | M-10 | combine M-7 payload factoring and M-8 arbiter absorption | won | iteration 6: -5.8 ps; smaller gain, fresh combination next |
 | M-11 | state-local token next value | won | iteration 6: -11.4 ps mshr, -14.6 ps entry; promoted |
 | M-12 | circular arbitration for control copies only | won | iteration 6: -10.6 ps; smaller gain, fresh combination next |
+| M-13 | per-winner direct blocker grant | running | iteration 7; Boolean identity for every binary mask, original state retained |
+| M-14 | M-10 absorption plus M-11 entry | running | iteration 7; fresh combination of measured components |
+| M-15 | M-12 control topology plus absorption and M-11 entry | running | iteration 7; all component state checkers retained |

@@ -91,6 +91,19 @@ module tb_arb_rr_equiv;
     endtask
 `endif
 
+`ifdef L1D_CHECK_M13
+    task check_blocker_pick;
+        input integer width;
+        input [7:0] grant_bits, masked, gm, gu;
+        begin
+            if (grant_bits !== ((|masked) ? gm : gu)) begin
+                errors = errors + 1;
+                if (errors <= 10) $display("TEST FAILED: M-13 BLOCKER PICK cycle %0d N=%0d", cyc, width);
+            end
+        end
+    endtask
+`endif
+
     integer n_g2, n_g3, n_g4, n_g5, n_g8;
     initial begin
         seed = SEED0; errors = 0; n_g2 = 0; n_g3 = 0; n_g4 = 0; n_g5 = 0; n_g8 = 0;
@@ -117,6 +130,13 @@ module tb_arb_rr_equiv;
             check_circular_last(4, u_r4.last, u_o4.m9_last);
             check_circular_last(5, u_r5.last, u_o5.m9_last);
             check_circular_last(8, u_r8.last, u_o8.m9_last);
+`endif
+`ifdef L1D_CHECK_M13
+            check_blocker_pick(2, o2, u_o2.masked, u_o2.gm, u_o2.gu);
+            check_blocker_pick(3, o3, u_o3.masked, u_o3.gm, u_o3.gu);
+            check_blocker_pick(4, o4, u_o4.masked, u_o4.gm, u_o4.gu);
+            check_blocker_pick(5, o5, u_o5.masked, u_o5.gm, u_o5.gu);
+            check_blocker_pick(8, o8, u_o8.masked, u_o8.gm, u_o8.gu);
 `endif
             if (|o2) n_g2 = n_g2 + 1;
             if (|o3) n_g3 = n_g3 + 1;
