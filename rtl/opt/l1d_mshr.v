@@ -88,6 +88,7 @@
 //   wire [N*RESP_W-1:0] e_pkt                 the response packets of all entries laid end to end
 // ============================================================================
 
+`define L1D_CHECK_M7
 `default_nettype none
 `include "l1d_defines.vh"
 
@@ -251,6 +252,86 @@ module l1d_mshr #(`L1D_PARAMS) (
         .clk(clk), .rst(rst), .request_bits(e_tok_c), .grant_taken(refill_token_granted), .grant_onehot(tk_gc), .grant_index(), .any_request()
     );
 
+    // TIMING OPT (M-7): compute both arbitration-round payload outcomes for
+    // AXI, response and token in parallel, and let the round select act last.
+    // Each kept mask copy has the original reset/update rule; prefix of the
+    // original grant equals the original arbiter next mask in every cycle.
+    (* keep *) reg [N-1:0] m7_ar_mask;                // N = 8 bits
+    wire [N-1:0] m7_ar_next, m7_ar_masked, m7_ar_gm, m7_ar_gu;
+    wire [N-1:0] m7_ar_sm, m7_ar_su;                   // N = 8 bits each
+    wire m7_ar_use = |m7_ar_masked;
+    genvar m7_ar_j;
+    generate
+        for (m7_ar_j = 0; m7_ar_j < N; m7_ar_j = m7_ar_j + 1) begin : g_m7_ar
+            if (m7_ar_j == 0) begin : g_first
+                assign m7_ar_next[m7_ar_j] = 1'b0;
+                assign m7_ar_gm[m7_ar_j] = m7_ar_masked[m7_ar_j];
+                assign m7_ar_gu[m7_ar_j] = e_ar[m7_ar_j];
+            end else begin : g_rest
+                assign m7_ar_next[m7_ar_j] = |ar_g[m7_ar_j-1:0];
+                assign m7_ar_gm[m7_ar_j] = m7_ar_masked[m7_ar_j] & ~|m7_ar_masked[m7_ar_j-1:0];
+                assign m7_ar_gu[m7_ar_j] = e_ar[m7_ar_j] & ~|e_ar[m7_ar_j-1:0];
+            end
+        end
+    endgenerate
+    (* keep *) always @(posedge clk) begin
+        if (rst) m7_ar_mask <= {N{1'b0}};
+        else if (axi_read_req_ready && axi_read_req_valid) m7_ar_mask <= m7_ar_next;
+    end
+    assign m7_ar_masked = e_ar & m7_ar_mask;
+    assign m7_ar_sm = {m7_ar_gm[N-1:1], ~|m7_ar_gm[N-1:1]};
+    assign m7_ar_su = {m7_ar_gu[N-1:1], ~|m7_ar_gu[N-1:1]};
+    (* keep *) reg [N-1:0] m7_rs_mask;                // N = 8 bits
+    wire [N-1:0] m7_rs_next, m7_rs_masked, m7_rs_gm, m7_rs_gu;
+    wire [N-1:0] m7_rs_sm, m7_rs_su;                   // N = 8 bits each
+    wire m7_rs_use = |m7_rs_masked;
+    genvar m7_rs_j;
+    generate
+        for (m7_rs_j = 0; m7_rs_j < N; m7_rs_j = m7_rs_j + 1) begin : g_m7_rs
+            if (m7_rs_j == 0) begin : g_first
+                assign m7_rs_next[m7_rs_j] = 1'b0;
+                assign m7_rs_gm[m7_rs_j] = m7_rs_masked[m7_rs_j];
+                assign m7_rs_gu[m7_rs_j] = e_resp[m7_rs_j];
+            end else begin : g_rest
+                assign m7_rs_next[m7_rs_j] = |rs_g[m7_rs_j-1:0];
+                assign m7_rs_gm[m7_rs_j] = m7_rs_masked[m7_rs_j] & ~|m7_rs_masked[m7_rs_j-1:0];
+                assign m7_rs_gu[m7_rs_j] = e_resp[m7_rs_j] & ~|e_resp[m7_rs_j-1:0];
+            end
+        end
+    endgenerate
+    (* keep *) always @(posedge clk) begin
+        if (rst) m7_rs_mask <= {N{1'b0}};
+        else if (response_taken && response_valid) m7_rs_mask <= m7_rs_next;
+    end
+    assign m7_rs_masked = e_resp & m7_rs_mask;
+    assign m7_rs_sm = {m7_rs_gm[N-1:1], ~|m7_rs_gm[N-1:1]};
+    assign m7_rs_su = {m7_rs_gu[N-1:1], ~|m7_rs_gu[N-1:1]};
+    (* keep *) reg [N-1:0] m7_tk_mask;                // N = 8 bits
+    wire [N-1:0] m7_tk_next, m7_tk_masked, m7_tk_gm, m7_tk_gu;
+    wire [N-1:0] m7_tk_sm, m7_tk_su;                   // N = 8 bits each
+    wire m7_tk_use = |m7_tk_masked;
+    genvar m7_tk_j;
+    generate
+        for (m7_tk_j = 0; m7_tk_j < N; m7_tk_j = m7_tk_j + 1) begin : g_m7_tk
+            if (m7_tk_j == 0) begin : g_first
+                assign m7_tk_next[m7_tk_j] = 1'b0;
+                assign m7_tk_gm[m7_tk_j] = m7_tk_masked[m7_tk_j];
+                assign m7_tk_gu[m7_tk_j] = e_tok[m7_tk_j];
+            end else begin : g_rest
+                assign m7_tk_next[m7_tk_j] = |tk_g[m7_tk_j-1:0];
+                assign m7_tk_gm[m7_tk_j] = m7_tk_masked[m7_tk_j] & ~|m7_tk_masked[m7_tk_j-1:0];
+                assign m7_tk_gu[m7_tk_j] = e_tok[m7_tk_j] & ~|e_tok[m7_tk_j-1:0];
+            end
+        end
+    endgenerate
+    (* keep *) always @(posedge clk) begin
+        if (rst) m7_tk_mask <= {N{1'b0}};
+        else if (refill_token_granted && refill_token_valid) m7_tk_mask <= m7_tk_next;
+    end
+    assign m7_tk_masked = e_tok & m7_tk_mask;
+    assign m7_tk_sm = {m7_tk_gm[N-1:1], ~|m7_tk_gm[N-1:1]};
+    assign m7_tk_su = {m7_tk_gu[N-1:1], ~|m7_tk_gu[N-1:1]};
+
     // TIMING OPT (O-3): the winners' data are picked out of the entry buses with the
     // arbiters' ONE-HOT grants (AND-OR) and not with the grant NUMBERS (a binary shift amount like ar_i*LINE_ADDR_W fans out to every bit).
     // The old code read entry 0 when nobody is granted (the number is 0 then), so entry 0 is also selected when no other entry is
@@ -258,26 +339,39 @@ module l1d_mshr #(`L1D_PARAMS) (
     wire [N-1:0] ar_sel = {ar_g[N-1:1], ~|ar_g[N-1:1]};   // one-hot select of the AXI read address winner, N = 8 bits
     wire [N-1:0] rs_sel = {rs_g[N-1:1], ~|rs_g[N-1:1]};   // one-hot select of the response winner, N = 8 bits
     wire [N-1:0] tk_sel = {tk_g[N-1:1], ~|tk_g[N-1:1]};   // one-hot select of the refill token winner, N = 8 bits
-    reg  [LINE_ADDR_W-1:0] ar_line;                       // line address of the AXI read winner, LINE_ADDR_W = 58 bits
-    reg                    ar_unique;                     // unique-read flag of the AXI read winner
-    reg  [RESP_W-1:0]      rs_pkt;                        // response packet of the response winner, RESP_W = 72 bits
-    reg  [SEAT_W-1:0]      rs_seat;                       // seat of the response winner, SEAT_W = 3 bits
-    reg  [LINE_ADDR_W-1:0] tk_line;                       // line address of the refill token winner, LINE_ADDR_W = 58 bits
-    integer s;
+    wire [LINE_ADDR_W-1:0] ar_line, tk_line;             // LINE_ADDR_W = 58 bits
+    wire ar_unique;
+    wire [RESP_W-1:0] rs_pkt;                           // RESP_W = 72 bits
+    wire [SEAT_W-1:0] rs_seat;                          // SEAT_W = 3 bits
+    reg [LINE_ADDR_W-1:0] m7_am, m7_au, m7_km, m7_ku;   // 58 bits each
+    reg m7_um, m7_uu;
+    reg [RESP_W-1:0] m7_pm, m7_pu;                      // 72 bits each
+    reg [SEAT_W-1:0] m7_tm, m7_tu;                      // 3 bits each
+    integer m7k;
     always @* begin
-        ar_line   = {LINE_ADDR_W{1'b0}};
-        ar_unique = 1'b0;
-        rs_pkt    = {RESP_W{1'b0}};
-        rs_seat   = {SEAT_W{1'b0}};
-        tk_line   = {LINE_ADDR_W{1'b0}};
-        for (s = 0; s < N; s = s + 1) begin
-            ar_line   = ar_line   | ({LINE_ADDR_W{ar_sel[s]}} & e_line[s*LINE_ADDR_W +: LINE_ADDR_W]);
-            ar_unique = ar_unique | (ar_sel[s] & e_uniq[s]);
-            rs_pkt    = rs_pkt    | ({RESP_W{rs_sel[s]}}      & e_pkt[s*RESP_W +: RESP_W]);
-            rs_seat   = rs_seat   | ({SEAT_W{rs_sel[s]}}      & e_seat[s*SEAT_W +: SEAT_W]);
-            tk_line   = tk_line   | ({LINE_ADDR_W{tk_sel[s]}} & e_line[s*LINE_ADDR_W +: LINE_ADDR_W]);
+        m7_am = {LINE_ADDR_W{1'b0}}; m7_au = {LINE_ADDR_W{1'b0}};
+        m7_km = {LINE_ADDR_W{1'b0}}; m7_ku = {LINE_ADDR_W{1'b0}};
+        m7_pm = {RESP_W{1'b0}}; m7_pu = {RESP_W{1'b0}};
+        m7_tm = {SEAT_W{1'b0}}; m7_tu = {SEAT_W{1'b0}};
+        m7_um = 1'b0; m7_uu = 1'b0;
+        for (m7k = 0; m7k < N; m7k = m7k + 1) begin
+            m7_am = m7_am | ({LINE_ADDR_W{m7_ar_sm[m7k]}} & e_line[m7k*LINE_ADDR_W +: LINE_ADDR_W]);
+            m7_au = m7_au | ({LINE_ADDR_W{m7_ar_su[m7k]}} & e_line[m7k*LINE_ADDR_W +: LINE_ADDR_W]);
+            m7_km = m7_km | ({LINE_ADDR_W{m7_tk_sm[m7k]}} & e_line[m7k*LINE_ADDR_W +: LINE_ADDR_W]);
+            m7_ku = m7_ku | ({LINE_ADDR_W{m7_tk_su[m7k]}} & e_line[m7k*LINE_ADDR_W +: LINE_ADDR_W]);
+            m7_pm = m7_pm | ({RESP_W{m7_rs_sm[m7k]}} & e_pkt[m7k*RESP_W +: RESP_W]);
+            m7_pu = m7_pu | ({RESP_W{m7_rs_su[m7k]}} & e_pkt[m7k*RESP_W +: RESP_W]);
+            m7_tm = m7_tm | ({SEAT_W{m7_rs_sm[m7k]}} & e_seat[m7k*SEAT_W +: SEAT_W]);
+            m7_tu = m7_tu | ({SEAT_W{m7_rs_su[m7k]}} & e_seat[m7k*SEAT_W +: SEAT_W]);
+            m7_um = m7_um | (m7_ar_sm[m7k] & e_uniq[m7k]);
+            m7_uu = m7_uu | (m7_ar_su[m7k] & e_uniq[m7k]);
         end
     end
+    assign ar_line = m7_ar_use ? m7_am : m7_au;
+    assign ar_unique = m7_ar_use ? m7_um : m7_uu;
+    assign tk_line = m7_tk_use ? m7_km : m7_ku;
+    assign rs_pkt = m7_rs_use ? m7_pm : m7_pu;
+    assign rs_seat = m7_rs_use ? m7_tm : m7_tu;
     assign axi_read_req_line_addr   = ar_line;
     assign axi_read_req_sub_id    = ar_i;
     assign axi_read_req_unique = ar_unique;

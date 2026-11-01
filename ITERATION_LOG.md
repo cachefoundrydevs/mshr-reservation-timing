@@ -311,7 +311,7 @@ No opt or protected path changed in this iteration. New baseline stays
 242.9 / 242.9 / 240.4 reservation. Goal gap remains 45.6 ps to 230 unsized.
 Nothing is merged to main; all work remains a proposal for user re-check.
 
-## Iteration 5 (2026-11-01): candidates awaiting Actions
+## Iteration 5 (2026-11-01)
 
 No iteration 4 timing candidate can satisfy the keep rule, so the baseline
 remains M-4: MSHR 275.6 / 263.7 / 273.1 ps; entry 230.5 / 230.5 / 228.0;
@@ -408,4 +408,59 @@ lockstep for N=2,3,4,5,8 (including the new invariant checkers) and the
 20-cycle N=4 and N=3 bounded arbiter proofs. No TEST FAILED or MISMATCH.
 Local evidence is preliminary only. One Actions commit must provide lint,
 12/12, all five EQUIVALENT checks and acceptable timing before promotion.
-Decision: pending. No iteration 5 RTL promotion yet.
+Actions evidence: run 41337210471, source commit
+81c1a8396ac77b2215ab0bb00936251daae9e75d, published 2026-11-01T19:18:15Z.
+Fetched results and checked latest/RUN.txt, latest/comparison.md, the entire
+latest/PASTE_TO_CHATGPT.md (empty failure-log section), and the full M-7
+250 ps worst-path report. All candidates pass Icarus compile, 12/12
+lockstep, and all five bounded formal checks with their added invariants.
+No FAIL / MISMATCH / NOT PROVEN or first differing cycle exists.
+
+## Comparison (critical delay in ps, ASAP7, ideal clock, no wires; smaller is faster)
+
+| version | lint | lockstep | formal | mshr 250 | mshr 250 sized | mshr 200 | entry 250 | entry 250 sized | entry 200 | rsv 250 | rsv 250 sized | rsv 200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| M-7 | iverilog | 12/12 | EQUIVALENT | 270.7 | 264.6 | 268.2 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| M-8 | iverilog | 12/12 | EQUIVALENT | 271.7 | 264.6 | 269.2 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| M-9 | iverilog | 12/12 | EQUIVALENT | 281.3 | 268.9 | 278.8 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| R-2 | iverilog | 12/12 | EQUIVALENT | 275.6 | 263.7 | 273.1 | 230.5 | 230.5 | 228.0 | 246.5 | 246.5 | 244.0 |
+| opt | iverilog | 12/12 | EQUIVALENT | 275.6 | 263.7 | 273.1 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| ref |  |  |  | 542.3 | 463.0 | 539.8 | 476.6 | 418.5 | 474.1 | 258.0 | 251.5 | 255.5 |
+
+A version may replace rtl/opt only if lint passes, lockstep is 12/12, formal is EQUIVALENT, and it is faster (see PROMPT_ITERATION.md).
+
+Decision: M-7 and M-8 both WIN under the keep rule. M-7 improves MSHR by
+4.9 ps at 250 and 200; M-8 improves by 3.9 ps. Both are 0.9 ps worse sized,
+within the explicitly allowed 1.0 ps limit. All entry/reservation columns
+are unchanged. Select M-7 for the larger primary gain. M-8 is not promoted;
+its combination with M-7 is a fresh iteration 6 candidate, not an assumed gain.
+M-7 area is 11801 (+158, about 1.36%); M-8 area is 11635 (-8) vs 11643.
+No gain exceeds the 30 ps suspect-result threshold.
+
+New M-7 worst path at 250: g_entry[5].u_entry.rs_c_q -> response control
+arbitration -> token next function -> g_entry[4].u_entry.tk_arb_q, -20.7 ps.
+Clock-to-Q 42.9 ps, arrival 242.8, required 222.1 (12.5 ps uncertainty and
+15.4 ps setup). Busy D follows at -18.8 and state D at -15.4. Payload
+outputs no longer dominate. M-8's worst path is token control to token
+flags, -21.7 ps. These measurements guide the next control-only changes.
+
+M-9 LOSES: +5.7 / +5.2 / +5.7 ps vs opt, despite passing all functional
+checks. Area 11654. Worst path line_r[50] -> compare/priority ->
+lookup_entry_has_data, -31.3 ps; lookup ID -30.2, AXI line -26.8 and token
+line -25.6. Circular picking helped some arbitration paths but lost globally.
+
+Promoted to rtl/opt: l1d_mshr.v, byte-identical to M-7 in source 81c1a83.
+SHA-256: b1aae73a804175162f84a58e0550ec7f5b09c746332588ca8b89ee6193802fae. Other opt files are
+identical to that run's M-7 tuple. Removed M-7/M-8/M-9 folders after the
+decision; complete files (480 / 133 / 159 lines) remain in commit 81c1a83.
+Also removed the stale already rejected R-2 folder from future workflow
+matrices; its code and results remain in history and every status row stays.
+This cleanup changes no opt behavior.
+
+New baseline (250 / sized / 200): MSHR 270.7 / 264.6 / 268.2; entry
+230.5 / 230.5 / 228.0; reservation 242.9 / 242.9 / 240.4 ps. The 4 GHz
+target is still NOT met; gap to working goal 230 is 40.7 ps unsized.
+The consecutive-no-win counter resets to zero. No main merge or push.
+The written arguments, complete added-signal inventories and per-pin
+self-review for every candidate are above. All old comparisons and all
+protected paths are preserved; this remains a proposal for user re-check.
