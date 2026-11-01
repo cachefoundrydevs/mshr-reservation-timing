@@ -542,6 +542,6 @@ SAT proof finished - no model found: SUCCESS!
                  \____ $$$|__/|________/|__/|_______/|__/
                        \__/                              
 
-End of script. Logfile hash: 4b24bf90d1, time: 1.04s, user: 1.01s, system: 0.03s, MEM: 83.62 MB peak
+End of script. Logfile hash: 4b24bf90d1, time: 1.50s, user: 1.48s, system: 0.03s, MEM: 83.54 MB peak
 Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
 Time spent: 97% 1x sat (1 sec), 0% 4x read_verilog (0 sec), ...

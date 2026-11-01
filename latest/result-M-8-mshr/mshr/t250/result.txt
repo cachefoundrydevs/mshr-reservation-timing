@@ -1,1 +1,0 @@
-RESULT period=250 synth_slack=-21.7 synth_crit=271.7 area=11635 sized_slack=-14.6 sized_crit=264.6

@@ -1,0 +1,1 @@
+module=l1d_mshr t250=260.1 t250sized=254.2 t200=257.6 area=11806

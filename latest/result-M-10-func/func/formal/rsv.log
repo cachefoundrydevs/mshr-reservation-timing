@@ -1,0 +1,547 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+
+-- Executing script file `/__w/mshr-reservation-timing/mshr-reservation-timing/out/M-10/func/formal/rsv.ys' --
+
+1. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v' to AST representation.
+Generating RTLIL representation for module `\l1d_reservation_unit'.
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \l1d_reservation_unit
+
+2.2. Analyzing design hierarchy..
+Top module:  \l1d_reservation_unit
+Removed 0 unused modules.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 3 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19 in module l1d_reservation_unit.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:139$10 in module l1d_reservation_unit.
+Marked 3 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:123$3 in module l1d_reservation_unit.
+Removed a total of 0 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 3 redundant assignments.
+Promoted 2 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~9 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+     1/6: $0\amo_lock_timeout_pulse[0:0]
+     2/6: $0\to_last[0:0]
+     3/6: $0\to_cnt[10:0]
+     4/6: $0\amo_lock_line[57:0]
+     5/6: $0\amo_lock_snoop_hold[0:0]
+     6/6: $0\amo_lock_valid[0:0]
+Creating decoders for process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:139$10'.
+     1/2: $0\reservation_line_addr[57:0]
+     2/2: $0\reservation_valid[0:0]
+Creating decoders for process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:123$3'.
+     1/4: $3\v_s2[0:0]
+     2/4: $2\v_s2[0:0]
+     3/4: $1\l_s2[57:0]
+     4/4: $1\v_s2[0:0]
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\l1d_reservation_unit.\v_s2' from process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:123$3'.
+No latch inferred for signal `\l1d_reservation_unit.\l_s2' from process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:123$3'.
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\l1d_reservation_unit.\amo_lock_valid' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+  created $dff cell `$procdff$114' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\amo_lock_snoop_hold' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+  created $dff cell `$procdff$115' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\amo_lock_line' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+  created $dff cell `$procdff$116' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\amo_lock_timeout_pulse' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+  created $dff cell `$procdff$117' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\to_cnt' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+  created $dff cell `$procdff$118' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\to_last' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+  created $dff cell `$procdff$119' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\reservation_valid' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:139$10'.
+  created $dff cell `$procdff$120' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\reservation_line_addr' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:139$10'.
+  created $dff cell `$procdff$121' with positive edge clock.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 5 empty switches in `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+Removing empty process `l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:157$19'.
+Found and cleaned up 1 empty switch in `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:139$10'.
+Removing empty process `l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:139$10'.
+Found and cleaned up 3 empty switches in `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:123$3'.
+Removing empty process `l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:123$3'.
+Cleaned up 9 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_reservation_unit.
+
+4. Executing FLATTEN pass (flatten design).
+
+5. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+Removed 0 unused cells and 50 unused wires.
+<suppressed ~1 debug messages>
+
+6. Executing MEMORY pass.
+
+6.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+6.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+6.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+6.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+6.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+
+6.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+6.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+6.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+
+6.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+7. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+8. Executing OPT pass (performing simple optimizations).
+
+8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_reservation_unit.
+
+8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_reservation_unit'.
+Computing hashes of 62 cells of `\l1d_reservation_unit'.
+Finding duplicate cells in `\l1d_reservation_unit'.
+Computing hashes of 61 cells of `\l1d_reservation_unit'.
+Finding duplicate cells in `\l1d_reservation_unit'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+8.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$121 ($dff) from module l1d_reservation_unit (D = \l_s2, Q = \reservation_line_addr, rval = 58'0000000000000000000000000000000000000000000000000000000000).
+Adding SRST signal on $procdff$114 ($dff) from module l1d_reservation_unit (D = $procmux$82_Y, Q = \amo_lock_valid, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$123 ($sdff) from module l1d_reservation_unit (D = $procmux$82_Y, Q = \amo_lock_valid).
+Adding SRST signal on $procdff$115 ($dff) from module l1d_reservation_unit (D = $procmux$73_Y, Q = \amo_lock_snoop_hold, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$127 ($sdff) from module l1d_reservation_unit (D = $procmux$73_Y, Q = \amo_lock_snoop_hold).
+Adding SRST signal on $procdff$116 ($dff) from module l1d_reservation_unit (D = $procmux$60_Y, Q = \amo_lock_line, rval = 58'0000000000000000000000000000000000000000000000000000000000).
+Adding EN signal on $auto$ff.cc:337:slice$135 ($sdff) from module l1d_reservation_unit (D = \s2_line_addr, Q = \amo_lock_line).
+Adding SRST signal on $procdff$117 ($dff) from module l1d_reservation_unit (D = $logic_and$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:179$22_Y, Q = \amo_lock_timeout_pulse, rval = 1'0).
+Adding SRST signal on $procdff$118 ($dff) from module l1d_reservation_unit (D = $procmux$51_Y, Q = \to_cnt, rval = 11'00000000000).
+Adding EN signal on $auto$ff.cc:337:slice$142 ($sdff) from module l1d_reservation_unit (D = $add$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:182$23_Y, Q = \to_cnt).
+Adding SRST signal on $procdff$119 ($dff) from module l1d_reservation_unit (D = $procmux$37_Y, Q = \to_last, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$150 ($sdff) from module l1d_reservation_unit (D = $eq$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:183$25_Y, Q = \to_last).
+Adding SRST signal on $procdff$120 ($dff) from module l1d_reservation_unit (D = $logic_and$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_reservation_unit.v:144$14_Y, Q = \reservation_valid, rval = 1'0).
+
+8.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+Removed 17 unused cells and 18 unused wires.
+<suppressed ~18 debug messages>
+
+8.5. Rerunning OPT passes. (Removed registers in this run.)
+
+8.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_reservation_unit.
+<suppressed ~3 debug messages>
+
+8.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_reservation_unit'.
+Computing hashes of 54 cells of `\l1d_reservation_unit'.
+Finding duplicate cells in `\l1d_reservation_unit'.
+Computing hashes of 53 cells of `\l1d_reservation_unit'.
+Finding duplicate cells in `\l1d_reservation_unit'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+8.8. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+8.10. Finished fast OPT passes.
+Renaming module \l1d_reservation_unit to \ref_top.
+
+9. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v' to AST representation.
+Generating RTLIL representation for module `\l1d_reservation_unit'.
+Successfully finished Verilog frontend.
+
+10. Executing HIERARCHY pass (managing design hierarchy).
+
+10.1. Analyzing design hierarchy..
+Top module:  \l1d_reservation_unit
+
+10.2. Analyzing design hierarchy..
+Top module:  \l1d_reservation_unit
+Removed 0 unused modules.
+
+11. Executing PROC pass (convert processes to netlists).
+
+11.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+11.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 4 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173 in module l1d_reservation_unit.
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:142$164 in module l1d_reservation_unit.
+Marked 3 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:126$157 in module l1d_reservation_unit.
+Removed a total of 0 dead cases.
+
+11.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 3 redundant assignments.
+Promoted 2 assignments to connections.
+
+11.4. Executing PROC_INIT pass (extract init attributes).
+
+11.5. Executing PROC_ARST pass (detect async resets in processes).
+
+11.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~11 debug messages>
+
+11.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+     1/6: $0\amo_lock_timeout_pulse[0:0]
+     2/6: $0\to_last[0:0]
+     3/6: $0\to_cnt[10:0]
+     4/6: $0\amo_lock_line[57:0]
+     5/6: $0\amo_lock_snoop_hold[0:0]
+     6/6: $0\amo_lock_valid[0:0]
+Creating decoders for process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:142$164'.
+     1/2: $0\reservation_line_addr[57:0]
+     2/2: $0\reservation_valid[0:0]
+Creating decoders for process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:126$157'.
+     1/4: $3\v_s2[0:0]
+     2/4: $2\v_s2[0:0]
+     3/4: $1\l_s2[57:0]
+     4/4: $1\v_s2[0:0]
+
+11.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\l1d_reservation_unit.\v_s2' from process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:126$157'.
+No latch inferred for signal `\l1d_reservation_unit.\l_s2' from process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:126$157'.
+
+11.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\l1d_reservation_unit.\amo_lock_valid' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+  created $dff cell `$procdff$261' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\amo_lock_snoop_hold' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+  created $dff cell `$procdff$262' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\amo_lock_line' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+  created $dff cell `$procdff$263' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\amo_lock_timeout_pulse' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+  created $dff cell `$procdff$264' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\to_cnt' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+  created $dff cell `$procdff$265' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\to_last' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+  created $dff cell `$procdff$266' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\reservation_valid' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:142$164'.
+  created $dff cell `$procdff$267' with positive edge clock.
+Creating register for signal `\l1d_reservation_unit.\reservation_line_addr' using process `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:142$164'.
+  created $dff cell `$procdff$268' with positive edge clock.
+
+11.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+11.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 7 empty switches in `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+Removing empty process `l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:160$173'.
+Found and cleaned up 1 empty switch in `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:142$164'.
+Removing empty process `l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:142$164'.
+Found and cleaned up 3 empty switches in `\l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:126$157'.
+Removing empty process `l1d_reservation_unit.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:126$157'.
+Cleaned up 11 empty switches.
+
+11.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_reservation_unit.
+
+12. Executing FLATTEN pass (flatten design).
+
+13. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+Removed 0 unused cells and 48 unused wires.
+<suppressed ~1 debug messages>
+
+14. Executing MEMORY pass.
+
+14.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+14.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+14.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+14.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+14.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+14.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+
+14.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+14.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+14.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+
+14.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+15. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+16. Executing OPT pass (performing simple optimizations).
+
+16.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_reservation_unit.
+
+16.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_reservation_unit'.
+Computing hashes of 59 cells of `\l1d_reservation_unit'.
+Finding duplicate cells in `\l1d_reservation_unit'.
+Removed a total of 0 cells.
+
+16.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$261 ($dff) from module l1d_reservation_unit (D = $procmux$229_Y, Q = \amo_lock_valid, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$269 ($sdff) from module l1d_reservation_unit (D = $procmux$229_Y, Q = \amo_lock_valid).
+Adding SRST signal on $procdff$262 ($dff) from module l1d_reservation_unit (D = $procmux$220_Y, Q = \amo_lock_snoop_hold, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$273 ($sdff) from module l1d_reservation_unit (D = $procmux$220_Y, Q = \amo_lock_snoop_hold).
+Adding SRST signal on $procdff$263 ($dff) from module l1d_reservation_unit (D = $procmux$207_Y, Q = \amo_lock_line, rval = 58'0000000000000000000000000000000000000000000000000000000000).
+Adding EN signal on $auto$ff.cc:337:slice$281 ($sdff) from module l1d_reservation_unit (D = \s2_line_addr, Q = \amo_lock_line).
+Adding SRST signal on $procdff$264 ($dff) from module l1d_reservation_unit (D = $logic_and$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:179$176_Y, Q = \amo_lock_timeout_pulse, rval = 1'0).
+Adding SRST signal on $procdff$265 ($dff) from module l1d_reservation_unit (D = $procmux$198_Y, Q = \to_cnt, rval = 11'00000000000).
+Adding EN signal on $auto$ff.cc:337:slice$288 ($sdff) from module l1d_reservation_unit (D = $add$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:193$179_Y, Q = \to_cnt).
+Adding SRST signal on $procdff$266 ($dff) from module l1d_reservation_unit (D = $procmux$190_Y, Q = \to_last, rval = 1'0).
+Adding EN signal on $auto$ff.cc:337:slice$292 ($sdff) from module l1d_reservation_unit (D = $eq$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:194$180_Y, Q = \to_last).
+Adding SRST signal on $procdff$267 ($dff) from module l1d_reservation_unit (D = $logic_and$/__w/mshr-reservation-timing/mshr-reservation-timing/build/v_M-10/l1d_reservation_unit.v:147$168_Y, Q = \reservation_valid, rval = 1'0).
+Adding SRST signal on $procdff$268 ($dff) from module l1d_reservation_unit (D = \l_s2, Q = \reservation_line_addr, rval = 58'0000000000000000000000000000000000000000000000000000000000).
+
+16.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+Removed 15 unused cells and 15 unused wires.
+<suppressed ~16 debug messages>
+
+16.5. Rerunning OPT passes. (Removed registers in this run.)
+
+16.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_reservation_unit.
+<suppressed ~3 debug messages>
+
+16.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_reservation_unit'.
+Computing hashes of 52 cells of `\l1d_reservation_unit'.
+Finding duplicate cells in `\l1d_reservation_unit'.
+Computing hashes of 51 cells of `\l1d_reservation_unit'.
+Finding duplicate cells in `\l1d_reservation_unit'.
+<suppressed ~3 debug messages>
+Removed a total of 1 cells.
+
+16.8. Executing OPT_DFF pass (perform DFF optimizations).
+
+16.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_reservation_unit..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+16.10. Finished fast OPT passes.
+Renaming module \l1d_reservation_unit to \opt_top.
+
+17. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "ref_top" and gate cell "opt_top".
+
+17.1. Executing FLATTEN pass (flatten design).
+<suppressed ~2 debug messages>
+
+17.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+18. Executing HIERARCHY pass (managing design hierarchy).
+
+18.1. Analyzing design hierarchy..
+Top module:  \miter
+
+18.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `\opt_top'.
+Removing unused module `\ref_top'.
+Removed 2 unused modules.
+
+19. Executing OPT pass (performing simple optimizations).
+
+19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+Computing hashes of 115 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 112 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 110 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 109 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 108 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+<suppressed ~21 debug messages>
+Removed a total of 7 cells.
+
+19.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+19.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \miter..
+Removed 0 unused cells and 6 unused wires.
+<suppressed ~1 debug messages>
+
+19.5. Finished fast OPT passes.
+
+20. Executing SAT pass (solving SAT problems in the circuit).
+Using SAT solver `minisat`.
+
+Setting up time step 1:
+Import set-constraint for this timestep: \in_rst = 1'1
+Final constraint equation: \in_rst = 1'1
+Imported 108 cells to SAT database.
+Final init constraint equation: { \gold.amo_lock_valid \gold.amo_lock_snoop_hold \gold.amo_lock_timeout_pulse \gold.to_cnt \gold.to_last \gold.reservation_valid \gold.reservation_line_addr \gate.amo_lock_snoop_hold \gate.amo_lock_line \gate.amo_lock_timeout_pulse \gate.to_cnt \gate.amo_lock_valid \gate.reservation_line_addr \gate.reservation_valid \gate.to_last } = 206'00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+Setting up time step 2:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 3:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 4:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 5:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 6:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 7:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 8:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 9:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 10:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 11:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 12:
+Final constraint equation: { } = { }
+Imported 108 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+Import show expression: \in_clk
+Import show expression: \in_rst
+Import show expression: \in_sc_check_line_addr
+Import show expression: \in_s2_line_addr
+Import show expression: \in_s2_lr_completed
+Import show expression: \in_s2_sc_completed
+Import show expression: \in_s2_write_completed
+Import show expression: \in_s2_amo_read_completed
+Import show expression: \in_s2_amo_read_was_hit
+Import show expression: \in_s2_amo_write_completed
+Import show expression: \in_s2_install_valid
+Import show expression: \in_s2_install_line_addr
+Import show expression: \in_s1_clear_valid
+Import show expression: \in_s1_clear_line_addr
+Import show expression: \in_maint_clear
+Import show expression: \trigger
+Import show expression: \gate_sc_reservation_matches
+Import show expression: \gold_sc_reservation_matches
+Import show expression: \gate_reservation_valid
+Import show expression: \gold_reservation_valid
+Import show expression: \gate_reservation_line_addr
+Import show expression: \gold_reservation_line_addr
+Import show expression: \gate_amo_lock_valid
+Import show expression: \gold_amo_lock_valid
+Import show expression: \gate_amo_lock_snoop_hold
+Import show expression: \gold_amo_lock_snoop_hold
+Import show expression: \gate_amo_lock_line
+Import show expression: \gold_amo_lock_line
+Import show expression: \gate_amo_lock_timeout_pulse
+Import show expression: \gold_amo_lock_timeout_pulse
+
+Solving problem with 56472 variables and 156750 clauses..
+SAT proof finished - no model found: SUCCESS!
+
+                  /$$$$$$      /$$$$$$$$     /$$$$$$$    
+                 /$$__  $$    | $$_____/    | $$__  $$   
+                | $$  \ $$    | $$          | $$  \ $$   
+                | $$  | $$    | $$$$$       | $$  | $$   
+                | $$  | $$    | $$__/       | $$  | $$   
+                | $$/$$ $$    | $$          | $$  | $$   
+                |  $$$$$$/ /$$| $$$$$$$$ /$$| $$$$$$$//$$
+                 \____ $$$|__/|________/|__/|_______/|__/
+                       \__/                              
+
+End of script. Logfile hash: 7c82978cb7, time: 1.62s, user: 1.58s, system: 0.04s, MEM: 83.22 MB peak
+Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+Time spent: 97% 1x sat (1 sec), 0% 4x read_verilog (0 sec), ...
