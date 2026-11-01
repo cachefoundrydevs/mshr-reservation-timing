@@ -699,3 +699,86 @@ Consecutive no-win iterations=1. Continue iteration 8 per the stop rule.
 Sources remain archived in b62dced: M-13 arb 152 lines; M-14 arb 135;
 M-15 arb 135 and top 558. Remove these folders from active matrix and
 retain the added checker. No protected paths or old comparisons changed.
+
+## Iteration 8: busy feedback, qualified response state and allocation fanout
+
+A: Iteration 7's published report confirms all three timing losses, so
+M-11 remains the verified baseline. Its worst path at 250 ps is
+entry3.rs_c_q -> response control arbiter -> entry_freed_pulse ->
+entry4.busy_r D, -9.3 ps. Allocation -> line D is next at -7.0, token
+flags -6.5. Iteration 7 M-13 improves busy D to -2.3 but exposes CAM
+has-data -11.0; M-14/M-15 expose allocation -> line/metadata at -15.0/-19.4.
+These mappings show that isolated arbiter gains do not reliably compose.
+
+| id | module | idea | expected gain (estimate) | expected area | risk |
+|---|---|---|---|---|---|
+| M-16 | l1d_mshr via entry | response error selects busy outcome last | 2-10 ps | within 1% | relies on checked exclusive-state decode; allocation/CAM can dominate |
+| M-17 | l1d_mshr via entry | registered qualified error-response state | 1-8 ps | +0-1% | added state; synthesis may retain same grant fanout or another path wins |
+| M-18 | l1d_mshr | dedicated busy copies for free-entry allocation | 1-8 ps | +0-2% | extra feedback load and mapping may erase fanout benefit |
+
+Exactness and written self-review:
+
+M-16, complete file variants/M-16/l1d_mshr_entry.v:
+* Added scalar wires m16_response_error=rs_q&&err_r, m16_busy_other and
+  m16_busy_n. No new flops. Compute busy's IDLE/INSTALL/hold outcome in
+  parallel, then use the current response-error condition to select
+  !response_taken. In an error RESP, busy=1 and inst_q=0, so old next
+  busy is exactly !response_taken. Outside that state, the response free
+  term is zero, giving exactly m16_busy_other. Exclusive state flags and
+  busy's decode are already checked by L1D_CHECK_M11. Every original
+  transition preserves the invariant; no external assumption is added.
+* Only busy_r's combinational D function changes; same zero reset and
+  same next value. No widths, ports, parameters, latency or other reset
+  changes. entry_busy and every entry/top output pin keep their original
+  functions by induction; entry_freed_pulse itself is unchanged.
+* L1D_CHECK_M16 checks m16_busy_n against the full old busy/free equation,
+  adds errors and prints TEST FAILED. All old comparisons remain intact.
+
+M-17, complete file variants/M-17/l1d_mshr_entry.v:
+* Added one kept scalar flop m17_response_error with zero reset and
+  next=(mrg_q&&err_r)||(rs_q&&err_r&&!response_taken). The invariant is
+  m17_response_error==(rs_q&&err_r). Reset establishes it. On MERGE->RESP,
+  error is held, so the first term establishes the new decode; RESP holds
+  the bit while unaccepted and clears it on acceptance; other states
+  produce zero. err_r cannot change during MERGE/RESP in the unchanged
+  FSM. This proves the invariant for every reachable input history.
+* Replace only rs_q&&err_r in entry_freed_pulse with the checked flop.
+  The grant is not predicted and no output is delayed: freed, busy next,
+  all handshakes and every payload/output pin equal their old same-cycle
+  functions. No changed widths, ports, parameters, observable resets or
+  latency. The only new state is an encoding of an existing expression.
+* L1D_CHECK_M17 checks that expression directly on every unit-test sample,
+  increments errors and prints TEST FAILED; existing comparisons and
+  M-11 state/next invariant checker remain unchanged.
+
+M-18, complete file variants/M-18/l1d_mshr.v:
+* Added kept N-bit m18_allocation_busy and genvar m18j, no payload copies.
+  Each bit resets zero and uses the entry's exact busy recurrence:
+  busy ? !entry_freed_pulses[j] : allocate_valid&&free_g[j]. Replacing
+  e_busy only in free_g's prefix calculation is inductive: equal busy
+  vectors imply equal free picks, equal allocation inputs and therefore
+  equal next busy vectors. No early allocation or grant prediction.
+* Each new state bit equals e_busy[j] after reset. Thus free_g is exactly
+  the same lowest-free one-hot in the same cycle, even when all busy.
+  u_free still computes can_allocate/allocate_entry_id from original
+  e_busy; CAM/any-busy remain untouched. Every entry input is identical,
+  so AXI outputs, response outputs, token outputs, lookup outputs,
+  install outputs and entry-freed pulses preserve all original values,
+  including invalid-cycle payloads. Width of the new vector is N (8 by
+  default); no existing width, reset, port, parameter or latency change.
+* L1D_CHECK_M18 checks the whole vector against e_busy in tb_mshr_equiv,
+  increments errors and prints TEST FAILED. All M-7 copy/payload and
+  original comparisons are preserved. No added invariant is unchecked.
+
+No existing comparison or protected path is changed. Local checks are
+preliminary; only one single-commit Actions run can verify a candidate.
+
+Local RTL g2005 compile and Verilator lint pass for all three. All pass
+100000-cycle whole-MSHR lockstep; M-16/M-17 also pass 150000-cycle entry
+lockstep and the configured six-cycle entry formal check. Every new
+invariant checker is active, no TEST FAILED/MISMATCH occurs. A local
+file-generation script stopped before adding M-18's checker; its insertion
+locator was fixed before compilation, with no RTL change or verification
+failure. All inherited testbench lines remain in order. Built files match
+the M-11 opt tuple plus each candidate overlay byte-for-byte.
+Decision pending; no iteration 8 promotion.

@@ -175,6 +175,18 @@ module tb_mshr_entry_equiv #(`L1D_PARAMS) ();
                 if (errors <= 10) $display("TEST FAILED: M-3 NEXT FUNCTION cycle %0d", cyc);
             end
 `endif
+`ifdef L1D_CHECK_M16
+            if (dut_opt.m16_busy_n !== (dut_opt.busy_r ? !dut_opt.entry_freed_pulse : allocate_valid)) begin
+                errors=errors+1;
+                $display("TEST FAILED: M-16 BUSY NEXT cycle %0d",cyc);
+            end
+`endif
+`ifdef L1D_CHECK_M17
+            if (dut_opt.m17_response_error !== (dut_opt.rs_q && dut_opt.err_r)) begin
+                errors=errors+1;
+                $display("TEST FAILED: M-17 RESPONSE ERROR cycle %0d",cyc);
+            end
+`endif
 `ifdef L1D_CHECK_M11
             if (dut_opt.state > dut_opt.E_INSTALL ||
                 dut_opt.tk_q !== (dut_opt.state == dut_opt.E_TOKEN) ||

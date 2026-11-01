@@ -314,6 +314,12 @@ module tb_mshr_equiv #(`L1D_PARAMS) ();
                 if (errors <= 10) $display("TEST FAILED: M-7 tk MASK/PICK INVARIANT cycle %0d", cyc);
             end
 `endif
+`ifdef L1D_CHECK_M18
+            if (dut_opt.m18_allocation_busy !== dut_opt.e_busy) begin
+                errors=errors+1;
+                $display("TEST FAILED: M-18 ALLOCATION BUSY COPY cycle %0d",cyc);
+            end
+`endif
 `ifdef L1D_CHECK_M12
             if (|m12_bad) begin
                 errors = errors + 1;

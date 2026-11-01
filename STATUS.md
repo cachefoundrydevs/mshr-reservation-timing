@@ -68,3 +68,6 @@
 | M-13 | per-winner direct blocker grant | lost | iteration 7: +1.7 ps at 250/200; sized improves 3.0 but not eligible |
 | M-14 | M-10 absorption plus M-11 entry | lost | iteration 7: +5.7 ps at 250/200 |
 | M-15 | M-12 control topology plus absorption and M-11 entry | lost | iteration 7: +10.1 ps at 250/200 |
+| M-16 | response error selects busy outcome last | running | iteration 8; exclusive-state proof and old busy-equation checker |
+| M-17 | predecoded error-response state | running | iteration 8; one new flop checked against rs_q and err_r |
+| M-18 | dedicated busy copies for free-entry allocation | running | iteration 8; each bit checked equal to entry busy |
