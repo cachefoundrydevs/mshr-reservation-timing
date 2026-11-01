@@ -487,6 +487,6 @@ SAT proof finished - no model found: SUCCESS!
                  \____ $$$|__/|________/|__/|_______/|__/
                        \__/                              
 
-End of script. Logfile hash: 1adb8efcb2, time: 0.26s, user: 0.23s, system: 0.03s, MEM: 64.32 MB peak
+End of script. Logfile hash: 1adb8efcb2, time: 0.31s, user: 0.28s, system: 0.03s, MEM: 64.41 MB peak
 Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
 Time spent: 94% 1x sat (0 sec), 1% 11x opt_clean (0 sec), ...

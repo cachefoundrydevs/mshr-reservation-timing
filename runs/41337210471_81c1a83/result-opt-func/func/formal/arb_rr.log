@@ -1,0 +1,492 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+
+-- Executing script file `/__w/mshr-reservation-timing/mshr-reservation-timing/out/opt/func/formal/arb_rr.ys' --
+
+1. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v' to AST representation.
+Generating RTLIL representation for module `\l1d_arb_rr'.
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1. Analyzing design hierarchy..
+Top module:  \l1d_arb_rr
+
+2.2. Analyzing design hierarchy..
+Top module:  \l1d_arb_rr
+Removed 0 unused modules.
+
+3. Executing PROC pass (convert processes to netlists).
+
+3.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:92$56 in module l1d_arb_rr.
+Marked 4 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6 in module l1d_arb_rr.
+Removed a total of 0 dead cases.
+
+3.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 8 assignments to connections.
+
+3.4. Executing PROC_INIT pass (extract init attributes).
+
+3.5. Executing PROC_ARST pass (detect async resets in processes).
+
+3.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~6 debug messages>
+
+3.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:92$56'.
+     1/1: $0\last[1:0]
+Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6'.
+     1/12: $4\grant_index[1:0]
+     2/12: $4\grant_onehot[3:0]
+     3/12: $1$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:82$5[31:0]$47
+     4/12: $3\grant_index[1:0]
+     5/12: $3\grant_onehot[3:0]
+     6/12: $1$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:82$4[31:0]$36
+     7/12: $2\grant_index[1:0]
+     8/12: $2\grant_onehot[3:0]
+     9/12: $1$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:82$3[31:0]$25
+    10/12: $1\grant_index[1:0]
+    11/12: $1\grant_onehot[3:0]
+    12/12: $1$bitselwrite$pos$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:82$2[31:0]$14
+
+3.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\l1d_arb_rr.\grant_onehot' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6'.
+No latch inferred for signal `\l1d_arb_rr.\grant_index' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6'.
+No latch inferred for signal `\l1d_arb_rr.\k' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6'.
+No latch inferred for signal `\l1d_arb_rr.\j' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6'.
+
+3.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\l1d_arb_rr.\last' using process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:92$56'.
+  created $dff cell `$procdff$99' with positive edge clock.
+
+3.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:92$56'.
+Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:92$56'.
+Found and cleaned up 4 empty switches in `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6'.
+Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/ref/l1d_arb_rr.v:74$6'.
+Cleaned up 6 empty switches.
+
+3.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_arb_rr.
+<suppressed ~8 debug messages>
+
+4. Executing FLATTEN pass (flatten design).
+
+5. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+Removed 16 unused cells and 67 unused wires.
+<suppressed ~17 debug messages>
+
+6. Executing MEMORY pass.
+
+6.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+6.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+6.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+6.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+6.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+6.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+
+6.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+6.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+6.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+
+6.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+7. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+8. Executing OPT pass (performing simple optimizations).
+
+8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_arb_rr.
+<suppressed ~8 debug messages>
+
+8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_arb_rr'.
+Computing hashes of 29 cells of `\l1d_arb_rr'.
+Finding duplicate cells in `\l1d_arb_rr'.
+Removed a total of 0 cells.
+
+8.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$99 ($dff) from module l1d_arb_rr (D = $procmux$58_Y, Q = \last, rval = 2'11).
+Adding EN signal on $auto$ff.cc:337:slice$100 ($sdff) from module l1d_arb_rr (D = \grant_index, Q = \last).
+
+8.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+Removed 2 unused cells and 5 unused wires.
+<suppressed ~3 debug messages>
+
+8.5. Rerunning OPT passes. (Removed registers in this run.)
+
+8.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_arb_rr.
+
+8.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_arb_rr'.
+Computing hashes of 27 cells of `\l1d_arb_rr'.
+Finding duplicate cells in `\l1d_arb_rr'.
+Removed a total of 0 cells.
+
+8.8. Executing OPT_DFF pass (perform DFF optimizations).
+
+8.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+
+8.10. Finished fast OPT passes.
+Renaming module \l1d_arb_rr to \ref_top.
+
+9. Executing Verilog-2005 frontend: /__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v
+Parsing Verilog input from `/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v' to AST representation.
+Generating RTLIL representation for module `\l1d_arb_rr'.
+Successfully finished Verilog frontend.
+
+10. Executing HIERARCHY pass (managing design hierarchy).
+
+10.1. Analyzing design hierarchy..
+Top module:  \l1d_arb_rr
+
+10.2. Analyzing design hierarchy..
+Top module:  \l1d_arb_rr
+Removed 0 unused modules.
+
+11. Executing PROC pass (convert processes to netlists).
+
+11.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+11.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:121$108 in module l1d_arb_rr.
+Removed a total of 0 dead cases.
+
+11.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 2 assignments to connections.
+
+11.4. Executing PROC_INIT pass (extract init attributes).
+
+11.5. Executing PROC_ARST pass (detect async resets in processes).
+
+11.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~2 debug messages>
+
+11.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:121$108'.
+     1/1: $0\mask_r[3:0]
+Creating decoders for process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:114$104'.
+
+11.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\l1d_arb_rr.\grant_onehot' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:114$104'.
+No latch inferred for signal `\l1d_arb_rr.\grant_index' from process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:114$104'.
+
+11.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\l1d_arb_rr.\mask_r' using process `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:121$108'.
+  created $dff cell `$procdff$139' with positive edge clock.
+
+11.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+11.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `\l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:121$108'.
+Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:121$108'.
+Removing empty process `l1d_arb_rr.$proc$/__w/mshr-reservation-timing/mshr-reservation-timing/rtl/opt/l1d_arb_rr.v:114$104'.
+Cleaned up 2 empty switches.
+
+11.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_arb_rr.
+<suppressed ~6 debug messages>
+
+12. Executing FLATTEN pass (flatten design).
+
+13. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+Removed 0 unused cells and 28 unused wires.
+<suppressed ~1 debug messages>
+
+14. Executing MEMORY pass.
+
+14.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+14.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+14.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+14.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+14.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+14.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+
+14.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+14.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+14.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+
+14.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+15. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+16. Executing OPT pass (performing simple optimizations).
+
+16.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_arb_rr.
+
+16.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_arb_rr'.
+Computing hashes of 27 cells of `\l1d_arb_rr'.
+Finding duplicate cells in `\l1d_arb_rr'.
+Removed a total of 0 cells.
+
+16.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$139 ($dff) from module l1d_arb_rr (D = $procmux$134_Y, Q = \mask_r, rval = 4'0000).
+Adding EN signal on $auto$ff.cc:337:slice$140 ($sdff) from module l1d_arb_rr (D = \mask_next, Q = \mask_r).
+
+16.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+Removed 2 unused cells and 2 unused wires.
+<suppressed ~3 debug messages>
+
+16.5. Rerunning OPT passes. (Removed registers in this run.)
+
+16.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module l1d_arb_rr.
+
+16.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\l1d_arb_rr'.
+Computing hashes of 25 cells of `\l1d_arb_rr'.
+Finding duplicate cells in `\l1d_arb_rr'.
+Removed a total of 0 cells.
+
+16.8. Executing OPT_DFF pass (perform DFF optimizations).
+
+16.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \l1d_arb_rr..
+
+16.10. Finished fast OPT passes.
+Renaming module \l1d_arb_rr to \opt_top.
+
+17. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "ref_top" and gate cell "opt_top".
+
+17.1. Executing FLATTEN pass (flatten design).
+<suppressed ~2 debug messages>
+
+17.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+18. Executing HIERARCHY pass (managing design hierarchy).
+
+18.1. Analyzing design hierarchy..
+Top module:  \miter
+
+18.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `\opt_top'.
+Removing unused module `\ref_top'.
+Removed 2 unused modules.
+
+19. Executing OPT pass (performing simple optimizations).
+
+19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+
+19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\miter'.
+Computing hashes of 59 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 58 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+Computing hashes of 57 cells of `\miter'.
+Finding duplicate cells in `\miter'.
+<suppressed ~6 debug messages>
+Removed a total of 2 cells.
+
+19.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+19.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \miter..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+19.5. Finished fast OPT passes.
+
+20. Executing SAT pass (solving SAT problems in the circuit).
+Using SAT solver `minisat`.
+
+Setting up time step 1:
+Import set-constraint for this timestep: \in_rst = 1'1
+Final constraint equation: \in_rst = 1'1
+Imported 57 cells to SAT database.
+Final init constraint equation: { \gold.last \gate.mask_r } = 6'000000
+
+Setting up time step 2:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 3:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 4:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 5:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 6:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 7:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 8:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 9:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 10:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 11:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 12:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 13:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 14:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 15:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 16:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 17:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 18:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 19:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+
+Setting up time step 20:
+Final constraint equation: { } = { }
+Imported 57 cells to SAT database.
+Import proof-constraint: \trigger = 1'0
+Final proof equation: \trigger = 1'0
+Import show expression: \in_clk
+Import show expression: \in_rst
+Import show expression: \in_request_bits
+Import show expression: \in_grant_taken
+Import show expression: \trigger
+Import show expression: \gate_grant_onehot
+Import show expression: \gold_grant_onehot
+Import show expression: \gate_grant_index
+Import show expression: \gold_grant_index
+Import show expression: \gate_any_request
+Import show expression: \gold_any_request
+
+Solving problem with 50364 variables and 136486 clauses..
+SAT proof finished - no model found: SUCCESS!
+
+                  /$$$$$$      /$$$$$$$$     /$$$$$$$    
+                 /$$__  $$    | $$_____/    | $$__  $$   
+                | $$  \ $$    | $$          | $$  \ $$   
+                | $$  | $$    | $$$$$       | $$  | $$   
+                | $$  | $$    | $$__/       | $$  | $$   
+                | $$/$$ $$    | $$          | $$  | $$   
+                |  $$$$$$/ /$$| $$$$$$$$ /$$| $$$$$$$//$$
+                 \____ $$$|__/|________/|__/|_______/|__/
+                       \__/                              
+
+End of script. Logfile hash: 143ec4108c, time: 0.21s, user: 0.20s, system: 0.02s, MEM: 63.50 MB peak
+Yosys 0.68+post (git sha1 UNKNOWN, Release, GNU /usr/local/bin/wrapped-cc/g++ 15.2.0)
+Time spent: 94% 1x sat (0 sec), 1% 11x opt_clean (0 sec), ...

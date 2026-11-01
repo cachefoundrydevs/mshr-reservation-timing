@@ -1,3 +1,3 @@
 cycles 200000; cycles with a grant: N=2 130507  N=3 144553  N=4 154685  N=5 162285  N=8 177711
 TEST PASSED
-/__w/mshr-reservation-timing/mshr-reservation-timing/tb/tb_arb_rr_equiv.v:119: $finish called at 2000020000 (1ps)
+/__w/mshr-reservation-timing/mshr-reservation-timing/tb/tb_arb_rr_equiv.v:148: $finish called at 2000020000 (1ps)
