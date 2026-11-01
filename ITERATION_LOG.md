@@ -167,7 +167,7 @@ hardware behavior; checker additions only strengthen existing verification.
 This is a proposal for user re-check. Nothing is merged into main.
 
 
-## Iteration 4 (2026-11-01): candidates awaiting Actions
+## Iteration 4 (2026-11-01)
 
 Branch: timing/iteration-4-response, created from timing/iteration-1-r1 at
 7c89d0c98fd024afbea47bccc81ada9365f74596. Latest baseline evidence is Actions
@@ -263,4 +263,51 @@ also passes 150000-cycle entry lockstep and the six-cycle bounded entry
 proof (FORMAL: ALL EQUIVALENT (mshr_entry)). No TEST FAILED or MISMATCH.
 Local results are preliminary only. Actions on one source commit must
 provide lint, 12/12 and all five formal results before any promotion.
-Decision: pending. No RTL promotion in iteration 4 yet.
+Actions evidence: 41332990431 on commit
+5aa332cffdd62e74a940b2e0e5d039aae865344c; results published 2026-11-01T18:29:45Z.
+Fetched results and checked latest/RUN.txt, latest/comparison.md and the
+complete latest/PASTE_TO_CHATGPT.md, including its empty failure-log section.
+All candidates pass Icarus compile, 12/12 lockstep with their new checkers,
+and all five bounded formal checks. No FAIL / MISMATCH / NOT PROVEN or first
+differing cycle exists. Local checks remain preliminary, not the evidence
+for the keep decision.
+
+## Comparison (critical delay in ps, ASAP7, ideal clock, no wires; smaller is faster)
+
+| version | lint | lockstep | formal | mshr 250 | mshr 250 sized | mshr 200 | entry 250 | entry 250 sized | entry 200 | rsv 250 | rsv 250 sized | rsv 200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| M-1 | iverilog | 12/12 | EQUIVALENT | 296.2 | 287.3 | 293.7 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| M-3 | iverilog | 12/12 | EQUIVALENT | 282.1 | 267.9 | 279.6 | 221.5 | 221.5 | 219.0 | 242.9 | 242.9 | 240.4 |
+| M-6 | iverilog | 12/12 | EQUIVALENT | 279.1 | 273.8 | 276.6 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| R-2 | iverilog | 12/12 | EQUIVALENT | 275.6 | 263.7 | 273.1 | 230.5 | 230.5 | 228.0 | 246.5 | 246.5 | 244.0 |
+| opt | iverilog | 12/12 | EQUIVALENT | 275.6 | 263.7 | 273.1 | 230.5 | 230.5 | 228.0 | 242.9 | 242.9 | 240.4 |
+| ref |  |  |  | 542.3 | 463.0 | 539.8 | 476.6 | 418.5 | 474.1 | 258.0 | 251.5 | 255.5 |
+
+A version may replace rtl/opt only if lint passes, lockstep is 12/12, formal is EQUIVALENT, and it is faster (see PROMPT_ITERATION.md).
+
+Decision: all three LOSE on timing; no promotion. First consecutive iteration
+without a win. Do not spend iterations 6-10 if iteration 5 also has no win.
+
+* M-1: MSHR +20.6 / +23.6 / +20.6 ps vs opt. Area 11718 vs 11643 (+75).
+  Worst 250 ps path starts at g_m1_slice[3].g_copy[2].rs_copy and ends at
+  response_packet[61], -46.2 ps. The copied request still has fanout 7 and
+  47.6 ps clock-to-Q; arbitration and buffering remain. AXI line is -43.7
+  and token line -40.6. Copies did not remove the limiting dependency.
+* M-3: MSHR +6.5 / +4.2 / +6.5 ps. Its standalone entry improves by 9.0 ps
+  in all three columns (221.5 / 221.5 / 219.0), but that does not offset
+  the full-MSHR regression. Area 11650. New worst path line_r[8] -> CAM/
+  priority/has-data logic -> lookup_entry_has_data, -32.1 ps at 250.
+* M-6: MSHR +3.5 / +10.1 / +3.5 ps. Area 11691. Response group improves
+  from -25.6 to -12.6 ps at 250, but AXI address becomes -29.1 and token
+  flag D paths -28.3. This partial benefit motivates a fresh candidate
+  covering all channels; the losing M-6 is not promoted.
+
+The complete sources (437-line M-1 top, 555-line M-3 entry, 427-line M-6 top)
+remain in tested commit 5aa332c. Their variant folders are removed after
+this decision. Their exactness arguments and full added-signal inventories
+are above. The checker additions are retained; no old comparison is removed.
+No opt or protected path changed in this iteration. New baseline stays
+275.6 / 263.7 / 273.1 MSHR; 230.5 / 230.5 / 228.0 entry;
+242.9 / 242.9 / 240.4 reservation. Goal gap remains 45.6 ps to 230 unsized.
+Nothing is merged to main; all work remains a proposal for user re-check.
+
