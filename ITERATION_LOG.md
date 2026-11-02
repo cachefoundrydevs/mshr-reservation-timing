@@ -855,3 +855,19 @@ Tested opt SHA256 l1d_arb_rr.v: e513301e34c32c7f2cc0f50b7429c6b1374f861ee87047f8
 Tested opt SHA256 l1d_mshr.v: b1aae73a804175162f84a58e0550ec7f5b09c746332588ca8b89ee6193802fae.
 Tested opt SHA256 l1d_mshr_entry.v: 8b5c4f72064138e7ee6b7ae77ffe243a0d1f56bb189bd14d0c232aacf9c7db25.
 Tested opt SHA256 l1d_reservation_unit.v: d70715f7de4f01d70cdcadd02eb477ef5fb4a715621bb69ae4d970f3002e307d.
+
+
+## Retained baseline confirmation after cleanup
+
+Actions run 41353740720 on commit
+4c933c0b0c664eb2eb09d242dd43eb1365dfe659 completes successfully, including
+lint=iverilog, lockstep=12/12 and all five configured bounded formal checks
+EQUIVALENT. Read latest/RUN.txt, comparison.md and complete
+PASTE_TO_CHATGPT.md from origin/results; no failure-log lines are present.
+The retained tuple reproduces mshr 259.3/253.8/256.8, entry
+215.9/215.9/213.4 and reservation 242.9/242.9/240.4 ps exactly.
+All four opt files are byte-identical to this tested commit. Subsequent
+commits only join the append-only status rows into three continuous
+Markdown tables and record this confirmation; no rows are deleted or
+changed. Working tree is clean, no active candidate folders remain and
+no further iteration is started under the two-no-win stop rule.
